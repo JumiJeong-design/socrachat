@@ -1183,6 +1183,7 @@ function save(s){try{localStorage.setItem(STORE,JSON.stringify(s));}catch{}}
 function loadPresets(){try{const d=JSON.parse(localStorage.getItem(PSTORE)||'null');if(Array.isArray(d))return d;}catch{}
   return[
     {name:'Default · Forest', state:{...DEFAULTS}},
+    {name:'Apple HIG',        state:{...DEFAULTS,accent:'#0071e3',bg:'#f5f5f7',surface:'#ffffff',warmAccent:'#0071e3',radiusXs:5,radiusSm:8,radiusMd:12,radiusLg:18,radiusXl:22,radius2xl:28,fontSize:17,lineHeight:1.47}},
     {name:'Navy · Sharp',     state:{...DEFAULTS,accent:'#1F3A5F',bg:'#F7F8FA',radiusXs:2,radiusSm:4,radiusMd:6,radiusLg:8,radiusXl:10,radius2xl:14,fontFamily:1}},
     {name:'Sage · Round',     state:{...DEFAULTS,accent:'#5E7A5E',radiusXs:6,radiusSm:12,radiusMd:18,radiusLg:22,radiusXl:28,radius2xl:36,fontFamily:2,lineHeight:1.65}},
     {name:'Plum · Warm',      state:{...DEFAULTS,accent:'#6B4A6B',bg:'#FAF8FC',fontFamily:4}},

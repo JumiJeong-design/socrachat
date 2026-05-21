@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Opinion Cards</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; padding: 18px 20px; background: #FBF9F4; font-family: var(--font-ui); color: #29251F; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .op {
+    background: #FFF; border: 1px solid #E8DECE;
+    border-radius: 16px;
+    padding: 16px 16px 14px;
+    display: flex; flex-direction: column; gap: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .op .strip { position: absolute; left: 0; top: 0; bottom: 0; width: 3px; }
+  .op.a .strip { background: #7B5EA0; }
+  .op.b .strip { background: #4A6FA5; }
+  .op-head { display: flex; align-items: center; gap: 8px; }
+  .op-num {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #F5F1EA; color: #524A41;
+    display: grid; place-items: center;
+    font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+  }
+  .op-pct {
+    font-family: var(--font-mono); font-size: 22px; font-weight: 700;
+    color: #29251F; line-height: 1;
+  }
+  .op-pct .u { font-size: 13px; font-weight: 500; color: #8A8175; margin-left: 1px; }
+  .op-strength {
+    font-size: 11px; font-weight: 600;
+    padding: 2px 8px; border-radius: 999px;
+    margin-left: auto;
+  }
+  .strong { background: #E8EFEA; color: #234A3F; }
+  .partial { background: #F4E3D5; color: #8A4F2E; }
+  .op-conclusion {
+    font-size: 15px; font-weight: 600; line-height: 1.4;
+    color: #29251F;
+  }
+  .op-rationale {
+    font-size: 12.5px; color: #524A41; line-height: 1.55;
+  }
+  .op-models { display: flex; gap: 4px; }
+  .op-models .av {
+    width: 22px; height: 22px; border-radius: 50%;
+    color: #FFF; font-weight: 700; font-size: 9px; font-family: var(--font-mono);
+    display: grid; place-items: center;
+    border: 1.5px solid #FFF;
+  }
+  .op-models .av + .av { margin-left: -8px; }
+  .op-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 6px; border-top: 1px dashed #E8DECE; }
+  .op-foot .ct { font-family: var(--font-mono); font-size: 10px; color: #8A8175; }
+  .op-foot button {
+    background: transparent; border: 0; color: #2D5F4F; cursor: pointer;
+    font-family: inherit; font-size: 12px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .op-foot button svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div class="op a">
+      <div class="strip"></div>
+      <div class="op-head">
+        <span class="op-num">A</span>
+        <span class="op-pct">62<span class="u">%</span></span>
+        <span class="op-strength strong">強い一致</span>
+      </div>
+      <div class="op-conclusion">長期保有なら今が買い時。ただし分割購入を推奨。</div>
+      <div class="op-rationale">EV市場の構造的成長 + 自社株買い再開 + バリュエーション安定が共通根拠。下落余地は限定的との見方。</div>
+      <div class="op-foot">
+        <div class="op-models">
+          <span class="av" style="background:#7B5EA0">C</span>
+          <span class="av" style="background:#4A6FA5">G</span>
+          <span class="av" style="background:#3D8077">P</span>
+          <span class="av" style="background:#5E6B7D">D</span>
+        </div>
+        <button>4 modelsの原文<svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+
+    <div class="op b">
+      <div class="strip"></div>
+      <div class="op-head">
+        <span class="op-num">B</span>
+        <span class="op-pct">38<span class="u">%</span></span>
+        <span class="op-strength partial">条件付き</span>
+      </div>
+      <div class="op-conclusion">短期トレード目的なら待機推奨、Q3決算後の判断が安全。</div>
+      <div class="op-rationale">マクロ金利 + 中国市場EV値下げ競争の見通し不確実性が共通の懸念。タイミング次第で逆指値必須。</div>
+      <div class="op-foot">
+        <div class="op-models">
+          <span class="av" style="background:#C68635">◆</span>
+          <span class="av" style="background:#B05C6D">G</span>
+        </div>
+        <button>2 modelsの原文<svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

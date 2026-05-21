@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Buttons</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; padding: 22px 28px; background: #FBF9F4; font-family: var(--font-ui); color: #29251F; }
+  h4 { font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: #8A8175; font-weight: 600; margin: 0 0 12px; }
+  .row { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
+  .label { font-family: var(--font-mono); font-size: 10px; color: #8A8175; width: 70px; }
+
+  .btn {
+    font-family: inherit; font-size: 13.5px; font-weight: 500;
+    padding: 9px 18px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 200ms cubic-bezier(.2,.8,.2,1);
+    display: inline-flex; align-items: center; gap: 7px;
+    letter-spacing: -.005em;
+  }
+  .primary { background: #2D5F4F; color: #FFF; }
+  .primary:hover { background: #234A3F; }
+  .secondary { background: #FFF; color: #29251F; border-color: #DED5C5; }
+  .secondary:hover { background: #F5F1EA; border-color: #C8D6CC; }
+  .ghost { background: transparent; color: #524A41; }
+  .ghost:hover { background: #F5F1EA; color: #29251F; }
+  .accent { background: #E8EFEA; color: #234A3F; }
+  .accent:hover { background: #C8D6CC; }
+  .danger { background: transparent; color: #B8504C; border-color: rgba(184,80,76,.3); }
+
+  .sm { padding: 6px 12px; font-size: 12px; border-radius: 8px; }
+  .lg { padding: 13px 24px; font-size: 15px; border-radius: 12px; font-weight: 600; }
+  svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+  .icon-btn {
+    width: 34px; height: 34px; border-radius: 10px;
+    background: transparent; border: 1px solid #DED5C5;
+    color: #524A41;
+    display: grid; place-items: center; cursor: pointer;
+  }
+  .icon-btn:hover { background: #F5F1EA; color: #29251F; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="label">PRIMARY</div>
+    <button class="btn primary">問い合わせる</button>
+    <button class="btn primary"><svg viewBox="0 0 24 24"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z" stroke-linecap="round" stroke-linejoin="round"/></svg>送信</button>
+    <button class="btn primary" disabled style="opacity:.4;cursor:not-allowed">処理中…</button>
+  </div>
+  <div class="row">
+    <div class="label">SECONDARY</div>
+    <button class="btn secondary">後で</button>
+    <button class="btn accent">原文を見る</button>
+    <button class="btn ghost">取り消す</button>
+    <button class="btn danger">削除</button>
+  </div>
+  <div class="row">
+    <div class="label">SIZES</div>
+    <button class="btn primary sm">小</button>
+    <button class="btn primary">中</button>
+    <button class="btn primary lg">大 · CTA</button>
+    <button class="icon-btn"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg></button>
+  </div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Color · Semantic + Modes</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; font-family: var(--font-ui); display: grid; grid-template-columns: 1fr 1fr; min-height: 280px; }
+  .pane { padding: 22px 24px; position: relative; }
+  .light { background: #FBF9F4; color: #29251F; }
+  .dark { background: #14130F; color: #F0EBDE; }
+  .tag { position: absolute; top: 12px; right: 14px; font-size: 9px; letter-spacing: .15em; opacity: .4; font-weight: 600; }
+  h4 { font-size: 10px; letter-spacing: .15em; text-transform: uppercase; opacity: .55; font-weight: 600; margin: 0 0 12px; }
+  .stack { display: flex; flex-direction: column; gap: 10px; }
+  .item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; font-size: 12.5px; }
+  .item .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .item .lbl { flex: 1; font-weight: 500; }
+  .item .hex { font-family: var(--font-mono); font-size: 10px; opacity: .55; }
+
+  .light .surf { background: #FFF; border: 1px solid #E8DECE; }
+  .dark .surf { background: #1E1C17; border: 1px solid #2D2820; }
+  .light .tint { background: #E8EFEA; }
+  .dark .tint { background: #1A2620; }
+</style>
+</head>
+<body>
+  <div class="pane light">
+    <span class="tag">LIGHT</span>
+    <h4>Surfaces + Semantic</h4>
+    <div class="stack">
+      <div class="item surf"><span class="dot" style="background:#FFFFFF;box-shadow:inset 0 0 0 1px #E8DECE"></span><span class="lbl">surface · elevated</span><span class="hex">#FFFFFF</span></div>
+      <div class="item tint"><span class="dot" style="background:#2D5F4F"></span><span class="lbl">accent · forest-500</span><span class="hex">#2D5F4F</span></div>
+      <div class="item surf"><span class="dot" style="background:#4F7A4C"></span><span class="lbl">success · 高信頼</span><span class="hex">#4F7A4C</span></div>
+      <div class="item surf"><span class="dot" style="background:#C9893A"></span><span class="lbl">warn · 注意/不一致</span><span class="hex">#C9893A</span></div>
+      <div class="item surf"><span class="dot" style="background:#B8504C"></span><span class="lbl">error · 重要警告</span><span class="hex">#B8504C</span></div>
+    </div>
+  </div>
+  <div class="pane dark">
+    <span class="tag">DARK</span>
+    <h4>Surfaces + Semantic</h4>
+    <div class="stack">
+      <div class="item surf"><span class="dot" style="background:#1E1C17;box-shadow:inset 0 0 0 1px #44402E"></span><span class="lbl">surface · elevated</span><span class="hex">#1E1C17</span></div>
+      <div class="item tint"><span class="dot" style="background:#7AAA94"></span><span class="lbl">accent · forest-light</span><span class="hex">#7AAA94</span></div>
+      <div class="item surf"><span class="dot" style="background:#74A872"></span><span class="lbl">success</span><span class="hex">#74A872</span></div>
+      <div class="item surf"><span class="dot" style="background:#E4AE5F"></span><span class="lbl">warn</span><span class="hex">#E4AE5F</span></div>
+      <div class="item surf"><span class="dot" style="background:#D17F8C"></span><span class="lbl">error</span><span class="hex">#D17F8C</span></div>
+    </div>
+  </div>
+</body>
+</html>

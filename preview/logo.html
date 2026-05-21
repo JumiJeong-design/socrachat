@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Logo</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; display: grid; grid-template-columns: 1fr 1fr; min-height: 240px; }
+  .pane { display: flex; align-items: center; justify-content: center; padding: 32px; position: relative; }
+  .light { background: #FBF9F4; }
+  .dark  { background: #14130F; }
+  .label { position: absolute; bottom: 10px; left: 14px; font-size: 10px; letter-spacing: .15em; opacity: .35; font-family: var(--font-ui); font-weight: 600; }
+  .light .label { color: #29251F; }
+  .dark .label { color: #F0EBDE; }
+
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .mark {
+    width: 44px; height: 44px; border-radius: 50%;
+    position: relative; flex-shrink: 0;
+  }
+  .light .mark { background: conic-gradient(from -110deg at 50% 50%, #2D5F4F 0deg, #2D5F4F 220deg, transparent 220deg); }
+  .dark .mark { background: conic-gradient(from -110deg at 50% 50%, #7AAA94 0deg, #7AAA94 220deg, transparent 220deg); }
+  .mark::after {
+    content: ''; position: absolute; inset: 8px;
+    border-radius: 50%;
+  }
+  .light .mark::after { background: #FBF9F4; }
+  .dark .mark::after { background: #14130F; }
+  .mark::before {
+    content: ''; position: absolute; inset: 14px;
+    border-radius: 50%; z-index: 1;
+  }
+  .light .mark::before { background: #2D5F4F; }
+  .dark .mark::before { background: #7AAA94; }
+
+  .word { display: flex; flex-direction: column; gap: 2px; }
+  .word .en {
+    font-family: var(--font-ui);
+    font-size: 28px; font-weight: 600; letter-spacing: -.02em; line-height: 1;
+  }
+  .light .word .en { color: #18150F; }
+  .light .word .en span { color: #2D5F4F; }
+  .dark .word .en { color: #FFFEFA; }
+  .dark .word .en span { color: #7AAA94; }
+  .word .ja {
+    font-family: var(--font-jp);
+    font-size: 11px; letter-spacing: .25em; opacity: .55; font-weight: 500;
+  }
+  .light .word .ja { color: #524A41; }
+  .dark .word .ja { color: #C8C0AE; }
+</style>
+</head>
+<body>
+  <div class="pane light">
+    <div class="logo">
+      <div class="mark"></div>
+      <div class="word">
+        <div class="en">Socra<span>Chat</span></div>
+        <div class="ja">ソクラチャット</div>
+      </div>
+    </div>
+    <span class="label">LIGHT</span>
+  </div>
+  <div class="pane dark">
+    <div class="logo">
+      <div class="mark"></div>
+      <div class="word">
+        <div class="en">Socra<span>Chat</span></div>
+        <div class="ja">ソクラチャット</div>
+      </div>
+    </div>
+    <span class="label">DARK</span>
+  </div>
+</body>
+</html>

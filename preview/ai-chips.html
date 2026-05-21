@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>AI Model Chips</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; padding: 22px 28px; background: #FBF9F4; font-family: var(--font-ui); color: #29251F; }
+  h4 { font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: #8A8175; font-weight: 600; margin: 0 0 10px; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+
+  .ai {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 5px 12px 5px 5px;
+    border-radius: 999px;
+    background: #FFF; border: 1px solid #DED5C5;
+    font-size: 12.5px; font-weight: 500;
+    color: #29251F;
+  }
+  .ai .ic {
+    width: 22px; height: 22px; border-radius: 50%;
+    display: grid; place-items: center;
+    color: #FFF; font-weight: 700; font-size: 10px;
+    font-family: var(--font-mono);
+  }
+  .ai.gpt .ic { background: #4A6FA5; }
+  .ai.claude .ic { background: #7B5EA0; }
+  .ai.gemini .ic { background: #C68635; }
+  .ai.perplexity .ic { background: #3D8077; }
+  .ai.grok .ic { background: #B05C6D; }
+  .ai.deepseek .ic { background: #5E6B7D; }
+
+  .ai .pct { font-family: var(--font-mono); font-size: 11px; color: #524A41; font-weight: 600; }
+  .ai.dim { opacity: .55; }
+
+  .ai.sel { border-color: #2D5F4F; background: #E8EFEA; }
+
+  .stack { display: flex; flex-direction: column; gap: 4px; padding: 14px 14px; background: #FFF; border-radius: 14px; border: 1px solid #E8DECE; max-width: 320px; }
+  .stack .ai { border: 0; background: transparent; padding: 5px 0; gap: 10px; }
+  .stack .ai .pct { margin-left: auto; }
+</style>
+</head>
+<body>
+  <h4>AI chips · selectable</h4>
+  <div class="row">
+    <span class="ai gpt"><span class="ic">G</span>GPT-4o</span>
+    <span class="ai claude"><span class="ic">C</span>Claude Opus</span>
+    <span class="ai gemini"><span class="ic">◆</span>Gemini 2.5</span>
+    <span class="ai perplexity"><span class="ic">P</span>Perplexity</span>
+    <span class="ai grok"><span class="ic">G</span>Grok</span>
+    <span class="ai deepseek dim"><span class="ic">D</span>DeepSeek</span>
+  </div>
+
+  <h4>Compact list · with weights</h4>
+  <div class="stack">
+    <div class="ai claude"><span class="ic">C</span>Claude Opus<span class="pct">28%</span></div>
+    <div class="ai gpt"><span class="ic">G</span>GPT-4o<span class="pct">24%</span></div>
+    <div class="ai gemini"><span class="ic">◆</span>Gemini 2.5<span class="pct">19%</span></div>
+    <div class="ai perplexity"><span class="ic">P</span>Perplexity<span class="pct">17%</span></div>
+    <div class="ai grok"><span class="ic">G</span>Grok<span class="pct">12%</span></div>
+  </div>
+</body>
+</html>

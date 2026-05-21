@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Persona Cards</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; padding: 18px 22px; background: #FBF9F4; font-family: var(--font-ui); color: #29251F; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .p {
+    background: #FFF; border: 1px solid #E8DECE; border-radius: 14px;
+    padding: 14px 14px 12px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .p-head { display: flex; align-items: center; gap: 10px; }
+  .p-av {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: grid; place-items: center;
+    font-family: var(--font-ui); font-weight: 700; font-size: 14px;
+    color: #FFF;
+    flex-shrink: 0;
+  }
+  .p-name { display: flex; flex-direction: column; gap: 1px; line-height: 1.15; }
+  .p-name .n { font-size: 13px; font-weight: 600; }
+  .p-name .role { font-size: 11px; color: #8A8175; }
+
+  .p-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+  .p-tag {
+    font-size: 10px; padding: 2px 7px; border-radius: 999px;
+    background: #F5F1EA; color: #524A41; font-weight: 500;
+  }
+  .p-quote {
+    font-family: var(--font-display);
+    font-size: 14px; line-height: 1.5; font-weight: 500;
+    color: #29251F;
+    padding: 8px 0;
+    border-top: 1px dashed #E8DECE;
+    border-bottom: 1px dashed #E8DECE;
+  }
+  .p-pts { display: flex; flex-direction: column; gap: 4px; font-size: 11.5px; color: #524A41; line-height: 1.5; }
+  .p-pts .pt { display: flex; gap: 6px; }
+  .p-pts .pt .ic { width: 14px; height: 14px; border-radius: 50%; display: grid; place-items: center; font-size: 9px; color: #FFF; flex-shrink: 0; margin-top: 2px; font-weight: 700; }
+  .p-pts .pt.pro .ic { background: #4F7A4C; }
+  .p-pts .pt.con .ic { background: #B8504C; }
+
+  .p-foot { display: flex; gap: 6px; padding-top: 4px; }
+  .p-foot button {
+    flex: 1; font-family: inherit; font-size: 11.5px;
+    background: #F5F1EA; border: 0;
+    padding: 7px 10px; border-radius: 8px;
+    cursor: pointer; color: #29251F; font-weight: 500;
+  }
+  .p-foot button:hover { background: #ECE5D9; }
+</style>
+</head>
+<body>
+  <div class="grid">
+
+    <div class="p">
+      <div class="p-head">
+        <div class="p-av" style="background:#4A6FA5">健</div>
+        <div class="p-name">
+          <span class="n">健太郎 / 38歳</span>
+          <span class="role">10年目会社員 · 慎重派投資家</span>
+        </div>
+      </div>
+      <div class="p-tags">
+        <span class="p-tag">保守的</span><span class="p-tag">分散重視</span><span class="p-tag">家計優先</span>
+      </div>
+      <div class="p-quote">「家計を考えると、まずは少額から試したい」</div>
+      <div class="p-pts">
+        <div class="pt pro"><span class="ic">+</span>NISA枠で月3万円の積立から検討推奨</div>
+        <div class="pt con"><span class="ic">-</span>一括購入はリスク許容度に合わない</div>
+      </div>
+      <div class="p-foot">
+        <button>原文</button><button>話しかける →</button>
+      </div>
+    </div>
+
+    <div class="p">
+      <div class="p-head">
+        <div class="p-av" style="background:#B05C6D">舞</div>
+        <div class="p-name">
+          <span class="n">舞 / 29歳</span>
+          <span class="role">フリーランス · 攻めの投資家</span>
+        </div>
+      </div>
+      <div class="p-tags">
+        <span class="p-tag">攻撃的</span><span class="p-tag">短期OK</span><span class="p-tag">テクノロジー強気</span>
+      </div>
+      <div class="p-quote">「EVは長期構造変化。タイミングは気にしない」</div>
+      <div class="p-pts">
+        <div class="pt pro"><span class="ic">+</span>レバレッジETFも視野、Q3決算後に増し玉</div>
+        <div class="pt con"><span class="ic">-</span>ボラに耐える資金管理が前提</div>
+      </div>
+      <div class="p-foot">
+        <button>原文</button><button>話しかける →</button>
+      </div>
+    </div>
+
+    <div class="p">
+      <div class="p-head">
+        <div class="p-av" style="background:#3D8077">圭</div>
+        <div class="p-name">
+          <span class="n">圭一 / 52歳</span>
+          <span class="role">FP · 退職世代向け助言</span>
+        </div>
+      </div>
+      <div class="p-tags">
+        <span class="p-tag">バランス</span><span class="p-tag">長期</span><span class="p-tag">出口設計</span>
+      </div>
+      <div class="p-quote">「個別株は資産の10%まで、出口を先に決める」</div>
+      <div class="p-pts">
+        <div class="pt pro"><span class="ic">+</span>S&P500メインに、テスラはサテライト位置</div>
+        <div class="pt con"><span class="ic">-</span>退職資金には不向きの集中</div>
+      </div>
+      <div class="p-foot">
+        <button>原文</button><button>話しかける →</button>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Color · Neutrals + Warm Accent</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; padding: 20px 24px; background: #FBF9F4; font-family: var(--font-ui); }
+  h4 { font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: #8A8175; font-weight: 600; margin: 0 0 10px; }
+  .group { margin-bottom: 14px; }
+  .row { display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; }
+  .sw { display: flex; flex-direction: column; gap: 5px; }
+  .chip { aspect-ratio: 1.2/1; border-radius: 8px; border: 1px solid rgba(0,0,0,.05); }
+  .name { font-size: 10px; color: #524A41; font-weight: 500; }
+  .hex { font-size: 9px; font-family: var(--font-mono); color: #8A8175; }
+</style>
+</head>
+<body>
+  <div class="group">
+    <h4>Cream → Stone · warm neutrals</h4>
+    <div class="row">
+      <div class="sw"><div class="chip" style="background:#FBF9F4"></div><div class="name">cream-50</div><div class="hex">#FBF9F4</div></div>
+      <div class="sw"><div class="chip" style="background:#F5F1EA"></div><div class="name">cream-100</div><div class="hex">#F5F1EA</div></div>
+      <div class="sw"><div class="chip" style="background:#ECE5D9"></div><div class="name">cream-200</div><div class="hex">#ECE5D9</div></div>
+      <div class="sw"><div class="chip" style="background:#DED5C5"></div><div class="name">cream-300</div><div class="hex">#DED5C5</div></div>
+      <div class="sw"><div class="chip" style="background:#8A8175"></div><div class="name">stone-50</div><div class="hex">#8A8175</div></div>
+      <div class="sw"><div class="chip" style="background:#524A41"></div><div class="name">stone-100</div><div class="hex">#524A41</div></div>
+      <div class="sw"><div class="chip" style="background:#29251F"></div><div class="name">stone-300</div><div class="hex">#29251F</div></div>
+      <div class="sw"><div class="chip" style="background:#14130F"></div><div class="name">stone-500</div><div class="hex">#14130F</div></div>
+    </div>
+  </div>
+  <div class="group">
+    <h4>Clay · warm accent (sparingly used)</h4>
+    <div class="row" style="grid-template-columns: repeat(3, 1fr); max-width:340px;">
+      <div class="sw"><div class="chip" style="background:#F4E3D5"></div><div class="name">clay-100</div><div class="hex">#F4E3D5</div></div>
+      <div class="sw"><div class="chip" style="background:#D89E7E"></div><div class="name">clay-300</div><div class="hex">#D89E7E</div></div>
+      <div class="sw"><div class="chip" style="background:#B5613F"></div><div class="name">clay-500</div><div class="hex">#B5613F</div></div>
+    </div>
+  </div>
+</body>
+</html>

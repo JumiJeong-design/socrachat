@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Spacing · Radii · Shadow</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; padding: 18px 24px; background: #FBF9F4; color: #29251F; font-family: var(--font-ui); display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  h4 { font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: #8A8175; font-weight: 600; margin: 0 0 10px; }
+  .panel { display: flex; flex-direction: column; gap: 6px; }
+  .panel.shadow { grid-column: span 2; }
+
+  .row { display: grid; grid-template-columns: 64px 36px 1fr; gap: 10px; align-items: center; }
+  .name { font-family: var(--font-mono); font-size: 10px; color: #524A41; }
+  .px { font-family: var(--font-mono); font-size: 10px; color: #8A8175; text-align: right; }
+  .bar { height: 8px; background: #2D5F4F; border-radius: 2px; }
+
+  .radii { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+  .ri { display: flex; flex-direction: column; gap: 4px; align-items: center; }
+  .ri .box { width: 100%; aspect-ratio: 1.2/1; background: linear-gradient(135deg,#C8D6CC,#2D5F4F); }
+  .ri .nm { font-family: var(--font-mono); font-size: 9px; color: #524A41; }
+
+  .shadows { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; padding: 10px 0; }
+  .sh { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+  .sh .b { width: 100px; height: 50px; background: #FFF; border-radius: 10px; }
+  .sm { box-shadow: 0 1px 2px rgba(45,35,20,.05); }
+  .md { box-shadow: 0 2px 12px rgba(45,35,20,.06); }
+  .lg { box-shadow: 0 8px 32px rgba(45,35,20,.08); }
+  .fc { box-shadow: 0 0 0 3px rgba(45,95,79,.25); border: 1px solid #2D5F4F; }
+  .sh .l { font-family: var(--font-mono); font-size: 9px; color: #524A41; text-align: center; }
+</style>
+</head>
+<body>
+  <div class="panel">
+    <h4>Spacing</h4>
+    <div class="row"><div class="name">--s-1</div><div class="px">4</div><div class="bar" style="width:4px"></div></div>
+    <div class="row"><div class="name">--s-2</div><div class="px">8</div><div class="bar" style="width:8px"></div></div>
+    <div class="row"><div class="name">--s-3</div><div class="px">12</div><div class="bar" style="width:12px"></div></div>
+    <div class="row"><div class="name">--s-4</div><div class="px">16</div><div class="bar" style="width:16px"></div></div>
+    <div class="row"><div class="name">--s-5</div><div class="px">24</div><div class="bar" style="width:24px"></div></div>
+    <div class="row"><div class="name">--s-6</div><div class="px">32</div><div class="bar" style="width:32px"></div></div>
+    <div class="row"><div class="name">--s-7</div><div class="px">48</div><div class="bar" style="width:48px"></div></div>
+    <div class="row"><div class="name">--s-8</div><div class="px">64</div><div class="bar" style="width:64px"></div></div>
+  </div>
+  <div class="panel">
+    <h4>Radii</h4>
+    <div class="radii">
+      <div class="ri"><div class="box" style="border-radius:4px"></div><div class="nm">xs · 4</div></div>
+      <div class="ri"><div class="box" style="border-radius:8px"></div><div class="nm">sm · 8</div></div>
+      <div class="ri"><div class="box" style="border-radius:12px"></div><div class="nm">md · 12</div></div>
+      <div class="ri"><div class="box" style="border-radius:16px"></div><div class="nm">lg · 16</div></div>
+      <div class="ri"><div class="box" style="border-radius:20px"></div><div class="nm">xl · 20</div></div>
+      <div class="ri"><div class="box" style="border-radius:999px"></div><div class="nm">full</div></div>
+    </div>
+  </div>
+  <div class="panel shadow">
+    <h4>Shadow system · warm-tinted</h4>
+    <div class="shadows">
+      <div class="sh"><div class="b sm"></div><div class="l">sm · subtle lift</div></div>
+      <div class="sh"><div class="b md"></div><div class="l">md · default card</div></div>
+      <div class="sh"><div class="b lg"></div><div class="l">lg · modal/menu</div></div>
+      <div class="sh"><div class="b fc"></div><div class="l">focus · 3px forest/25</div></div>
+    </div>
+  </div>
+</body>
+</html>

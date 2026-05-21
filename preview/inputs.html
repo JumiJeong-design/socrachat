@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Inputs · Composer</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; padding: 22px 28px; background: #FBF9F4; font-family: var(--font-ui); color: #29251F; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; }
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .lbl { font-size: 11px; color: #524A41; font-weight: 600; letter-spacing: .02em; }
+  .input {
+    font-family: inherit; font-size: 14px;
+    padding: 10px 14px;
+    background: #FFF;
+    border: 1px solid #DED5C5;
+    border-radius: 10px;
+    color: #29251F;
+    outline: none;
+    transition: all 200ms cubic-bezier(.2,.8,.2,1);
+  }
+  .input:focus { border-color: #2D5F4F; box-shadow: 0 0 0 3px rgba(45,95,79,.18); }
+  .input.error { border-color: #B8504C; box-shadow: 0 0 0 3px rgba(184,80,76,.15); }
+  .help { font-size: 11px; color: #8A8175; }
+  .err { font-size: 11px; color: #B8504C; }
+
+  .composer {
+    grid-column: span 2;
+    background: #FFF;
+    border: 1px solid #DED5C5;
+    border-radius: 18px;
+    padding: 14px 14px 10px 18px;
+    box-shadow: 0 4px 24px rgba(45,35,20,.06);
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .composer textarea {
+    border: 0; outline: none; resize: none; padding: 0;
+    font-family: inherit; font-size: 15px; color: #29251F;
+    background: transparent;
+    line-height: 1.55; min-height: 48px; max-height: 200px;
+  }
+  .ctrls { display: flex; justify-content: space-between; align-items: center; }
+  .ctrls .left { display: flex; gap: 4px; }
+  .ctrls .right { display: flex; align-items: center; gap: 10px; }
+  .iconb {
+    width: 30px; height: 30px; border-radius: 8px;
+    background: transparent; border: 0; cursor: pointer;
+    color: #8A8175;
+    display: grid; place-items: center;
+  }
+  .iconb:hover { background: #F5F1EA; color: #524A41; }
+  .iconb svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.75; }
+  .hint { font-size: 11px; color: #8A8175; font-family: var(--font-mono); letter-spacing: .02em; }
+  .send {
+    background: #2D5F4F; color: #FFF;
+    border: 0; border-radius: 999px;
+    height: 32px; padding: 0 14px;
+    display: inline-flex; align-items: center; gap: 6px;
+    cursor: pointer; font-weight: 600; font-size: 13px;
+    font-family: inherit;
+  }
+  .send svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div class="field">
+      <div class="lbl">ニックネーム</div>
+      <input class="input" value="ユーザー" placeholder="ニックネーム">
+    </div>
+    <div class="field">
+      <div class="lbl">メールアドレス</div>
+      <input class="input error" value="not-valid-mail">
+      <div class="err">正しい形式で入力してください</div>
+    </div>
+    <div class="composer">
+      <textarea>テスラの株は今買うべき？それとも下がるのを待つべきだろうか。長期的な視点で見ています。</textarea>
+      <div class="ctrls">
+        <div class="left">
+          <button class="iconb" title="ファイル"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></button>
+          <button class="iconb" title="リンク"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"/></svg></button>
+          <button class="iconb" title="音声"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3M8 22h8"/></svg></button>
+        </div>
+        <div class="right">
+          <span class="hint">⏎ で送信</span>
+          <button class="send">問い合わせる<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
