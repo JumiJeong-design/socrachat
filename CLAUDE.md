@@ -37,3 +37,17 @@ i18n: `data-lang="ja|ko|en"` on html element
 ```
 vercel --yes --prod
 ```
+
+## 수정 후 체크리스트
+작업 완료 시 `/ship` 커맨드를 안내하거나 아래 순서를 따른다:
+1. i18n 키 누락 검사 (data-i18n 키가 ko/ja/en 딕셔너리에 모두 있는지)
+2. 브라우저 확인 — SC/AP · KO/JA/EN · Light/Dark · Desktop/Mobile
+3. git commit + push
+4. `vercel --yes --prod` 배포
+5. 피그마 비교 (레이아웃 큰 변경 또는 공유 예정 시만)
+
+## i18n 규칙
+- 텍스트 요소에 `data-i18n="key"` 추가 시 반드시 ko/ja/en 딕셔너리 세 곳 모두에 키 추가
+- TEXTAREA는 `el.textContent = val` (placeholder 아님)
+- INPUT은 `el.setAttribute('placeholder', val)`
+- 딕셔너리 문자열에 아포스트로피 포함 시 큰따옴표로 감쌀 것 (SyntaxError 방지)
