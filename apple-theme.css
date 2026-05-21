@@ -165,3 +165,22 @@ html[data-design="apple"][data-theme="dark"] *::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.20);
 }
 html[data-design="apple"] *::-webkit-scrollbar-track { background: transparent; }
+
+/* ── Palette token overrides (maps SC forest/clay/cream → Apple blue/gray) ── */
+html[data-design="apple"] {
+  --forest-50:  #e8f2ff;
+  --forest-100: #b8d4f5;
+  --forest-300: #5a9de0;
+  --forest-500: #0071e3;
+  --forest-600: #0066cc;
+  --forest-700: #004daa;
+
+  --cream-50:  #f5f5f7;
+  --cream-100: #e8e8ed;
+  --cream-200: #d8d8dc;
+  --cream-300: #c7c7cc;
+
+  --clay-100: #f5f5f7;
+  --clay-300: #c7c7cc;
+  --clay-500: #636366;
+}

@@ -22,8 +22,8 @@
     display: flex; align-items: center; justify-content: space-between;
   }
   nav .links { display: flex; align-items: center; gap: 22px; font-size: 13px; }
-  nav .links a { color: var(--fg-muted); font-weight: 500; }
-  nav .links a:hover { color: var(--fg-strong); }
+  nav .links a:not(.cta) { color: var(--fg-muted); font-weight: 500; }
+  nav .links a:not(.cta):hover { color: var(--fg-strong); }
   nav .cta {
     background: var(--accent); color: var(--accent-fg);
     padding: 8px 18px; border-radius: 999px;

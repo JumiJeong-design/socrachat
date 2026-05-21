@@ -6,6 +6,7 @@
 <title>SocraChat · Full Flow Walkthrough</title>
 <link rel="stylesheet" href="colors_and_type.css">
 <link rel="stylesheet" href="apple-theme.css">
+<script src="assets/sc-ui.js" defer></script>
 <script src="assets/shell.js" defer></script>
 <style>
   * { box-sizing: border-box; }
@@ -131,43 +132,6 @@
     color: var(--fg-muted);
   }
 
-  /* === Viewport switcher === */
-  .vp-switch, .lang-switch {
-    display: flex; align-items: center;
-    background: var(--bg-sunken);
-    border-radius: 999px;
-    padding: 3px;
-    flex-shrink: 0;
-  }
-  .vp-switch button, .lang-switch button {
-    background: transparent; border: 0; cursor: pointer;
-    padding: 5px 10px; border-radius: 999px;
-    color: var(--fg-subtle);
-    display: inline-flex; align-items: center; gap: 5px;
-    font-family: inherit; font-size: 11px; font-weight: 600;
-    letter-spacing: .04em;
-    transition: all 180ms cubic-bezier(.2,.8,.2,1);
-  }
-  .vp-switch button:hover, .lang-switch button:hover { color: var(--fg-strong); }
-  .vp-switch button.on, .lang-switch button.on {
-    background: var(--surface); color: var(--accent);
-    box-shadow: var(--shadow-sm);
-  }
-  .vp-switch svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 1.75; }
-
-  .theme-btn {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    width: 32px; height: 32px;
-    display: grid; place-items: center;
-    cursor: pointer;
-    color: var(--fg-muted);
-    flex-shrink: 0;
-  }
-  .theme-btn:hover { background: var(--surface-hover); color: var(--fg-strong); }
-  .theme-btn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
-
   .chrome-divider { width: 1px; height: 20px; background: var(--line); flex-shrink: 0; }
 
   /* === STAGE === */
@@ -239,10 +203,57 @@
     .narration { padding: 10px 14px; font-size: 12px; }
     .step { font-size: 11px; padding: 5px 9px; }
   }
+
+  /* === COLLAPSIBLE CHROME === */
+  .chrome-wrap {
+    overflow: hidden;
+    max-height: 200px;
+    transition: max-height 300ms cubic-bezier(.4,0,.2,1);
+  }
+  body.chrome-collapsed .chrome-wrap {
+    max-height: 0;
+  }
+
+  .chrome-toggle {
+    background: none; border: 0; cursor: pointer;
+    color: var(--fg-subtle); padding: 4px 6px;
+    border-radius: 6px; flex-shrink: 0;
+    display: inline-flex; align-items: center;
+    transition: all 150ms;
+  }
+  .chrome-toggle:hover { color: var(--fg-strong); background: var(--surface-hover); }
+  .chrome-toggle svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 300ms cubic-bezier(.4,0,.2,1); }
+  body.chrome-collapsed .chrome-toggle svg { transform: rotate(180deg); }
+
+  .chrome-peek {
+    position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+    z-index: 100;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-top: 0;
+    border-radius: 0 0 12px 12px;
+    padding: 3px 14px 5px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .06em;
+    color: var(--fg-muted); cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    opacity: 0; pointer-events: none;
+    transition: opacity 200ms;
+  }
+  body.chrome-collapsed .chrome-peek { opacity: 1; pointer-events: all; }
+  .chrome-peek:hover { color: var(--accent); }
+  .chrome-peek svg { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 </style>
 </head>
 <body>
 
+<!-- PEEK TAB (shows when chrome is collapsed) -->
+<button class="chrome-peek" id="chrome-peek" title="툴바 펼치기">
+  <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+  FLOW
+</button>
+
+<div class="chrome-wrap">
 <!-- TOP STEPPER -->
 <header class="stepper-bar">
   <div class="brand">
@@ -252,32 +263,7 @@
   </div>
 
   <div class="stepper" id="stepper"></div>
-
-  <div class="vp-switch" id="vp-switch">
-    <button data-vp="desktop" class="on" title="Desktop">
-      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-      <span>Web</span>
-    </button>
-    <button data-vp="mobile" title="Mobile">
-      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M12 18h.01"/></svg>
-      <span>Mobile</span>
-    </button>
-  </div>
-
   <div class="chrome-divider"></div>
-
-  <div class="lang-switch" id="lang-switch">
-    <button data-lang-btn="ko">KO</button>
-    <button data-lang-btn="ja" class="on">JA</button>
-    <button data-lang-btn="en">EN</button>
-  </div>
-
-  <button class="theme-btn" id="theme-btn" title="theme">
-    <svg id="theme-icon" viewBox="0 0 24 24"></svg>
-  </button>
-
-  <div class="chrome-divider"></div>
-
   <button class="navbtn" id="prev-btn">
     <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
     <span data-i18n="prev">前へ</span>
@@ -292,7 +278,11 @@
 <div class="narration">
   <div class="step-meta" id="step-meta">STEP 1 / 6</div>
   <div class="text" id="narration-text"></div>
+  <button class="chrome-toggle" id="chrome-toggle" title="툴바 접기">
+    <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
 </div>
+</div><!-- /chrome-wrap -->
 
 <!-- STAGE -->
 <main class="stage" id="stage">
@@ -302,6 +292,17 @@
 </main>
 
 <script>
+  // === Chrome collapse toggle ===
+  const chromeToggle = document.getElementById('chrome-toggle');
+  const chromePeek   = document.getElementById('chrome-peek');
+  function toggleChrome() {
+    document.body.classList.toggle('chrome-collapsed');
+    localStorage.setItem('flow-chrome-collapsed', document.body.classList.contains('chrome-collapsed') ? '1' : '');
+  }
+  chromeToggle.addEventListener('click', toggleChrome);
+  chromePeek.addEventListener('click', toggleChrome);
+  if (localStorage.getItem('flow-chrome-collapsed')) document.body.classList.add('chrome-collapsed');
+
   // === Flow definition ===
   const STEPS = [
     {
@@ -429,76 +430,27 @@
   nextBtn.addEventListener('click', next);
   prevBtn.addEventListener('click', prev);
 
-  // === Lang + Theme controlled from chrome ===
-  function getLang() { return localStorage.getItem('sc-lang') || 'ja'; }
-  function getTheme() { return localStorage.getItem('sc-theme') || 'light'; }
-
-  function paintLangSwitch() {
-    const cur = getLang();
-    document.querySelectorAll('#lang-switch button').forEach(b => {
-      b.classList.toggle('on', b.dataset.langBtn === cur);
-    });
-  }
-  function paintThemeIcon() {
-    const t = getTheme();
-    const ic = document.getElementById('theme-icon');
-    ic.innerHTML = t === 'dark'
-      ? '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'
-      : '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>';
-  }
-
-  function applyLangAll(lang) {
-    localStorage.setItem('sc-lang', lang);
-    document.documentElement.setAttribute('data-lang', lang);
-    paintLangSwitch();
-    renderStepper(); renderMeta();
-    // call into iframe
+  function syncIframe() {
     try {
-      if (screenEl.contentWindow && screenEl.contentWindow.__SC) {
-        screenEl.contentWindow.__SC.applyLang(lang);
-      }
-    } catch (e) {}
-  }
-  function applyThemeAll(theme) {
-    localStorage.setItem('sc-theme', theme);
-    document.documentElement.setAttribute('data-theme', theme);
-    paintThemeIcon();
-    try {
-      if (screenEl.contentWindow && screenEl.contentWindow.__SC) {
-        screenEl.contentWindow.__SC.applyTheme(theme);
+      const w = screenEl.contentWindow;
+      if (w && w.__SC) {
+        const lng = localStorage.getItem('sc-lang')   || 'ja';
+        const thm = localStorage.getItem('sc-theme')  || 'light';
+        const dsg = localStorage.getItem('sc-design') || 'sc';
+        w.__SC.applyLang(lng);
+        w.__SC.applyTheme(thm);
+        w.__SC.applyDesign(dsg);
       }
     } catch (e) {}
   }
 
-  document.querySelectorAll('#lang-switch button').forEach(b => {
-    b.addEventListener('click', () => applyLangAll(b.dataset.langBtn));
-  });
-  document.getElementById('theme-btn').addEventListener('click', () => {
-    applyThemeAll(getTheme() === 'light' ? 'dark' : 'light');
-  });
+  // Propagate shell.js state changes into the iframe
+  document.addEventListener('sc:lang',   () => { renderStepper(); renderMeta(); syncIframe(); });
+  document.addEventListener('sc:theme',  syncIframe);
+  document.addEventListener('sc:design', syncIframe);
 
-  // re-apply when iframe finishes loading a new screen
-  screenEl.addEventListener('load', () => {
-    try {
-      if (screenEl.contentWindow && screenEl.contentWindow.__SC) {
-        screenEl.contentWindow.__SC.applyLang(getLang());
-        screenEl.contentWindow.__SC.applyTheme(getTheme());
-      }
-    } catch (e) {}
-  });
-
-  // Viewport switcher
-  function setViewport(vp) {
-    document.body.setAttribute('data-vp', vp);
-    localStorage.setItem('sc-vp', vp);
-    document.querySelectorAll('#vp-switch button').forEach(b => {
-      b.classList.toggle('on', b.dataset.vp === vp);
-    });
-  }
-  document.querySelectorAll('#vp-switch button').forEach(b => {
-    b.addEventListener('click', () => setViewport(b.dataset.vp));
-  });
-  setViewport(localStorage.getItem('sc-vp') || 'desktop');
+  // Sync into iframe whenever a new screen loads
+  screenEl.addEventListener('load', syncIframe);
 
   document.addEventListener('keydown', (e) => {
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
@@ -506,22 +458,12 @@
     if (e.key === 'ArrowLeft') prev();
   });
 
-  // Sync lang/theme changes from inside iframes (no-op now since chrome controls — but kept for safety)
-  window.addEventListener('storage', (e) => {
-    if (e.key === 'sc-lang') applyLangAll(e.newValue);
-    if (e.key === 'sc-theme') applyThemeAll(e.newValue);
-  });
-
   // Restore from hash on load
   const hash = (location.hash || '').replace('#', '');
   const startIdx = STEPS.findIndex(s => s.id === hash);
   if (startIdx >= 0) currentIdx = startIdx;
 
-  // Initial render
-  document.documentElement.setAttribute('data-lang', getLang());
-  document.documentElement.setAttribute('data-theme', getTheme());
-  paintLangSwitch();
-  paintThemeIcon();
+  // Initial render (shell.js handles data-lang / data-theme on html element)
   renderStepper();
   renderMeta();
   if (startIdx >= 0) screenEl.src = STEPS[startIdx].path;
