@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light" data-lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SocraChat · All Screens</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="stylesheet" href="apple-theme.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="design-canvas.jsx"></script>
+<style>
+  html, body { margin: 0; overflow: hidden; height: 100vh; }
+  body { background: var(--bg-sunken); }
+  .screen-frame {
+    width: 100%; height: 100%; border: 0;
+    background: var(--surface);
+    display: block;
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="env,react">
+const { useState } = React;
+
+function Screen({ path }) {
+  return <iframe src={path} className="screen-frame" data-screen-label={path}></iframe>;
+}
+
+function App() {
+  return (
+    <DesignCanvas
+      title="SocraChat · 8 Screens"
+      subtitle="멀티 AI 비교 도구 · 라이트/다크 · KR/EN/JA 스위치"
+      initialZoom={0.4}
+    >
+      <DCSection id="hero-screen" title="① 답변 비교 보드 (메인 화면)" subtitle="4가지 시각화 토글 · 의견 카드 · 페르소나 사이드">
+        <DCArtboard id="comparison" label="Comparison Board" width={1280} height={1100}>
+          <Screen path="screens/comparison.html" />
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="flow" title="② 입력 → 분석 → 답변" subtitle="질문 입력부터 결과까지">
+        <DCArtboard id="home" label="01. Home / Composer" width={1280} height={900}>
+          <Screen path="screens/home.html" />
+        </DCArtboard>
+        <DCArtboard id="followup" label="02. Follow-up Questions" width={1280} height={1100}>
+          <Screen path="screens/followup.html" />
+        </DCArtboard>
+        <DCArtboard id="analyzing" label="03. Analyzing" width={1280} height={760}>
+          <Screen path="screens/analyzing.html" />
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="detail" title="③ 답변 심화 화면" subtitle="원문 보기 · 개별 AI와 1:1 대화">
+        <DCArtboard id="source" label="04. Source Detail" width={1280} height={1100}>
+          <Screen path="screens/source.html" />
+        </DCArtboard>
+        <DCArtboard id="deep-chat" label="05. Deep Chat with single AI" width={1280} height={900}>
+          <Screen path="screens/deep-chat.html" />
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="marketing" title="④ 마케팅 · 랜딩" subtitle="첫인상 · 가치 제안">
+        <DCArtboard id="landing" label="06. Landing Page" width={1280} height={2400}>
+          <Screen path="screens/landing.html" />
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="mobile" title="⑤ 모바일 반응형" subtitle="동일 화면들의 모바일 폭 · 375px">
+        <DCArtboard id="m-home" label="Home (mobile)" width={375} height={800}>
+          <Screen path="screens/home.html" />
+        </DCArtboard>
+        <DCArtboard id="m-followup" label="Follow-up (mobile)" width={375} height={1100}>
+          <Screen path="screens/followup.html" />
+        </DCArtboard>
+        <DCArtboard id="m-comparison" label="Comparison (mobile)" width={375} height={1400}>
+          <Screen path="screens/comparison.html" />
+        </DCArtboard>
+        <DCArtboard id="m-deepchat" label="Deep Chat (mobile)" width={375} height={800}>
+          <Screen path="screens/deep-chat.html" />
+        </DCArtboard>
+      </DCSection>
+    </DesignCanvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

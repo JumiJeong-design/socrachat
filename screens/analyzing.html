@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light" data-lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SocraChat · Analyzing</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../apple-theme.css">
+<script src="../assets/sc-ui.js" defer></script>
+<script src="../assets/shell.js" defer></script>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+<style>
+  html, body { margin: 0; min-height: 100vh; }
+  body { background: var(--bg); color: var(--fg); display: flex; flex-direction: column; }
+
+  .topbar { padding: 18px 24px; display: flex; align-items: center; }
+  .main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 24px 80px; }
+  .container { width: 100%; max-width: 720px; }
+
+  .q {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 36px;
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .q .ic { width: 28px; height: 28px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; flex-shrink: 0; font-weight: 700; font-family: var(--font-mono); }
+  .q .body { flex: 1; }
+  .q .lbl { font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg-subtle); font-weight: 600; margin-bottom: 4px; }
+  .q .text { font-size: 15px; color: var(--fg-strong); line-height: 1.55; }
+
+  .pipeline { display: flex; flex-direction: column; gap: 4px; }
+  .step {
+    display: grid; grid-template-columns: 32px 1fr auto; gap: 14px;
+    align-items: center;
+    padding: 14px 4px;
+    border-bottom: 1px dashed var(--line);
+    transition: all 240ms cubic-bezier(.2,.8,.2,1);
+  }
+  .step:last-child { border: 0; }
+  .step .marker {
+    width: 24px; height: 24px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--bg-sunken);
+    color: var(--fg-subtle);
+    font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+  }
+  .step .label { font-size: 14px; color: var(--fg-muted); font-weight: 500; }
+  .step .meta { font-family: var(--font-mono); font-size: 11px; color: var(--fg-subtle); }
+  .step.done .marker { background: var(--accent); color: var(--accent-fg); }
+  .step.done .marker::after { content: '✓'; font-size: 12px; }
+  .step.done .marker .n { display: none; }
+  .step.done .label { color: var(--fg-strong); }
+  .step.running .marker { background: var(--accent-soft); color: var(--accent); position: relative; }
+  .step.running .marker::after {
+    content: ''; position: absolute; inset: -3px; border-radius: 50%;
+    border: 2px solid var(--accent); border-top-color: transparent;
+    animation: spin 800ms linear infinite;
+  }
+  .step.running .label { color: var(--fg-strong); font-weight: 600; }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .ai-stack { display: flex; gap: 6px; }
+  .ai-stack .av {
+    width: 22px; height: 22px; border-radius: 50%;
+    color: #FFF; font-size: 9px; font-weight: 700; font-family: var(--font-mono);
+    display: grid; place-items: center;
+    border: 2px solid var(--bg);
+  }
+  .ai-stack .av + .av { margin-left: -10px; }
+  .ai-stack .av.pulse { animation: pulse 1200ms ease-in-out infinite; }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+  }
+
+  .progress {
+    margin-top: 36px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px;
+  }
+  .progress .text { font-size: 13px; color: var(--fg-muted); }
+  .progress .text b { color: var(--fg-strong); font-weight: 700; font-family: var(--font-mono); }
+  .progress button {
+    background: transparent; border: 1px solid var(--line-strong);
+    color: var(--fg-muted);
+    padding: 7px 14px; border-radius: 999px;
+    font-family: inherit; font-size: 12px; font-weight: 500;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .progress button:hover { background: var(--surface-hover); color: var(--fg-strong); }
+  .progress button svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+  @media (max-width: 540px) {
+    .topbar { padding: 12px 16px; }
+    .main { padding: 24px 16px 72px; }
+    .q { padding: 12px 14px; gap: 10px; margin-bottom: 24px; }
+    .q .text { font-size: 14px; }
+    .step { gap: 10px; padding: 12px 2px; }
+    .step .label { font-size: 13px; }
+    .progress { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .progress button { align-self: flex-end; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div data-sc-logo="sm"></div>
+</header>
+
+<main class="main">
+  <div class="container">
+    <div class="q">
+      <div class="ic">Q</div>
+      <div class="body">
+        <div class="lbl" data-i18n="q_label">あなたの問い</div>
+        <div class="text" data-i18n="question">テスラの株は今買うべき？それとも下がるのを待つべきだろうか。長期的な視点で見ている。</div>
+      </div>
+    </div>
+
+    <div class="pipeline">
+      <div class="step done">
+        <div class="marker"><span class="n">1</span></div>
+        <div class="label" data-i18n="step1">質問のカテゴリを分析中…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height:1.5">→ 投資・経済 / 選択比較型 (A or B)</small></div>
+        <div class="meta">0.4s</div>
+      </div>
+      <div class="step done">
+        <div class="marker"><span class="n">2</span></div>
+        <div class="label" data-i18n="step2">最適なAIモデルを選定…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height:1.5">→ Claude · GPT-4o · Gemini · Perplexity · Grok</small></div>
+        <div class="meta">0.6s</div>
+      </div>
+      <div class="step running">
+        <div class="marker"><span class="n">3</span></div>
+        <div class="label" data-i18n="step3">5モデルに同時問い合わせ中…</div>
+        <div class="ai-stack">
+          <span class="av pulse" style="background:#7B5EA0">C</span>
+          <span class="av pulse" style="background:#4A6FA5;animation-delay:.15s">G</span>
+          <span class="av pulse" style="background:#C68635;animation-delay:.30s">◆</span>
+          <span class="av pulse" style="background:#3D8077;animation-delay:.45s">P</span>
+          <span class="av pulse" style="background:#B05C6D;animation-delay:.60s">X</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="marker"><span class="n">4</span></div>
+        <div class="label" data-i18n="step4">意見・結論を分類してグループ化</div>
+        <div class="meta">—</div>
+      </div>
+      <div class="step">
+        <div class="marker"><span class="n">5</span></div>
+        <div class="label" data-i18n="step5">ペルソナ視点を生成</div>
+        <div class="meta">—</div>
+      </div>
+      <div class="step">
+        <div class="marker"><span class="n">6</span></div>
+        <div class="label" data-i18n="step6">出典・信頼度ラベルを確認</div>
+        <div class="meta">—</div>
+      </div>
+    </div>
+
+    <div class="progress">
+      <div class="text"><b>3</b> / 6 · <span data-i18n="prog_running">5モデルに問い合わせ中…</span></div>
+      <button><svg viewBox="0 0 24 24" stroke-linecap="round"><rect x="6" y="6" width="12" height="12" rx="1"/></svg><span data-i18n="cancel">中断</span></button>
+    </div>
+  </div>
+</main>
+
+<script>
+  window.__SC_I18N = {
+    ja: {
+      q_label: 'あなたの問い',
+      question: 'テスラの株は今買うべき？それとも下がるのを待つべきだろうか。長期的な視点で見ている。',
+      step1: '質問のカテゴリを分析中…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height:1.5">→ 投資・経済 / 選択比較型 (A or B)</small>',
+      step2: '最適なAIモデルを選定…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height:1.5">→ Claude · GPT-4o · Gemini · Perplexity · Grok</small>',
+      step3: '5モデルに同時問い合わせ中…',
+      step4: '意見・結論を分類してグループ化',
+      step5: 'ペルソナ視点を生成',
+      step6: '出典・信頼度ラベルを確認',
+      prog_running: '5モデルに問い合わせ中…',
+      cancel: '中断',
+    },
+    en: {
+      q_label: 'Your question',
+      question: 'Should I buy Tesla now, or wait for it to drop? Looking long-term.',
+      step1: 'Analyzing question category…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height:1.5">→ Finance / Compare-and-decide (A or B)</small>',
+      step2: 'Selecting best AI models…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height:1.5">→ Claude · GPT-4o · Gemini · Perplexity · Grok</small>',
+      step3: 'Querying 5 models in parallel…',
+      step4: 'Clustering opinions & conclusions',
+      step5: 'Generating persona perspectives',
+      step6: 'Checking sources & confidence labels',
+      prog_running: 'Querying 5 models…',
+      cancel: 'Cancel',
+    },
+    ko: {
+      q_label: '나의 질문',
+      question: '테슬라 주식, 지금 사야 할까? 아니면 더 떨어지길 기다려야 할까? 장기 관점이야.',
+      step1: '질문 카테고리 분석 중…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height:1.5">→ 금융·투자 / 선택형 (A or B)</small>',
+      step2: '최적의 AI 모델 선정 중…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height:1.5">→ Claude · GPT-4o · Gemini · Perplexity · Grok</small>',
+      step3: '5개 모델에 동시 질의 중…',
+      step4: '의견·결론 분류 및 그룹화',
+      step5: '페르소나 시점 생성',
+      step6: '출처·신뢰도 라벨 확인',
+      prog_running: '5개 모델에 질의 중…',
+      cancel: '중단',
+    }
+  };
+</script>
+</body>
+</html>

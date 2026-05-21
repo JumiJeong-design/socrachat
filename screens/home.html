@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light" data-lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SocraChat · Home</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../apple-theme.css">
+<script src="../assets/sc-ui.js" defer></script>
+<script src="../assets/shell.js" defer></script>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+<style>
+  html, body { margin: 0; min-height: 100vh; }
+  body { background: var(--bg); color: var(--fg); display: flex; flex-direction: column; }
+
+  .topbar {
+    padding: 18px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+  }
+  .topbar nav { display: flex; gap: 18px; }
+  .topbar nav a {
+    font-size: 13px; font-weight: 500; color: var(--fg-muted);
+    padding: 6px 10px; border-radius: 8px;
+    transition: all 180ms cubic-bezier(.2,.8,.2,1);
+  }
+  .topbar nav a:hover { color: var(--fg-strong); background: var(--surface-hover); }
+  .topbar nav a.active { color: var(--accent); background: var(--accent-soft); }
+
+  .main {
+    flex: 1;
+    display: flex; align-items: center; justify-content: center;
+    padding: 40px 24px 100px;
+  }
+  .container {
+    width: 100%; max-width: 720px;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center;
+    gap: 32px;
+  }
+  .greeting {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 500; line-height: 1.2;
+    color: var(--fg-strong);
+    letter-spacing: -.015em;
+  }
+  .greeting .accent { color: var(--accent); }
+  .sub {
+    font-size: 16px; color: var(--fg-muted); line-height: 1.7;
+    max-width: 480px;
+  }
+
+  .composer {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: 22px;
+    padding: 14px 14px 12px 20px;
+    box-shadow: var(--shadow-lg);
+    display: flex; flex-direction: column; gap: 10px;
+    transition: all 200ms cubic-bezier(.2,.8,.2,1);
+  }
+  .composer:focus-within {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-lg), 0 0 0 4px rgba(45,95,79,.12);
+  }
+  .composer textarea {
+    border: 0; outline: none; resize: none; padding: 0;
+    font-family: inherit; font-size: 17px; color: var(--fg);
+    background: transparent;
+    line-height: 1.55; min-height: 60px; max-height: 240px;
+  }
+  .composer textarea::placeholder { color: var(--fg-subtle); }
+
+  .composer-bar { display: flex; justify-content: space-between; align-items: center; }
+  .composer-bar .left { display: flex; gap: 4px; }
+  .composer-bar .right { display: flex; align-items: center; gap: 10px; }
+  .iconb {
+    width: 34px; height: 34px; border-radius: 10px;
+    background: transparent; border: 0;
+    color: var(--fg-muted); cursor: pointer;
+    display: grid; place-items: center;
+    transition: all 180ms;
+  }
+  .iconb:hover { background: var(--surface-hover); color: var(--fg-strong); }
+  .iconb svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+
+  .ai-select {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 12px; border-radius: 999px;
+    background: var(--bg-sunken);
+    cursor: pointer; transition: background 180ms;
+    font-size: 12px; color: var(--fg-muted);
+    font-weight: 500;
+    flex-shrink: 1; min-width: 0;
+    border: 0;
+    font-family: inherit;
+  }
+  .ai-select:hover { background: var(--surface-hover); color: var(--fg-strong); }
+  .ai-select .ct { font-family: var(--font-mono); font-weight: 700; color: var(--fg-strong); }
+  .ai-select .lbl { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ai-select svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; flex-shrink: 0; }
+
+  .send {
+    background: var(--accent); color: var(--accent-fg);
+    border: 0; border-radius: 999px;
+    height: 36px; padding: 0 18px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: inherit; font-size: 13.5px; font-weight: 600;
+    cursor: pointer;
+    transition: all 180ms;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .send:hover { background: var(--accent-hover); }
+  .send:disabled { background: var(--line-strong); cursor: not-allowed; color: var(--fg-subtle); }
+  .send svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; flex-shrink: 0; }
+
+  .composer-bar .left { flex: 1; min-width: 0; }
+
+  .examples {
+    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+    max-width: 640px;
+  }
+  .ex {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 13px; color: var(--fg-muted);
+    cursor: pointer;
+    transition: all 180ms;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .ex:hover { background: var(--accent-soft); border-color: transparent; color: var(--accent); }
+  .ex .cat { font-family: var(--font-mono); font-size: 10px; color: var(--fg-subtle); }
+
+  .recent {
+    width: 100%; max-width: 720px; margin-top: 8px;
+    display: flex; flex-direction: column; gap: 6px;
+    text-align: left;
+  }
+  .recent h3 {
+    font-size: 11px; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--fg-subtle);
+    margin-bottom: 8px;
+  }
+  .recent-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    cursor: pointer; transition: background 180ms;
+  }
+  .recent-item:hover { background: var(--surface-hover); }
+  .recent-item .title { flex: 1; font-size: 13.5px; color: var(--fg); font-weight: 500; }
+  .recent-item .stack { display: flex; }
+  .recent-item .stack .av { width: 18px; height: 18px; border-radius: 50%; color: #FFF; font-size: 8px; font-weight: 700; font-family: var(--font-mono); display: grid; place-items: center; border: 1.5px solid var(--bg); }
+  .recent-item .stack .av + .av { margin-left: -7px; }
+  .recent-item .date { font-family: var(--font-mono); font-size: 11px; color: var(--fg-subtle); }
+
+  @media (max-width: 540px) {
+    .topbar nav { display: none; }
+    .greeting { font-size: 32px; }
+    .composer textarea { font-size: 15px; }
+    .composer-bar .left .iconb:nth-child(2),
+    .composer-bar .left .iconb:nth-child(3) { display: none; }
+    .send .lbl { display: none; }
+    .send { padding: 0; width: 36px; justify-content: center; }
+    .ai-select { max-width: 130px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div data-sc-logo="sm"></div>
+  <nav>
+    <a href="#" class="active" data-i18n="nav_ask">問い合わせ</a>
+    <a href="#" data-i18n="nav_history">履歴</a>
+    <a href="#" data-i18n="nav_persona">ペルソナ</a>
+    <a href="#" data-i18n="nav_models">AIモデル</a>
+  </nav>
+</header>
+
+<main class="main">
+  <div class="container">
+    <div>
+      <h1 class="greeting" data-i18n="greeting">複数のAIに、<span class="accent">同時に聞く。</span></h1>
+      <div style="height:14px"></div>
+      <p class="sub" data-i18n="subhead">5つのAIモデルに同じ質問を投げて、意見の一致と分岐を一目で確認。あなた専用の合議システム。</p>
+    </div>
+
+    <div class="composer">
+      <textarea data-i18n="composer_placeholder" data-i18n-attr="placeholder" placeholder="気になることを、なんでも聞いてみてください。" rows="2">テスラの株は今買うべき？それとも下がるのを待つべきだろうか。長期的な視点で見ている。</textarea>
+      <div class="composer-bar">
+        <div class="left">
+          <button class="iconb" title="attach"><svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></button>
+          <button class="iconb" title="link"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"/></svg></button>
+          <button class="iconb" title="voice"><svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3M8 22h8"/></svg></button>
+          <button class="ai-select" type="button">
+            <span class="ct">5</span>
+            <span class="lbl" data-i18n="ai_select">モデル選択</span>
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+        </div>
+        <div class="right">
+          <button class="send"><span class="lbl" data-i18n="send">問い合わせる</span><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="examples">
+      <div class="ex"><span class="cat">投資</span><span data-i18n="ex1">NISA枠を使いきるべきか</span></div>
+      <div class="ex"><span class="cat">健康</span><span data-i18n="ex2">プロテイン1日何g必要？</span></div>
+      <div class="ex"><span class="cat">キャリア</span><span data-i18n="ex3">転職と社内異動、どちらが先？</span></div>
+      <div class="ex"><span class="cat">育児</span><span data-i18n="ex4">私立か公立小学校か</span></div>
+    </div>
+
+    <div class="recent">
+      <h3 data-i18n="recent_title">最近の問い合わせ</h3>
+      <div class="recent-item">
+        <span class="title" data-i18n="recent1">新NISAを使い切るか、住宅ローン繰り上げ返済か</span>
+        <div class="stack"><span class="av" style="background:#7B5EA0">C</span><span class="av" style="background:#4A6FA5">G</span><span class="av" style="background:#3D8077">P</span></div>
+        <span class="date">2h ago</span>
+      </div>
+      <div class="recent-item">
+        <span class="title" data-i18n="recent2">子供の英語教育、いつから始めるべき？</span>
+        <div class="stack"><span class="av" style="background:#7B5EA0">C</span><span class="av" style="background:#4A6FA5">G</span><span class="av" style="background:#C68635">◆</span><span class="av" style="background:#B05C6D">X</span></div>
+        <span class="date">yesterday</span>
+      </div>
+      <div class="recent-item">
+        <span class="title" data-i18n="recent3">在宅勤務の腰痛、椅子買い替えるべき？</span>
+        <div class="stack"><span class="av" style="background:#4A6FA5">G</span><span class="av" style="background:#C68635">◆</span></div>
+        <span class="date">2 days</span>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  window.__SC_I18N = {
+    ja: {
+      nav_ask: '問い合わせ', nav_history: '履歴', nav_persona: 'ペルソナ', nav_models: 'AIモデル',
+      greeting: '複数のAIに、<span class="accent">同時に聞く。</span>',
+      subhead: '5つのAIモデルに同じ質問を投げて、意見の一致と分岐を一目で確認。あなた専用の合議システム。',
+      composer_placeholder: '気になることを、なんでも聞いてみてください。',
+      ai_select: 'モデル選択', send: '問い合わせる',
+      ex1: 'NISA枠を使いきるべきか', ex2: 'プロテイン1日何g必要？', ex3: '転職と社内異動、どちらが先？', ex4: '私立か公立小学校か',
+      recent_title: '最近の問い合わせ',
+      recent1: '新NISAを使い切るか、住宅ローン繰り上げ返済か',
+      recent2: '子供の英語教育、いつから始めるべき？',
+      recent3: '在宅勤務の腰痛、椅子買い替えるべき？',
+    },
+    en: {
+      nav_ask: 'Ask', nav_history: 'History', nav_persona: 'Personas', nav_models: 'AI Models',
+      greeting: 'Ask many AIs <span class="accent">at once.</span>',
+      subhead: 'Send the same question to 5 AI models and see agreement vs disagreement at a glance. Your personal council.',
+      composer_placeholder: "Ask anything that's on your mind…",
+      ai_select: 'models', send: 'Ask',
+      ex1: 'Should I max out my IRA?', ex2: 'How much protein per day?', ex3: 'Switch jobs or transfer?', ex4: 'Private vs public school?',
+      recent_title: 'Recent questions',
+      recent1: 'Max out new NISA or pay down mortgage first?',
+      recent2: 'When should we start English with the kids?',
+      recent3: 'WFH back pain — buy a new chair?',
+    },
+    ko: {
+      nav_ask: '질문', nav_history: '히스토리', nav_persona: '페르소나', nav_models: 'AI 모델',
+      greeting: '여러 AI에게, <span class="accent">한 번에 묻는다.</span>',
+      subhead: '5개 AI 모델에 같은 질문을 던지고, 의견 일치와 분기를 한눈에. 나만의 합의 시스템.',
+      composer_placeholder: '궁금한 것을 무엇이든 물어보세요.',
+      ai_select: '모델 선택', send: '질문하기',
+      ex1: 'NISA 한도를 다 채워야 할까', ex2: '하루 단백질 얼마나 필요?', ex3: '이직과 사내 이동, 뭐가 먼저?', ex4: '사립과 공립, 어디로?',
+      recent_title: '최근 질문',
+      recent1: '신 NISA를 다 채울까, 주담대 조기상환을 할까',
+      recent2: '아이 영어교육, 언제부터 시작해야 할까?',
+      recent3: '재택근무 허리통증, 의자 바꿔야 할까?',
+    }
+  };
+</script>
+</body>
+</html>

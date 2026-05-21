@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light" data-lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SocraChat · Deep chat</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../apple-theme.css">
+<script src="../assets/sc-ui.js" defer></script>
+<script src="../assets/shell.js" defer></script>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+<style>
+  html, body { margin: 0; height: 100vh; overflow: hidden; }
+  body { background: var(--bg); color: var(--fg); display: flex; flex-direction: column; }
+
+  .topbar {
+    height: 64px; padding: 0 18px;
+    border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; gap: 14px;
+    background: var(--bg);
+  }
+  .iconb {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: transparent; border: 0;
+    color: var(--fg-muted); cursor: pointer;
+    display: grid; place-items: center;
+  }
+  .iconb:hover { background: var(--surface-hover); color: var(--fg-strong); }
+  .iconb svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+
+  .who { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
+  .who .av {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: #7B5EA0; color: #FFF;
+    display: grid; place-items: center;
+    font-weight: 700; font-size: 14px;
+    font-family: var(--font-mono);
+    flex-shrink: 0;
+    position: relative;
+  }
+  .who .av::after {
+    content: ''; position: absolute; right: -2px; bottom: -2px;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: #4F7A4C; border: 2px solid var(--bg);
+  }
+  .who .info { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+  .who .info .n { font-size: 15px; font-weight: 600; color: var(--fg-strong); display: flex; align-items: center; gap: 6px; }
+  .who .info .badge {
+    font-family: var(--font-mono); font-size: 9px; padding: 1px 6px; border-radius: 4px;
+    background: rgba(123,94,160,.1); color: #7B5EA0; font-weight: 700; letter-spacing: .05em;
+  }
+  .who .info .role { font-size: 11.5px; color: var(--fg-subtle); }
+
+  /* feed */
+  .feed {
+    flex: 1; overflow-y: auto;
+    padding: 24px 22px 130px;
+    display: flex; flex-direction: column;
+    align-items: center;
+  }
+  .feed-inner {
+    width: 100%; max-width: 720px;
+    display: flex; flex-direction: column;
+    gap: 16px;
+  }
+
+  .stamp {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--fg-subtle);
+    text-align: center; display: flex; align-items: center; gap: 12px;
+    margin-bottom: 4px;
+  }
+  .stamp::before, .stamp::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+  .turn { display: flex; gap: 10px; align-items: flex-end; }
+  .turn.ai { align-items: flex-start; }
+  .turn.me { justify-content: flex-end; }
+  .turn.ai .ava {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: #7B5EA0; color: #FFF;
+    display: grid; place-items: center;
+    font-weight: 700; font-size: 11px; font-family: var(--font-mono);
+    flex-shrink: 0; align-self: flex-start;
+    margin-top: 2px;
+  }
+  .bub {
+    padding: 12px 16px;
+    font-size: 14.5px; line-height: 1.65;
+    max-width: 78%; border-radius: 18px;
+    font-feature-settings: 'palt' 1;
+  }
+  .turn.ai .bub {
+    background: var(--bubble-ai-bg); color: var(--bubble-ai-fg);
+    border: 1px solid var(--bubble-ai-border);
+    border-bottom-left-radius: 6px;
+  }
+  .turn.me .bub {
+    background: var(--bubble-user-bg); color: var(--bubble-user-fg);
+    border-bottom-right-radius: 6px;
+  }
+  .bub.context-card {
+    background: var(--accent-soft); border: 1px solid var(--line);
+    display: flex; flex-direction: column; gap: 8px; padding: 14px 16px;
+  }
+  .bub.context-card .lbl { font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  .bub.context-card .q { font-size: 14px; color: var(--fg-strong); font-weight: 600; line-height: 1.5; }
+  .bub.context-card .a { font-size: 12.5px; color: var(--fg-muted); line-height: 1.6; }
+  .bub.context-card .ref { display: flex; gap: 6px; font-size: 11px; color: var(--fg-subtle); font-family: var(--font-mono); }
+
+  .actions { display: flex; gap: 4px; margin-left: 40px; margin-top: -8px; }
+  .actions button {
+    background: transparent; border: 0; cursor: pointer; padding: 4px 8px;
+    border-radius: 6px; font-family: inherit;
+    font-size: 11px; color: var(--fg-subtle); font-weight: 500;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .actions button:hover { background: var(--surface-hover); color: var(--fg-strong); }
+  .actions svg { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+  .typing { display: flex; gap: 4px; padding: 4px 2px; }
+  .typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--fg-subtle); animation: dot 1.4s infinite ease-in-out; }
+  .typing span:nth-child(2) { animation-delay: .18s; }
+  .typing span:nth-child(3) { animation-delay: .36s; }
+  @keyframes dot { 0%, 80%, 100% { opacity: .3; transform: translateY(0); } 40% { opacity: .9; transform: translateY(-3px); } }
+
+  /* composer */
+  .composer-wrap {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 14px 22px 22px;
+    background: linear-gradient(180deg, transparent, var(--bg) 30%);
+  }
+  .composer {
+    max-width: 720px; margin: 0 auto;
+    background: var(--surface); border: 1px solid var(--line-strong);
+    border-radius: 18px; padding: 8px 10px 8px 18px;
+    box-shadow: var(--shadow-lg);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .composer textarea {
+    flex: 1; border: 0; outline: none; resize: none;
+    font-family: inherit; font-size: 14.5px; color: var(--fg);
+    background: transparent;
+    line-height: 1.5; min-height: 24px; max-height: 120px; padding: 6px 0;
+  }
+  .composer textarea::placeholder { color: var(--fg-subtle); }
+  .send {
+    background: var(--accent); color: var(--accent-fg);
+    border: 0; border-radius: 999px;
+    width: 32px; height: 32px;
+    display: grid; place-items: center; cursor: pointer;
+    flex-shrink: 0;
+  }
+  .send svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; }
+  .composer .iconb { width: 30px; height: 30px; }
+  .composer .iconb svg { width: 15px; height: 15px; }
+
+  @media (max-width: 560px) {
+    .topbar { padding: 0 12px; gap: 8px; height: 58px; }
+    .who .av { width: 34px; height: 34px; }
+    .who .info .n { font-size: 14px; }
+    .who .info .role { font-size: 10.5px; }
+    .feed { padding: 16px 12px 110px; }
+    .bub { max-width: 86%; font-size: 14px; }
+    .bub.context-card { padding: 12px 14px; }
+    .composer-wrap { padding: 10px 12px 16px; }
+    .stamp { font-size: 9px; gap: 8px; }
+    .actions { margin-left: 38px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <button class="iconb"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+  <div class="who">
+    <div class="av">C</div>
+    <div class="info">
+      <div class="n">Claude Opus <span class="badge">Deep</span></div>
+      <div class="role" data-i18n="role">投資 · 構造分析が得意</div>
+    </div>
+  </div>
+  <button class="iconb"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/></svg></button>
+  <button class="iconb"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button>
+</header>
+
+<div class="feed">
+  <div class="feed-inner">
+    <div class="stamp" data-i18n="context_stamp">前の対話から続けています</div>
+
+    <div class="turn ai">
+      <div class="ava">C</div>
+      <div class="bub context-card">
+        <div class="lbl" data-i18n="context_lbl">引き継いだ文脈</div>
+        <div class="q" data-i18n="context_q">テスラの株は今買うべき？それとも下がるのを待つべきか</div>
+        <div class="a" data-i18n="context_a">私(Claude)は<b>長期保有なら今が買い時</b>と回答。EV市場の構造的成長と自社株買い再開を根拠に、月次分割購入を推奨。確信度: 高</div>
+        <div class="ref">📊 5モデル合議 · 結論A · 62%</div>
+      </div>
+    </div>
+
+    <div class="stamp" data-i18n="new_stamp">新しい質問</div>
+
+    <div class="turn me">
+      <div class="bub" data-i18n="user_q1">月次分割って、具体的には毎月いくらくらい？仮に総額50万円としたら。</div>
+    </div>
+
+    <div class="turn ai">
+      <div class="ava">C</div>
+      <div class="bub" data-i18n="ai_a1">いい質問ですね。50万円を想定すると、ボラティリティの高い銘柄なので<b>6〜10回に分割</b>するのが一般的です。<br><br>具体的には:<br>・月8万円 × 6か月 (積極パターン)<br>・月5万円 × 10か月 (慎重パターン)<br><br>どちらが向いているかは、生活費とリスク許容度次第です。月のキャッシュフローに余裕がありますか？</div>
+    </div>
+
+    <div class="actions">
+      <button><svg viewBox="0 0 24 24" stroke-linecap="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span data-i18n="copy">コピー</span></button>
+      <button><svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/></svg><span data-i18n="regen">再生成</span></button>
+      <button><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg><span data-i18n="save">保存</span></button>
+    </div>
+
+    <div class="turn me">
+      <div class="bub" data-i18n="user_q2">月10万円までなら余裕あります。慎重パターンを月10万円にしたら短くなる？</div>
+    </div>
+
+    <div class="turn ai">
+      <div class="ava">C</div>
+      <div class="bub"><div class="typing"><span></span><span></span><span></span></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="composer-wrap">
+  <div class="composer">
+    <textarea data-i18n="composer_placeholder" data-i18n-attr="placeholder" placeholder="Claudeに続けて話す…" rows="1"></textarea>
+    <button class="iconb"><svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></button>
+    <button class="send"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>
+  </div>
+</div>
+
+<script>
+  window.__SC_I18N = {
+    ja: {
+      role: '投資 · 構造分析が得意',
+      context_stamp: '前の対話から続けています',
+      context_lbl: '引き継いだ文脈',
+      context_q: 'テスラの株は今買うべき？それとも下がるのを待つべきか',
+      context_a: '私(Claude)は<b>長期保有なら今が買い時</b>と回答。EV市場の構造的成長と自社株買い再開を根拠に、月次分割購入を推奨。確信度: 高',
+      new_stamp: '新しい質問',
+      user_q1: '月次分割って、具体的には毎月いくらくらい？仮に総額50万円としたら。',
+      ai_a1: 'いい質問ですね。50万円を想定すると、ボラティリティの高い銘柄なので<b>6〜10回に分割</b>するのが一般的です。<br><br>具体的には:<br>・月8万円 × 6か月 (積極パターン)<br>・月5万円 × 10か月 (慎重パターン)<br><br>どちらが向いているかは、生活費とリスク許容度次第です。月のキャッシュフローに余裕がありますか？',
+      copy: 'コピー', regen: '再生成', save: '保存',
+      user_q2: '月10万円までなら余裕あります。慎重パターンを月10万円にしたら短くなる？',
+      composer_placeholder: 'Claudeに続けて話す…',
+    },
+    en: {
+      role: 'Investing · structural analysis',
+      context_stamp: 'Continuing from earlier conversation',
+      context_lbl: 'Carried-over context',
+      context_q: 'Should I buy Tesla now, or wait for it to drop?',
+      context_a: 'I (Claude) answered: <b>buy now for long-term hold</b>. EV structural growth + resumed buybacks. Recommended monthly DCA. Confidence: high',
+      new_stamp: 'New question',
+      user_q1: 'What does monthly DCA actually look like in numbers? Say total budget is ¥500K.',
+      ai_a1: 'Good question. For ¥500K with a high-volatility name, <b>6–10 tranches</b> is standard.<br><br>Specifically:<br>· ¥80K × 6 months (aggressive)<br>· ¥50K × 10 months (cautious)<br><br>Which fits depends on your monthly cash flow and risk tolerance. Do you have monthly slack?',
+      copy: 'Copy', regen: 'Regen', save: 'Save',
+      user_q2: 'I have up to ¥100K/mo. Does that shorten the cautious pattern?',
+      composer_placeholder: 'Keep talking to Claude…',
+    },
+    ko: {
+      role: '투자 · 구조 분석에 강함',
+      context_stamp: '이전 대화에서 이어집니다',
+      context_lbl: '인계받은 맥락',
+      context_q: '테슬라 주식, 지금 사야 할까? 아니면 더 떨어지길 기다려야 할까?',
+      context_a: 'Claude(나)는 <b>장기 보유라면 지금이 매수 시점</b>이라고 답변. EV 시장의 구조적 성장 + 자사주매입 재개를 근거로 월간 분할 매수 권장. 확신도: 높음',
+      new_stamp: '새 질문',
+      user_q1: '월간 분할이라면 구체적으로 매달 얼마씩이야? 가령 총 50만엔이라고 치면.',
+      ai_a1: '좋은 질문이에요. 50만엔이라면 변동성이 큰 종목이라 <b>6〜10회 분할</b>이 일반적입니다.<br><br>구체적으로:<br>· 8만엔 × 6개월 (공격 패턴)<br>· 5만엔 × 10개월 (신중 패턴)<br><br>어느 쪽이 맞을지는 생활비와 리스크 허용도에 달려 있어요. 월 현금흐름에 여유가 있으신가요?',
+      copy: '복사', regen: '재생성', save: '저장',
+      user_q2: '월 10만엔까지는 여유 있어. 신중 패턴을 월 10만엔으로 하면 더 짧아져?',
+      composer_placeholder: 'Claude와 계속 이야기하기…',
+    }
+  };
+</script>
+</body>
+</html>
