@@ -37,7 +37,7 @@
     align-items: center;
     padding: 14px 4px;
     border-bottom: 1px dashed var(--line);
-    transition: all 240ms cubic-bezier(.2,.8,.2,1);
+    transition: all var(--dur-mid) var(--ease-out);
   }
   .step:last-child { border: 0; }
   .step .marker {
@@ -66,7 +66,7 @@
   .ai-stack { display: flex; gap: 6px; }
   .ai-stack .av {
     width: 22px; height: 22px; border-radius: 50%;
-    color: #FFF; font-size: 9px; font-weight: 700; font-family: var(--font-mono);
+    color: var(--fg-on-accent); font-size: 9px; font-weight: 700; font-family: var(--font-mono);
     display: grid; place-items: center;
     border: 2px solid var(--bg);
   }
@@ -87,7 +87,7 @@
   .progress button {
     background: transparent; border: 1px solid var(--line-strong);
     color: var(--fg-muted);
-    padding: 7px 14px; border-radius: 999px;
+    padding: 7px 14px; border-radius: var(--r-full);
     font-family: inherit; font-size: 12px; font-weight: 500;
     cursor: pointer;
     display: inline-flex; align-items: center; gap: 6px;
@@ -138,11 +138,11 @@
         <div class="marker"><span class="n">3</span></div>
         <div class="label" data-i18n="step3">5モデルに同時問い合わせ中…</div>
         <div class="ai-stack">
-          <span class="av pulse" style="background:#7B5EA0">C</span>
-          <span class="av pulse" style="background:#4A6FA5;animation-delay:.15s">G</span>
-          <span class="av pulse" style="background:#C68635;animation-delay:.30s">◆</span>
-          <span class="av pulse" style="background:#3D8077;animation-delay:.45s">P</span>
-          <span class="av pulse" style="background:#B05C6D;animation-delay:.60s">X</span>
+          <span class="av pulse" style="background:var(--ai-violet)">C</span>
+          <span class="av pulse" style="background:var(--ai-blue);animation-delay:.15s">G</span>
+          <span class="av pulse" style="background:var(--ai-amber);animation-delay:.30s">◆</span>
+          <span class="av pulse" style="background:var(--ai-teal);animation-delay:.45s">P</span>
+          <span class="av pulse" style="background:var(--ai-rose);animation-delay:.60s">X</span>
         </div>
       </div>
       <div class="step">
@@ -163,8 +163,8 @@
     </div>
 
     <div class="progress">
-      <div class="text"><b>3</b> / 6 · <span data-i18n="prog_running">5モデルに問い合わせ中…</span></div>
-      <button><svg viewBox="0 0 24 24" stroke-linecap="round"><rect x="6" y="6" width="12" height="12" rx="1"/></svg><span data-i18n="cancel">中断</span></button>
+      <div class="text" role="status" aria-live="polite"><b>3</b> / 6 · <span data-i18n="prog_running">5モデルに問い合わせ中…</span></div>
+      <button aria-label="Cancel analysis"><svg viewBox="0 0 24 24" stroke-linecap="round"><rect x="6" y="6" width="12" height="12" rx="1"/></svg><span data-i18n="cancel">中断</span></button>
     </div>
   </div>
 </main>

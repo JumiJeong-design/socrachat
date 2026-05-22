@@ -7,7 +7,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Shippori+Mincho:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  /* ===== Color: raw palette ===== */
+  /* ===== Layer 1 · Primitive — raw palette (never reference directly in components) ===== */
   /* Cream — surfaces */
   --cream-50:  #FBF9F4;
   --cream-100: #F5F1EA;
@@ -43,12 +43,21 @@
   --ai-rose:    #B05C6D;
   --ai-slate:   #5E6B7D;
 
-  /* Semantic */
+  /* ===== Layer 2 · Semantic — mode-aware aliases (use these in styles) ===== */
+  /* ---- Status ---- */
   --success:  #4F7A4C;
   --info:     var(--ai-blue);
   --warn:     #C9893A;
   --error:    #B8504C;
   --neutral:  var(--stone-50);
+
+  /* ---- Warn / Error surfaces ---- */
+  --warn-soft:    rgba(201, 137, 58, .10);
+  --warn-fg:      #8A5C20;
+  --warn-border:  rgba(201, 137, 58, .25);
+  --error-soft:   rgba(184, 80, 76, .10);
+  --error-fg:     var(--error);
+  --error-border: rgba(184, 80, 76, .25);
 
   /* ---------- LIGHT MODE (default) ---------- */
   --bg:           var(--cream-50);
@@ -75,10 +84,11 @@
   --warm-accent:   var(--clay-500);
   --warm-soft:     var(--clay-100);
 
+  /* ===== Layer 3 · Component — scoped to specific UI elements ===== */
   --bubble-user-bg:   var(--forest-500);
-  --bubble-user-fg:   #FFFFFF;
-  --bubble-ai-bg:     #FFFFFF;
-  --bubble-ai-fg:     var(--stone-300);
+  --bubble-user-fg:   var(--fg-on-accent);
+  --bubble-ai-bg:     var(--surface);
+  --bubble-ai-fg:     var(--fg);
   --bubble-ai-border: var(--line);
 
   --shadow-sm: 0 1px 2px rgba(45, 35, 20, 0.05);
@@ -133,9 +143,12 @@
   /* ---------- Motion ---------- */
   --ease-out:  cubic-bezier(.2, .8, .2, 1);
   --ease-soft: cubic-bezier(.4, 0, .2, 1);
-  --dur-fast:  120ms;
-  --dur-base:  200ms;
-  --dur-slow:  320ms;
+  --dur-fast:   120ms;
+  --dur-base:   200ms;
+  --dur-mid:    240ms;
+  --dur-bubble: 280ms;
+  --dur-slow:   320ms;
+  --dur-enter:  600ms;
 
   /* ---------- Layout ---------- */
   --max-content: 720px;
@@ -170,11 +183,18 @@
   --warm-accent:   #D89E7E;
   --warm-soft:     #2C1F16;
 
+  --warn-soft:    rgba(228, 174, 95, .10);
+  --warn-fg:      #E4AE5F;
+  --warn-border:  rgba(228, 174, 95, .25);
+  --error-soft:   rgba(184, 80, 76, .14);
+  --error-fg:     #E07874;
+  --error-border: rgba(184, 80, 76, .35);
+
   --bubble-user-bg:   #7AAA94;
-  --bubble-user-fg:   #0E1612;
-  --bubble-ai-bg:     #1E1C17;
-  --bubble-ai-fg:     #F0EBDE;
-  --bubble-ai-border: #2D2820;
+  --bubble-user-fg:   var(--accent-fg);
+  --bubble-ai-bg:     var(--surface);
+  --bubble-ai-fg:     var(--fg);
+  --bubble-ai-border: var(--line);
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
   --shadow-md: 0 2px 12px rgba(0, 0, 0, 0.5);
@@ -230,6 +250,20 @@ button { font-family: inherit; cursor: pointer; }
 .muted { color: var(--fg-muted); }
 .subtle { color: var(--fg-subtle); }
 .mono { font-family: var(--font-mono); }
+
+/* ---- Focus visible — WCAG 2.1 AA ---- */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+button:focus-visible, [role="button"]:focus-visible, a:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+  border-radius: var(--r-sm);
+}
+input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: none;
+}
 
 /* scrollbar */
 *::-webkit-scrollbar { width: 8px; height: 8px; }

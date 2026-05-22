@@ -38,12 +38,13 @@
   .model-tag {
     display: inline-flex; align-items: center; gap: 10px;
     align-self: flex-start;
-    background: rgba(123,94,160,.08);
+    background: color-mix(in srgb, var(--ai-violet) 8%, transparent);
     padding: 6px 12px 6px 6px;
-    border-radius: 999px;
+    border-radius: var(--r-full);
   }
-  .model-tag .av { width: 26px; height: 26px; border-radius: 50%; background: #7B5EA0; color: #FFF; display: grid; place-items: center; font-family: var(--font-mono); font-size: 11px; font-weight: 700; }
-  .model-tag .n { font-size: 13px; font-weight: 600; color: #7B5EA0; }
+  .model-tag .av { width: 26px; height: 26px; border-radius: 50%; background: var(--ai-violet); color: var(--fg-on-accent); display: grid; place-items: center; font-family: var(--font-mono); font-size: 11px; font-weight: 700; }
+  .model-tag .n { font-size: 13px; font-weight: 600; color: var(--ai-violet); }
+
   .model-tag .meta { font-family: var(--font-mono); font-size: 11px; color: var(--fg-muted); }
 
   h1 { font-size: 28px; font-weight: 600; line-height: 1.35; color: var(--fg-strong); letter-spacing: -.01em; }
@@ -60,9 +61,9 @@
 
   .full-text { font-size: 15px; line-height: 1.85; color: var(--fg); max-width: 700px; }
   .full-text p { margin-bottom: 16px; }
-  .full-text p strong { color: var(--fg-strong); font-weight: 600; background: linear-gradient(transparent 60%, rgba(123,94,160,.18) 60%); padding: 0 2px; }
+  .full-text p strong { color: var(--fg-strong); font-weight: 600; background: linear-gradient(transparent 60%, color-mix(in srgb, var(--ai-violet) 18%, transparent) 60%); padding: 0 2px; }
   .full-text h3 { font-size: 16px; font-weight: 700; color: var(--fg-strong); margin: 24px 0 10px; display: flex; align-items: center; gap: 8px; }
-  .full-text h3::before { content: ''; width: 4px; height: 14px; background: #7B5EA0; border-radius: 2px; }
+  .full-text h3::before { content: ''; width: 4px; height: 14px; background: var(--ai-violet); border-radius: var(--r-xs); }
   .full-text ul { padding-left: 22px; margin-bottom: 16px; }
   .full-text li { margin-bottom: 6px; }
   .full-text blockquote {
@@ -103,12 +104,12 @@
   .switch-row {
     display: flex; align-items: center; gap: 10px;
     padding: 7px 10px; border-radius: 8px;
-    cursor: pointer; transition: background 180ms;
+    cursor: pointer; transition: background var(--dur-base);
     font-size: 12.5px;
   }
   .switch-row:hover { background: var(--bg-sunken); }
   .switch-row.active { background: var(--accent-soft); }
-  .switch-row .av { width: 22px; height: 22px; border-radius: 50%; color: #FFF; font-family: var(--font-mono); font-size: 10px; font-weight: 700; display: grid; place-items: center; flex-shrink: 0; }
+  .switch-row .av { width: 22px; height: 22px; border-radius: 50%; color: var(--fg-on-accent); font-family: var(--font-mono); font-size: 10px; font-weight: 700; display: grid; place-items: center; flex-shrink: 0; }
   .switch-row .n { flex: 1; font-weight: 500; color: var(--fg); }
   .switch-row .pc { font-family: var(--font-mono); color: var(--fg-subtle); }
   .switch-row.active .pc { color: var(--accent); }
@@ -129,7 +130,7 @@
 <body>
 
 <header class="topbar">
-  <button class="iconb"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+  <button class="iconb" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
   <div class="crumbs">
     <a data-i18n="cr_board">比較ボード</a>
     <span class="sep">›</span>
@@ -137,8 +138,8 @@
     <span class="sep">›</span>
     <b data-i18n="cr_claude">Claude · 原文</b>
   </div>
-  <button class="iconb"><svg viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button>
-  <button class="iconb"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg></button>
+  <button class="iconb" aria-label="Copy text"><svg viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button>
+  <button class="iconb" aria-label="Download"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg></button>
 </header>
 
 <div class="layout">
@@ -196,11 +197,11 @@
     <div class="scard">
       <h3 data-i18n="side_switch">他のモデルを見る</h3>
       <div class="switch-models">
-        <div class="switch-row active"><span class="av" style="background:#7B5EA0">C</span><span class="n">Claude Opus</span><span class="pc">95</span></div>
-        <div class="switch-row"><span class="av" style="background:#4A6FA5">G</span><span class="n">GPT-4o</span><span class="pc">80</span></div>
-        <div class="switch-row"><span class="av" style="background:#3D8077">P</span><span class="n">Perplexity</span><span class="pc">68</span></div>
-        <div class="switch-row"><span class="av" style="background:#C68635">◆</span><span class="n">Gemini 2.5</span><span class="pc">55</span></div>
-        <div class="switch-row"><span class="av" style="background:#B05C6D">X</span><span class="n">Grok</span><span class="pc">42</span></div>
+        <div class="switch-row active"><span class="av" style="background:var(--ai-violet)">C</span><span class="n">Claude Opus</span><span class="pc">95</span></div>
+        <div class="switch-row"><span class="av" style="background:var(--ai-blue)">G</span><span class="n">GPT-4o</span><span class="pc">80</span></div>
+        <div class="switch-row"><span class="av" style="background:var(--ai-teal)">P</span><span class="n">Perplexity</span><span class="pc">68</span></div>
+        <div class="switch-row"><span class="av" style="background:var(--ai-amber)">◆</span><span class="n">Gemini 2.5</span><span class="pc">55</span></div>
+        <div class="switch-row"><span class="av" style="background:var(--ai-rose)">X</span><span class="n">Grok</span><span class="pc">42</span></div>
       </div>
     </div>
 
