@@ -10,12 +10,12 @@
   const assetBase = script?.src ? new URL('.', script.src).href : 'assets/';
 
   const MODEL_ICONS = {
-    claude: { label: 'Claude', logo: 'claude.svg', color: 'var(--ai-claude)' },
-    openai: { label: 'GPT', logo: 'openai.svg', color: 'var(--ai-gpt)' },
-    gemini: { label: 'Gemini', logo: 'gemini.svg', color: 'var(--ai-gemini)' },
-    perplexity: { label: 'Perplexity', logo: 'perplexity.svg', color: 'var(--ai-perplexity)' },
-    grok: { label: 'Grok', logo: 'grok.svg', color: 'var(--ai-grok)' },
-    deepseek: { label: 'DeepSeek', logo: 'deepseek.svg', color: 'var(--ai-deepseek)' },
+    claude:     { label: 'Claude',     logo: 'claude.svg'     },
+    openai:     { label: 'GPT',        logo: 'openai.svg'     },
+    gemini:     { label: 'Gemini',     logo: 'gemini.svg'     },
+    perplexity: { label: 'Perplexity', logo: 'perplexity.svg' },
+    grok:       { label: 'Grok',       logo: 'grok.svg'       },
+    deepseek:   { label: 'DeepSeek',   logo: 'deepseek.svg'   },
   };
 
   function injectModelIconStyles() {
@@ -30,14 +30,14 @@
         overflow: hidden;
         color: transparent !important;
         text-indent: -9999px;
-        background: var(--model-color, currentColor);
+        background: var(--bg-sunken, #f0f0f0);
       }
       [data-model-icon]::before {
         content: "";
         width: 58%;
         height: 58%;
         display: block;
-        background: #fff;
+        background: var(--fg-muted, #888);
         mask: var(--model-logo-url) center / contain no-repeat;
         -webkit-mask: var(--model-logo-url) center / contain no-repeat;
       }
@@ -61,7 +61,6 @@
       el.setAttribute('data-model-mounted', '1');
       el.setAttribute('role', el.getAttribute('role') || 'img');
       el.setAttribute('aria-label', el.getAttribute('aria-label') || model.label);
-      el.style.setProperty('--model-color', model.color);
       el.style.setProperty('--model-logo-url', `url("${assetBase}model-logos/${model.logo}")`);
     });
   }
