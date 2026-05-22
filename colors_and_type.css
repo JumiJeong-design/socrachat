@@ -43,6 +43,14 @@
   --ai-rose:    #B05C6D;
   --ai-slate:   #5E6B7D;
 
+  /* Brand aliases — map model names to identity hues */
+  --ai-claude:     var(--ai-violet);
+  --ai-gpt:        var(--ai-blue);
+  --ai-gemini:     var(--ai-teal);
+  --ai-perplexity: var(--ai-rose);
+  --ai-grok:       var(--ai-slate);
+  --ai-deepseek:   var(--ai-amber);
+
   /* ===== Layer 2 · Semantic — mode-aware aliases (use these in styles) ===== */
   /* ---- Status ---- */
   --success:  #4F7A4C;
@@ -214,6 +222,14 @@
   --ai-teal:    #5FA39A;
   --ai-rose:    #D17F8C;
   --ai-slate:   #8A98AA;
+
+  /* Brand aliases */
+  --ai-claude:     var(--ai-violet);
+  --ai-gpt:        var(--ai-blue);
+  --ai-gemini:     var(--ai-teal);
+  --ai-perplexity: var(--ai-rose);
+  --ai-grok:       var(--ai-slate);
+  --ai-deepseek:   var(--ai-amber);
 }
 
 /* ---------- Base ---------- */
