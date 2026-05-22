@@ -59,6 +59,16 @@
         el.innerHTML = val;
       }
     });
+    document.querySelectorAll('[data-i18n-content]').forEach((el) => {
+      const key = el.getAttribute('data-i18n-content');
+      const val = dict[key];
+      if (val == null) return;
+      if (el.tagName === 'TEXTAREA' || el.tagName === 'INPUT') {
+        el.value = val;
+      } else {
+        el.textContent = val;
+      }
+    });
     dispatch('sc:lang', { lang });
     paintToolbar();
   }
