@@ -6,6 +6,66 @@
    Usage: <div data-sc-logo></div>  or  <div data-sc-logo="lg"></div>
 */
 (function () {
+  const script = document.currentScript;
+  const assetBase = script?.src ? new URL('.', script.src).href : 'assets/';
+
+  const MODEL_ICONS = {
+    claude: { label: 'Claude', logo: 'claude.svg', color: 'var(--ai-claude)' },
+    openai: { label: 'GPT', logo: 'openai.svg', color: 'var(--ai-gpt)' },
+    gemini: { label: 'Gemini', logo: 'gemini.svg', color: 'var(--ai-gemini)' },
+    perplexity: { label: 'Perplexity', logo: 'perplexity.svg', color: 'var(--ai-perplexity)' },
+    grok: { label: 'Grok', logo: 'grok.svg', color: 'var(--ai-grok)' },
+    deepseek: { label: 'DeepSeek', logo: 'deepseek.svg', color: 'var(--ai-deepseek)' },
+  };
+
+  function injectModelIconStyles() {
+    if (document.getElementById('sc-model-icon-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'sc-model-icon-styles';
+    style.textContent = `
+      [data-model-icon] {
+        position: relative;
+        display: inline-grid;
+        place-items: center;
+        overflow: hidden;
+        color: transparent !important;
+        text-indent: -9999px;
+        background: var(--model-color, currentColor);
+      }
+      [data-model-icon]::before {
+        content: "";
+        width: 58%;
+        height: 58%;
+        display: block;
+        background: #fff;
+        mask: var(--model-logo-url) center / contain no-repeat;
+        -webkit-mask: var(--model-logo-url) center / contain no-repeat;
+      }
+      .av-s[data-model-icon]::before,
+      .pv-opt .models .av[data-model-icon]::before { width: 62%; height: 62%; }
+      .av-l[data-model-icon]::before,
+      .av-xl[data-model-icon]::before,
+      .ai-dot[data-model-icon]::before,
+      .chip[data-model-icon]::before { width: 56%; height: 56%; }
+      .ai .ic[data-model-icon]::before { width: 60%; height: 60%; }
+    `;
+    document.head.appendChild(style);
+  }
+
+  function mountModelIcons() {
+    injectModelIconStyles();
+    document.querySelectorAll('[data-model-icon]:not([data-model-mounted])').forEach((el) => {
+      const key = el.getAttribute('data-model-icon');
+      const model = MODEL_ICONS[key];
+      if (!model) return;
+      el.setAttribute('data-model-mounted', '1');
+      el.setAttribute('role', el.getAttribute('role') || 'img');
+      el.setAttribute('aria-label', el.getAttribute('aria-label') || model.label);
+      el.style.setProperty('--model-color', model.color);
+      el.style.setProperty('--model-logo-url', `url("${assetBase}model-logos/${model.logo}")`);
+    });
+  }
+
   function mountLogos() {
     document.querySelectorAll('[data-sc-logo]:not([data-sc-mounted])').forEach((el) => {
       el.setAttribute('data-sc-mounted', '1');
@@ -33,6 +93,10 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mountLogos);
   else mountLogos();
   window.__SC_mountLogos = mountLogos;
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mountModelIcons);
+  else mountModelIcons();
+  window.__SC_mountModelIcons = mountModelIcons;
+  window.SC_MODEL_ICONS = MODEL_ICONS;
 })();
 
 /* ---- ICONS (inline lucide subset) ---- */

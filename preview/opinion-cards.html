@@ -27,7 +27,7 @@
   }
   .op-pct {
     font-family: var(--font-mono); font-size: 22px; font-weight: 700;
-    color: #29251F; line-height: 1;
+    color: #29251F; line-height: 100%;
   }
   .op-pct .u { font-size: 13px; font-weight: 500; color: #8A8175; margin-left: 1px; }
   .op-strength {
@@ -38,11 +38,11 @@
   .strong { background: #E8EFEA; color: #234A3F; }
   .partial { background: #F4E3D5; color: #8A4F2E; }
   .op-conclusion {
-    font-size: 15px; font-weight: 600; line-height: 1.4;
+    font-size: 15px; font-weight: 600; line-height: 165%;
     color: #29251F;
   }
   .op-rationale {
-    font-size: 12.5px; color: #524A41; line-height: 1.55;
+    font-size: 12.5px; color: #524A41; line-height: 165%;
   }
   .op-models { display: flex; gap: 4px; }
   .op-models .av {
@@ -61,6 +61,7 @@
   }
   .op-foot button svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; }
 </style>
+<script src="../assets/sc-ui.js" defer></script>
 </head>
 <body>
   <div class="grid">
@@ -75,10 +76,10 @@
       <div class="op-rationale">EV市場の構造的成長 + 自社株買い再開 + バリュエーション安定が共通根拠。下落余地は限定的との見方。</div>
       <div class="op-foot">
         <div class="op-models">
-          <span class="av" style="background:#7B5EA0">C</span>
-          <span class="av" style="background:#4A6FA5">G</span>
-          <span class="av" style="background:#3D8077">P</span>
-          <span class="av" style="background:#5E6B7D">D</span>
+          <span class="av" data-model-icon="claude"></span>
+          <span class="av" data-model-icon="openai"></span>
+          <span class="av" data-model-icon="perplexity"></span>
+          <span class="av" data-model-icon="deepseek"></span>
         </div>
         <button>4 modelsの原文<svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button>
       </div>
@@ -95,8 +96,8 @@
       <div class="op-rationale">マクロ金利 + 中国市場EV値下げ競争の見通し不確実性が共通の懸念。タイミング次第で逆指値必須。</div>
       <div class="op-foot">
         <div class="op-models">
-          <span class="av" style="background:#C68635">◆</span>
-          <span class="av" style="background:#B05C6D">G</span>
+          <span class="av" data-model-icon="gemini"></span>
+          <span class="av" data-model-icon="grok"></span>
         </div>
         <button>2 modelsの原文<svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button>
       </div>

@@ -15,11 +15,42 @@ Figma file: https://www.figma.com/design/HFRVQXoWTWVaxMDNW7yapS
 File key: `HFRVQXoWTWVaxMDNW7yapS`
 
 ### "Figma 싱크해줘" — Figma → Code
-When asked to sync from Figma:
-1. Use `mcp__plugin_figma_figma__get_variable_defs` with fileKey to read current variable values
-2. Compare Theme collection (Light mode) values against `colors_and_type.css`
-3. Update changed CSS variables in `colors_and_type.css`
+When asked to sync from Figma, use the Plugin API (MCP) approach:
+1. Run this script via `use_figma` to read all variable values:
+```js
+const collections = await figma.variables.getLocalVariableCollectionsAsync();
+function toHex(r,g,b){return '#'+[r,g,b].map(v=>Math.round(v*255).toString(16).padStart(2,'0').toUpperCase()).join('')}
+const out={};
+for(const col of collections){
+  const vars=await Promise.all(col.variableIds.map(id=>figma.variables.getVariableByIdAsync(id)));
+  const modeMap=Object.fromEntries(col.modes.map(m=>[m.modeId,m.name]));
+  out[col.name]=vars.filter(Boolean).map(v=>{
+    const values={};
+    for(const [modeId,val] of Object.entries(v.valuesByMode)){
+      const mode=modeMap[modeId];
+      if(v.resolvedType==='COLOR'&&val&&'r'in val) values[mode]=toHex(val.r,val.g,val.b);
+      else values[mode]=val;
+    }
+    return{name:v.name,type:v.resolvedType,values};
+  });
+}
+return out;
+```
+2. Compare returned values against `colors_and_type.css` using this mapping:
+   - Figma `bg/default` → CSS `--bg`, `bg/surface` → `--surface`, `bg/hover` → `--surface-hover`, `bg/elevated` → `--surface-elev`
+   - Figma `fg/default` → `--fg`, `fg/strong` → `--fg-strong`, `fg/muted` → `--fg-muted`, `fg/subtle` → `--fg-subtle`, `fg/on-accent` → `--fg-on-accent`
+   - Figma `line/default` → `--line`, `line/strong` → `--line-strong`
+   - Figma `accent/default` → `--accent`, `accent/hover` → `--accent-hover`, `accent/soft` → `--accent-soft`, `accent/fg` → `--accent-fg`
+   - Figma `warm/default` → `--warm-accent`, `warm/soft` → `--warm-soft`
+   - Figma `bubble/*` → `--bubble-*` (same suffix)
+   - Figma `ai-id/claude` → `--ai-claude`, `ai-id/gpt` → `--ai-gpt`, etc.
+   - Figma `status/success` → `--success`, `status/warn` → `--warn`, `status/error` → `--error`, `status/info` → `--info`
+   - Figma primitives (`cream/*`, `forest/*`, `clay/*`, `stone/*`) → `--cream-*`, `--forest-*`, etc.
+   - Light mode values → `:root` block, Dark mode values → `[data-theme="dark"]` block
+3. Update only the changed values in `colors_and_type.css`
 4. Run `vercel --yes --prod` to deploy
+
+Note: Figma REST API requires Professional plan. Use MCP approach above for free plan.
 
 ### Code → Figma
 When asked to push screens to Figma:
@@ -32,6 +63,22 @@ When asked to push screens to Figma:
 Primary: `--accent: #2D5F4F` (Forest green) on `--bg: #FBF9F4` (Warm cream)
 Dark mode: `[data-theme="dark"]` on root element
 i18n: `data-lang="ja|ko|en"` on html element
+
+## Visual direction
+
+Current target direction:
+- Bold monochrome mobile GUI with large editorial typography, warm off-white surfaces, rounded content blocks, simple black/near-black controls, and restrained use of accent color.
+- The product should feel functional, minimal, warm, witty, mobile-native, and brand-conscious.
+- Cute is allowed only as a quiet emotional layer; the interface itself must not become childish, pastel, decorative, glossy, or mascot-led.
+- Use hierarchy through scale, weight, spacing, and contrast. Avoid screens where every card has the same visual weight.
+- One screen should have one clear main message or one clear main action.
+- Prefer black / near-black, white, warm off-white, light gray, dark gray, and low-contrast warm borders.
+- Avoid colorful gradients, glassmorphism, saturated color systems, strong shadows, nested cards, and thin fragile UI.
+
+3D mascot rule:
+- A quiet black 3D cat assistant may appear only at emotional/supportive moments: onboarding, empty states, loading, completion, error, help, waiting, friendly tips, and result summaries.
+- Do not use the mascot in dense data screens, complex forms, settings, payment/auth, long lists, comparison tables, or places where the CTA must be the only focus.
+- One mascot image max per screen. It supports the message; it never replaces the interface.
 
 ## Deploy
 ```
@@ -52,4 +99,3 @@ vercel --yes --prod
 - TEXTAREA 입력값(pre-filled content): `data-i18n-content="key"` (별도 키 필요)
 - INPUT placeholder: `data-i18n="key"` (shell.js가 자동으로 setAttribute 처리)
 - 딕셔너리 문자열에 아포스트로피 포함 시 큰따옴표로 감쌀 것 (SyntaxError 방지)
-

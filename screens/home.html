@@ -6,7 +6,7 @@
 <title>SocraChat · Home</title>
 <link rel="stylesheet" href="../colors_and_type.css">
 <link rel="stylesheet" href="../apple-theme.css">
-<link rel="stylesheet" href="../apple-theme.css">
+<link rel="stylesheet" href="../notion-theme.css">
 <script src="../assets/sc-ui.js" defer></script>
 <script src="../assets/shell.js" defer></script>
 <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
@@ -21,7 +21,7 @@
   }
   .topbar nav { display: flex; gap: 18px; }
   .topbar nav a {
-    font-size: 13px; font-weight: 500; color: var(--fg-muted);
+    font-size: 14px; font-weight: 500; color: var(--fg-muted);
     padding: 6px 10px; border-radius: 8px;
     transition: all var(--dur-base) var(--ease-out);
   }
@@ -31,25 +31,72 @@
   .main {
     flex: 1;
     display: flex; align-items: center; justify-content: center;
-    padding: 40px 24px 100px;
+    padding: 32px 24px 92px;
   }
   .container {
-    width: 100%; max-width: 720px;
+    width: 100%; max-width: 760px;
     display: flex; flex-direction: column; align-items: center;
     text-align: center;
-    gap: 32px;
+    gap: 26px;
   }
+  .intent {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 12px;
+    border-radius: var(--r-full);
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 13px; font-weight: 700;
+  }
+  .intent i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .hero-copy { width: 100%; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; }
   .greeting {
     font-family: var(--font-display);
-    font-size: clamp(36px, 5vw, 56px);
-    font-weight: 500; line-height: 1.2;
+    font-size: clamp(32px, 4.5vw, 52px);
+    font-weight: 500; line-height: 125%;
     color: var(--fg-strong);
     letter-spacing: -.015em;
   }
   .greeting .accent { color: var(--accent); }
   .sub {
-    font-size: 16px; color: var(--fg-muted); line-height: 1.7;
-    max-width: 480px;
+    font-size: 17px; color: var(--fg-muted); line-height: 175%;
+    max-width: 620px; margin: 0 auto;
+  }
+  .decision-flow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+    max-width: 680px;
+    text-align: center;
+    color: var(--fg-subtle);
+  }
+  .decision-step {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 12px;
+    min-width: 0;
+  }
+  .decision-step + .decision-step::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: var(--line-strong);
+    margin-right: 12px;
+  }
+  .decision-step .k {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--fg-subtle);
+    font-weight: 700;
+  }
+  .decision-step .t {
+    font-size: 14px;
+    line-height: 165%;
+    color: var(--fg-muted);
+    font-weight: 500;
+    white-space: nowrap;
   }
 
   .composer {
@@ -70,7 +117,7 @@
     border: 0; outline: none; resize: none; padding: 0;
     font-family: inherit; font-size: 17px; color: var(--fg);
     background: transparent;
-    line-height: 1.55; min-height: 60px; max-height: 240px;
+    line-height: 170%; min-height: 70px; max-height: 240px;
   }
   .composer textarea::placeholder { color: var(--fg-subtle); }
 
@@ -92,7 +139,7 @@
     padding: 5px 12px; border-radius: var(--r-full);
     background: var(--bg-sunken);
     cursor: pointer; transition: background var(--dur-base);
-    font-size: 12px; color: var(--fg-muted);
+    font-size: 14px; color: var(--fg-muted);
     font-weight: 500;
     flex-shrink: 1; min-width: 0;
     border: 0;
@@ -108,7 +155,7 @@
     border: 0; border-radius: var(--r-full);
     height: 36px; padding: 0 18px;
     display: inline-flex; align-items: center; gap: 6px;
-    font-family: inherit; font-size: 13.5px; font-weight: 600;
+    font-family: inherit; font-size: 14.5px; font-weight: 600;
     cursor: pointer;
     transition: all var(--dur-base);
     flex-shrink: 0;
@@ -127,14 +174,14 @@
   .ex {
     background: var(--surface); border: 1px solid var(--line);
     border-radius: var(--r-full);
-    padding: 8px 14px;
-    font-size: 13px; color: var(--fg-muted);
+    padding: 9px 16px;
+    font-size: 15px; color: var(--fg-muted);
     cursor: pointer;
     transition: all var(--dur-base);
     display: inline-flex; align-items: center; gap: 6px;
   }
   .ex:hover { background: var(--accent-soft); border-color: transparent; color: var(--accent); }
-  .ex .cat { font-family: var(--font-mono); font-size: 10px; color: var(--fg-subtle); }
+  .ex .cat { font-family: var(--font-mono); font-size: 12px; color: var(--fg-subtle); }
 
   .recent {
     width: 100%; max-width: 720px; margin-top: 8px;
@@ -142,7 +189,7 @@
     text-align: left;
   }
   .recent h3 {
-    font-size: 11px; font-weight: 700; letter-spacing: .12em;
+    font-size: 12px; font-weight: 700; letter-spacing: .1em;
     text-transform: uppercase; color: var(--fg-subtle);
     margin-bottom: 8px;
   }
@@ -153,21 +200,28 @@
     cursor: pointer; transition: background var(--dur-base);
   }
   .recent-item:hover { background: var(--surface-hover); }
-  .recent-item .title { flex: 1; font-size: 13.5px; color: var(--fg); font-weight: 500; }
+  .recent-item .title { flex: 1; font-size: 16px; color: var(--fg); font-weight: 500; line-height: var(--leading-normal); }
   .recent-item .stack { display: flex; }
   .recent-item .stack .av { width: 18px; height: 18px; border-radius: 50%; color: var(--fg-on-accent); font-size: 8px; font-weight: 700; font-family: var(--font-mono); display: grid; place-items: center; border: 1.5px solid var(--bg); }
   .recent-item .stack .av + .av { margin-left: -7px; }
-  .recent-item .date { font-family: var(--font-mono); font-size: 11px; color: var(--fg-subtle); }
+  .recent-item .date { font-family: var(--font-mono); font-size: 12px; color: var(--fg-subtle); }
 
   @media (max-width: 540px) {
     .topbar nav { display: none; }
     .greeting { font-size: 32px; }
-    .composer textarea { font-size: 15px; }
+    .sub { font-size: 16px; line-height: 175%; }
+    .decision-flow { flex-direction: column; gap: 6px; align-items: center; }
+    .decision-step { padding: 0; }
+    .decision-step + .decision-step::before { display: none; }
+    .decision-step .t { font-size: 14px; white-space: normal; }
+    .composer textarea { font-size: 16px; line-height: 175%; }
     .composer-bar .left .iconb:nth-child(2),
     .composer-bar .left .iconb:nth-child(3) { display: none; }
     .send .lbl { display: none; }
     .send { padding: 0; width: 36px; justify-content: center; }
-    .ai-select { max-width: 130px; }
+    .ai-select { max-width: 140px; }
+    .recent-item { align-items: flex-start; flex-wrap: wrap; }
+    .recent-item .title { min-width: 100%; }
   }
 </style>
 </head>
@@ -185,10 +239,16 @@
 
 <main class="main">
   <div class="container">
-    <div>
-      <h1 class="greeting" data-i18n="greeting">複数のAIに、<span class="accent">同時に聞く。</span></h1>
-      <div style="height:14px"></div>
-      <p class="sub" data-i18n="subhead">5つのAIモデルに同じ質問を投げて、意見の一致と分岐を一目で確認。あなた専用の合議システム。</p>
+    <div class="hero-copy">
+      <div class="intent"><i></i><span data-i18n="intent">複数AIで、判断の不安を減らす</span></div>
+      <h1 class="greeting" data-i18n="greeting">AIの答えが割れるとき、<span class="accent">判断の質が上がる。</span></h1>
+      <p class="sub" data-i18n="subhead">ひとつのAIの答えをそのまま信じるのではなく、5つのAIの一致点と食い違いを見て、納得して決めるための相談画面です。</p>
+    </div>
+
+    <div class="decision-flow" aria-label="SocraChat decision flow">
+      <div class="decision-step"><div class="k">01</div><div class="t" data-i18n="flow1">同じ質問を5つのAIに送る</div></div>
+      <div class="decision-step"><div class="k">02</div><div class="t" data-i18n="flow2">一致した結論と割れた論点を見る</div></div>
+      <div class="decision-step"><div class="k">03</div><div class="t" data-i18n="flow3">根拠を比べて自分で決める</div></div>
     </div>
 
     <div class="composer">
@@ -221,17 +281,17 @@
       <h3 data-i18n="recent_title">最近の問い合わせ</h3>
       <div class="recent-item">
         <span class="title" data-i18n="recent1">新NISAを使い切るか、住宅ローン繰り上げ返済か</span>
-        <div class="stack"><span class="av" style="background:var(--ai-violet)">C</span><span class="av" style="background:var(--ai-blue)">G</span><span class="av" style="background:var(--ai-teal)">P</span></div>
+        <div class="stack"><span class="av" data-model-icon="claude"></span><span class="av" data-model-icon="openai"></span><span class="av" data-model-icon="perplexity"></span></div>
         <span class="date">2h ago</span>
       </div>
       <div class="recent-item">
         <span class="title" data-i18n="recent2">子供の英語教育、いつから始めるべき？</span>
-        <div class="stack"><span class="av" style="background:var(--ai-violet)">C</span><span class="av" style="background:var(--ai-blue)">G</span><span class="av" style="background:var(--ai-amber)">◆</span><span class="av" style="background:var(--ai-rose)">X</span></div>
+        <div class="stack"><span class="av" data-model-icon="claude"></span><span class="av" data-model-icon="openai"></span><span class="av" data-model-icon="gemini"></span><span class="av" data-model-icon="grok"></span></div>
         <span class="date">yesterday</span>
       </div>
       <div class="recent-item">
         <span class="title" data-i18n="recent3">在宅勤務の腰痛、椅子買い替えるべき？</span>
-        <div class="stack"><span class="av" style="background:var(--ai-blue)">G</span><span class="av" style="background:var(--ai-amber)">◆</span></div>
+        <div class="stack"><span class="av" data-model-icon="openai"></span><span class="av" data-model-icon="gemini"></span></div>
         <span class="date">2 days</span>
       </div>
     </div>
@@ -242,8 +302,10 @@
   window.__SC_I18N = {
     ja: {
       nav_ask: '問い合わせ', nav_history: '履歴', nav_persona: 'ペルソナ', nav_models: 'AIモデル',
-      greeting: '複数のAIに、<span class="accent">同時に聞く。</span>',
-      subhead: '5つのAIモデルに同じ質問を投げて、意見の一致と分岐を一目で確認。あなた専用の合議システム。',
+      intent: '複数AIで、判断の不安を減らす',
+      greeting: 'AIの答えが割れるとき、<span class="accent">判断の質が上がる。</span>',
+      subhead: 'ひとつのAIの答えをそのまま信じるのではなく、5つのAIの一致点と食い違いを見て、納得して決めるための相談画面です。',
+      flow1: '同じ質問を5つのAIに送る', flow2: '一致した結論と割れた論点を見る', flow3: '根拠を比べて自分で決める',
       composer_placeholder: '気になることを、なんでも聞いてみてください。',
       composer_content: 'テスラの株は今買うべき？それとも下がるのを待つべきだろうか。長期的な視点で見ている。',
       ai_select: 'モデル選択', send: '問い合わせる',
@@ -255,8 +317,10 @@
     },
     en: {
       nav_ask: 'Ask', nav_history: 'History', nav_persona: 'Personas', nav_models: 'AI Models',
-      greeting: 'Ask many AIs <span class="accent">at once.</span>',
-      subhead: 'Send the same question to 5 AI models and see agreement vs disagreement at a glance. Your personal council.',
+      intent: 'Reduce decision risk with multiple AIs',
+      greeting: 'When AIs disagree, <span class="accent">you decide better.</span>',
+      subhead: 'Instead of trusting one answer, compare where five AIs agree, where they split, and what evidence each side uses.',
+      flow1: 'Send one question to 5 AIs', flow2: 'See consensus and disagreement', flow3: 'Compare reasons before deciding',
       composer_placeholder: "Ask anything that's on your mind…",
       composer_content: 'Should I buy Tesla stock now, or wait for a dip? Thinking long-term.',
       ai_select: 'models', send: 'Ask',
@@ -268,8 +332,10 @@
     },
     ko: {
       nav_ask: '질문', nav_history: '히스토리', nav_persona: '페르소나', nav_models: 'AI 모델',
-      greeting: '여러 AI에게, <span class="accent">한 번에 묻는다.</span>',
-      subhead: '5개 AI 모델에 같은 질문을 던지고, 의견 일치와 분기를 한눈에. 나만의 합의 시스템.',
+      intent: '여러 AI로 판단 불안을 줄이기',
+      greeting: 'AI 의견이 갈릴 때, <span class="accent">당신의 판단이 날카로워진다.</span>',
+      subhead: '하나의 답을 그대로 믿지 않고, 5개 AI가 어디서 동의하고 어디서 갈리는지 비교해 납득하고 결정하는 상담 화면입니다.',
+      flow1: '같은 질문을 5개 AI에 보내기', flow2: '일치한 결론과 갈린 쟁점 보기', flow3: '근거를 비교하고 직접 결정하기',
       composer_placeholder: '궁금한 것을 무엇이든 물어보세요.',
       composer_content: '테슬라 주식, 지금 사야 할까? 아니면 더 떨어지길 기다려야 할까? 장기 관점이야.',
       ai_select: '모델 선택', send: '질문하기',

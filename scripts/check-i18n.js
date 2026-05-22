@@ -68,7 +68,6 @@ for (const rel of HTML_FILES) {
   // --- 1. Collect all i18n keys used in HTML ---
   const usedKeys = new Set();
   for (const m of src.matchAll(/data-i18n(?:-content)?="([^"]+)"/g)) {
-    if (m[0].startsWith('data-i18n-attr')) continue;  // mechanism attr, not a key
     usedKeys.add(m[1]);
   }
   if (usedKeys.size === 0) continue;

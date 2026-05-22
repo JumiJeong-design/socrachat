@@ -39,25 +39,26 @@
   .stack .ai { border: 0; background: transparent; padding: 5px 0; gap: 10px; }
   .stack .ai .pct { margin-left: auto; }
 </style>
+<script src="../assets/sc-ui.js" defer></script>
 </head>
 <body>
   <h4>AI chips · selectable</h4>
   <div class="row">
-    <span class="ai gpt"><span class="ic">G</span>GPT-4o</span>
-    <span class="ai claude"><span class="ic">C</span>Claude Opus</span>
-    <span class="ai gemini"><span class="ic">◆</span>Gemini 2.5</span>
-    <span class="ai perplexity"><span class="ic">P</span>Perplexity</span>
-    <span class="ai grok"><span class="ic">G</span>Grok</span>
-    <span class="ai deepseek dim"><span class="ic">D</span>DeepSeek</span>
+    <span class="ai gpt"><span class="ic" data-model-icon="openai"></span>GPT-4o</span>
+    <span class="ai claude"><span class="ic" data-model-icon="claude"></span>Claude Opus</span>
+    <span class="ai gemini"><span class="ic" data-model-icon="gemini"></span>Gemini 2.5</span>
+    <span class="ai perplexity"><span class="ic" data-model-icon="perplexity"></span>Perplexity</span>
+    <span class="ai grok"><span class="ic" data-model-icon="grok"></span>Grok</span>
+    <span class="ai deepseek dim"><span class="ic" data-model-icon="deepseek"></span>DeepSeek</span>
   </div>
 
   <h4>Compact list · with weights</h4>
   <div class="stack">
-    <div class="ai claude"><span class="ic">C</span>Claude Opus<span class="pct">28%</span></div>
-    <div class="ai gpt"><span class="ic">G</span>GPT-4o<span class="pct">24%</span></div>
-    <div class="ai gemini"><span class="ic">◆</span>Gemini 2.5<span class="pct">19%</span></div>
-    <div class="ai perplexity"><span class="ic">P</span>Perplexity<span class="pct">17%</span></div>
-    <div class="ai grok"><span class="ic">G</span>Grok<span class="pct">12%</span></div>
+    <div class="ai claude"><span class="ic" data-model-icon="claude"></span>Claude Opus<span class="pct">28%</span></div>
+    <div class="ai gpt"><span class="ic" data-model-icon="openai"></span>GPT-4o<span class="pct">24%</span></div>
+    <div class="ai gemini"><span class="ic" data-model-icon="gemini"></span>Gemini 2.5<span class="pct">19%</span></div>
+    <div class="ai perplexity"><span class="ic" data-model-icon="perplexity"></span>Perplexity<span class="pct">17%</span></div>
+    <div class="ai grok"><span class="ic" data-model-icon="grok"></span>Grok<span class="pct">12%</span></div>
   </div>
 </body>
 </html>

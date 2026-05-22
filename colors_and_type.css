@@ -105,9 +105,9 @@
   --font-mono:    'JetBrains Mono', 'Menlo', monospace;
 
   --text-xs:   12px;
-  --text-sm:   13px;
-  --text-base: 14.5px;
-  --text-md:   16px;
+  --text-sm:   14px;
+  --text-base: 16px;
+  --text-md:   17px;
   --text-lg:   18px;
   --text-xl:   22px;
   --text-2xl:  28px;
@@ -117,8 +117,8 @@
 
   --leading-tight:   1.25;
   --leading-snug:    1.4;
-  --leading-normal:  1.55;
-  --leading-relaxed: 1.7;
+  --leading-normal:  1.65;
+  --leading-relaxed: 1.8;
 
   /* ---------- Spacing ---------- */
   --s-1:  4px;
@@ -182,6 +182,11 @@
 
   --warm-accent:   #D89E7E;
   --warm-soft:     #2C1F16;
+
+  --success:  #6B9E68;
+  --warn:     #E4AE5F;
+  --error:    #E07874;
+  --neutral:  #8A8175;
 
   --warn-soft:    rgba(228, 174, 95, .10);
   --warn-fg:      #E4AE5F;

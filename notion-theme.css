@@ -1,0 +1,280 @@
+/* =========================================================
+   Notion Design System Override — SocraChat
+   Warm minimalism. Whisper borders. NotionInter typography.
+   Scoped to html[data-design="notion"].
+   ========================================================= */
+
+html[data-design="notion"] {
+  --font-display: 'Inter', -apple-system, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-ui:      'Inter', -apple-system, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-jp:      'Inter', 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', system-ui, sans-serif;
+  --font-ko:      'Inter', 'Noto Sans KR', system-ui, sans-serif;
+
+  --text-xs:   12px;
+  --text-sm:   14px;
+  --text-base: 16px;
+  --text-md:   20px;
+  --text-lg:   22px;
+  --text-xl:   26px;
+  --text-2xl:  40px;
+  --text-3xl:  48px;
+  --text-4xl:  54px;
+  --text-5xl:  64px;
+
+  --leading-tight:   1.00;
+  --leading-snug:    1.23;
+  --leading-normal:  1.50;
+  --leading-relaxed: 1.60;
+
+  --r-xs:   4px;
+  --r-sm:   5px;
+  --r-md:   8px;
+  --r-lg:   12px;
+  --r-xl:   16px;
+  --r-2xl:  20px;
+  --r-full: 9999px;
+
+  --dur-fast:  150ms;
+  --dur-base:  220ms;
+  --dur-slow:  360ms;
+  --ease-out:  cubic-bezier(0.2, 0.6, 0.25, 1);
+  --ease-soft: cubic-bezier(0.2, 0.4, 0.2, 1);
+
+  --max-content: 760px;
+  --max-board:   1200px;
+  --max-page:    1280px;
+}
+
+/* ── Light mode ── */
+html[data-design="notion"],
+html[data-design="notion"][data-theme="light"] {
+  --bg:            #ffffff;
+  --bg-sunken:     #f6f5f4;
+  --bg-tint:       #f6f5f4;
+  --surface:       #ffffff;
+  --surface-hover: #f6f5f4;
+  --surface-elev:  #ffffff;
+
+  --fg:           rgba(0, 0, 0, 0.95);
+  --fg-strong:    rgba(0, 0, 0, 0.95);
+  --fg-muted:     #615d59;
+  --fg-subtle:    #a39e98;
+  --fg-on-accent: #ffffff;
+
+  --line:         rgba(0, 0, 0, 0.10);
+  --line-strong:  rgba(0, 0, 0, 0.18);
+
+  --accent:       #0075de;
+  --accent-hover: #005bab;
+  --accent-soft:  #f2f9ff;
+  --accent-fg:    #ffffff;
+
+  --warm-accent: #615d59;
+  --warm-soft:   #f6f5f4;
+
+  --success: #1aae39;
+  --info:    #0075de;
+  --warn:    #dd5b00;
+  --error:   #d44333;
+
+  --warn-soft:    rgba(221, 91, 0, .08);
+  --warn-fg:      #b04800;
+  --warn-border:  rgba(221, 91, 0, .22);
+  --error-soft:   rgba(212, 67, 51, .08);
+  --error-fg:     #d44333;
+  --error-border: rgba(212, 67, 51, .22);
+
+  --bubble-user-bg:   #0075de;
+  --bubble-user-fg:   #ffffff;
+  --bubble-ai-bg:     #f6f5f4;
+  --bubble-ai-fg:     rgba(0, 0, 0, 0.95);
+  --bubble-ai-border: rgba(0, 0, 0, 0.10);
+
+  --shadow-sm:    0 1px 0 rgba(0, 0, 0, 0.04);
+  --shadow-md:    rgba(0,0,0,.04) 0px 4px 18px, rgba(0,0,0,.027) 0px 2px 7.85px, rgba(0,0,0,.02) 0px 0.8px 2.93px, rgba(0,0,0,.01) 0px 0.175px 1.04px;
+  --shadow-lg:    rgba(0,0,0,.01) 0px 1px 3px, rgba(0,0,0,.02) 0px 3px 7px, rgba(0,0,0,.02) 0px 7px 15px, rgba(0,0,0,.04) 0px 14px 28px, rgba(0,0,0,.05) 0px 23px 52px;
+  --shadow-xl:    rgba(0,0,0,.01) 0px 1px 3px, rgba(0,0,0,.02) 0px 3px 7px, rgba(0,0,0,.02) 0px 7px 15px, rgba(0,0,0,.04) 0px 14px 28px, rgba(0,0,0,.05) 0px 23px 52px;
+  --shadow-focus: 0 0 0 2px rgba(9, 127, 232, 0.40);
+
+  --ai-blue:    #0075de;
+  --ai-violet:  #5e35b1;
+  --ai-amber:   #dd5b00;
+  --ai-teal:    #2a9d99;
+  --ai-rose:    #c2185b;
+  --ai-slate:   #615d59;
+}
+
+/* ── Dark mode ── */
+html[data-design="notion"][data-theme="dark"] {
+  --bg:            #191918;
+  --bg-sunken:     #131312;
+  --bg-tint:       #21201F;
+  --surface:       #202019;
+  --surface-hover: #2C2B29;
+  --surface-elev:  #252422;
+
+  --fg:           #DDDBD8;
+  --fg-strong:    #F3F2F1;
+  --fg-muted:     #9B9590;
+  --fg-subtle:    #6B6660;
+  --fg-on-accent: #ffffff;
+
+  --line:         rgba(255, 255, 255, 0.08);
+  --line-strong:  rgba(255, 255, 255, 0.14);
+
+  --accent:       #4395E0;
+  --accent-hover: #62AEFE;
+  --accent-soft:  rgba(67, 149, 224, 0.15);
+  --accent-fg:    #ffffff;
+
+  --warm-accent: #9B9590;
+  --warm-soft:   rgba(255, 255, 255, 0.06);
+
+  --success: #34c45a;
+  --info:    #4395E0;
+  --warn:    #f07a3a;
+  --error:   #e05a4c;
+
+  --warn-soft:    rgba(240, 122, 58, .10);
+  --warn-fg:      #f09060;
+  --warn-border:  rgba(240, 122, 58, .25);
+  --error-soft:   rgba(224, 90, 76, .10);
+  --error-fg:     #e07060;
+  --error-border: rgba(224, 90, 76, .25);
+
+  --bubble-user-bg:   #4395E0;
+  --bubble-user-fg:   #ffffff;
+  --bubble-ai-bg:     #252422;
+  --bubble-ai-fg:     #DDDBD8;
+  --bubble-ai-border: rgba(255, 255, 255, 0.08);
+
+  --shadow-sm:    none;
+  --shadow-md:    rgba(0,0,0,.20) 0px 4px 18px, rgba(0,0,0,.14) 0px 2px 7.85px, rgba(0,0,0,.10) 0px 0.8px 2.93px;
+  --shadow-lg:    rgba(0,0,0,.16) 0px 1px 3px, rgba(0,0,0,.20) 0px 3px 7px, rgba(0,0,0,.22) 0px 7px 15px, rgba(0,0,0,.26) 0px 14px 28px;
+  --shadow-xl:    rgba(0,0,0,.16) 0px 1px 3px, rgba(0,0,0,.20) 0px 3px 7px, rgba(0,0,0,.22) 0px 7px 15px, rgba(0,0,0,.26) 0px 14px 28px, rgba(0,0,0,.30) 0px 23px 52px;
+  --shadow-focus: 0 0 0 2px rgba(67, 149, 224, 0.50);
+
+  --ai-blue:    #62aef0;
+  --ai-violet:  #9b7db5;
+  --ai-amber:   #f0905a;
+  --ai-teal:    #5bbfbc;
+  --ai-rose:    #e07aae;
+  --ai-slate:   #9B9590;
+}
+
+/* ── Typography ── */
+html[data-design="notion"] body {
+  font-family: var(--font-ui);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  font-feature-settings: 'lnum' 1, 'locl' 1;
+}
+
+html[data-design="notion"] h1,
+html[data-design="notion"] h2,
+html[data-design="notion"] h3,
+html[data-design="notion"] h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-feature-settings: 'lnum' 1, 'locl' 1;
+}
+
+html[data-design="notion"] h1 { font-size: var(--text-5xl); line-height: 1.00; letter-spacing: -0.033em; }
+html[data-design="notion"] h2 { font-size: var(--text-3xl); line-height: 1.00; letter-spacing: -0.031em; }
+html[data-design="notion"] h3 { font-size: var(--text-xl);  line-height: 1.23; letter-spacing: -0.024em; }
+html[data-design="notion"] h4 { font-size: var(--text-lg);  line-height: 1.27; letter-spacing: -0.011em; }
+
+html[data-design="notion"] a { color: var(--accent); }
+html[data-design="notion"][data-theme="dark"] a { color: var(--accent); }
+
+/* ── Scrollbar ── */
+html[data-design="notion"] *::-webkit-scrollbar { width: 6px; height: 6px; }
+html[data-design="notion"] *::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 3px; }
+html[data-design="notion"][data-theme="dark"] *::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); }
+html[data-design="notion"] *::-webkit-scrollbar-track { background: transparent; }
+
+/* ── Primitive remaps (forest green → Notion Blue) ── */
+html[data-design="notion"] {
+  --forest-50:  #f2f9ff;
+  --forest-100: #c8e0f8;
+  --forest-300: #62aef0;
+  --forest-500: #0075de;
+  --forest-600: #005bab;
+  --forest-700: #003d78;
+
+  --cream-50:  #f6f5f4;
+  --cream-100: #edece9;
+  --cream-200: #e1dfdb;
+  --cream-300: #d0cdc8;
+
+  --clay-100: #f6f5f4;
+  --clay-300: #a39e98;
+  --clay-500: #615d59;
+}
+
+/* ── Component overrides ── */
+html[data-design="notion"] .send,
+html[data-design="notion"] .cta,
+html[data-design="notion"] .cta-primary,
+html[data-design="notion"] .navbtn.primary,
+html[data-design="notion"] .btn.primary {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-radius: var(--r-xs);
+}
+
+html[data-design="notion"] .composer,
+html[data-design="notion"] .opinion,
+html[data-design="notion"] .side-card,
+html[data-design="notion"] .scard,
+html[data-design="notion"] .preview,
+html[data-design="notion"] .persona-card,
+html[data-design="notion"] .c-card {
+  border-color: rgba(0, 0, 0, 0.10);
+  box-shadow: var(--shadow-md);
+}
+
+html[data-design="notion"][data-theme="dark"] .composer,
+html[data-design="notion"][data-theme="dark"] .opinion,
+html[data-design="notion"][data-theme="dark"] .side-card,
+html[data-design="notion"][data-theme="dark"] .scard,
+html[data-design="notion"][data-theme="dark"] .preview,
+html[data-design="notion"][data-theme="dark"] .persona-card,
+html[data-design="notion"][data-theme="dark"] .c-card {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+html[data-design="notion"] .tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  font-weight: 600;
+}
+
+html[data-design="notion"] .intent {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+html[data-design="notion"] .badge {
+  background: var(--accent-soft);
+  color: #097fe8;
+  border-radius: var(--r-full);
+  letter-spacing: 0.125px;
+}
+
+html[data-design="notion"][data-theme="dark"] .badge {
+  color: #62aef0;
+}
+
+html[data-design="notion"] .ex,
+html[data-design="notion"] .chip,
+html[data-design="notion"] .source-chip {
+  border-color: rgba(0, 0, 0, 0.10);
+}
+
+html[data-design="notion"][data-theme="dark"] .ex,
+html[data-design="notion"][data-theme="dark"] .chip,
+html[data-design="notion"][data-theme="dark"] .source-chip {
+  border-color: rgba(255, 255, 255, 0.08);
+}

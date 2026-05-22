@@ -123,12 +123,12 @@ html[data-design="apple"][data-theme="dark"] {
   --shadow-xl:    rgba(0, 0, 0, 0.50) 3px 5px 30px 0px;
   --shadow-focus: 0 0 0 3px rgba(41, 151, 255, 0.35);
 
-  --ai-blue:   #6E9FE0;
-  --ai-violet: #B09CD8;
-  --ai-amber:  #F0C070;
-  --ai-teal:   #5BBFB5;
-  --ai-rose:   #E08FA0;
-  --ai-slate:  #A0AFBF;
+  --ai-gpt:   #6E9FE0;
+  --ai-claude: #B09CD8;
+  --ai-gemini:  #F0C070;
+  --ai-perplexity:   #5BBFB5;
+  --ai-grok:   #E08FA0;
+  --ai-deepseek:  #A0AFBF;
 }
 
 /* ── Typography ── */
@@ -147,10 +147,10 @@ html[data-design="apple"] h4 {
   font-weight: 600;
   letter-spacing: -0.02em;
 }
-html[data-design="apple"] h1 { font-size: var(--text-5xl); line-height: 1.07; letter-spacing: -0.28px; }
-html[data-design="apple"] h2 { font-size: var(--text-3xl); line-height: 1.10; }
-html[data-design="apple"] h3 { font-size: var(--text-2xl); line-height: 1.14; }
-html[data-design="apple"] h4 { font-size: var(--text-xl);  line-height: 1.19; }
+html[data-design="apple"] h1 { font-size: var(--text-5xl); line-height: 107%; letter-spacing: -0.28px; }
+html[data-design="apple"] h2 { font-size: var(--text-3xl); line-height: 110%; }
+html[data-design="apple"] h3 { font-size: var(--text-2xl); line-height: 114%; }
+html[data-design="apple"] h4 { font-size: var(--text-xl);  line-height: 119%; }
 
 html[data-design="apple"] a { color: #0066cc; }
 html[data-design="apple"][data-theme="dark"] a { color: #2997ff; }

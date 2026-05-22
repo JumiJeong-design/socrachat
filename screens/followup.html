@@ -6,7 +6,8 @@
 <title>SocraChat · Follow-up</title>
 <link rel="stylesheet" href="../colors_and_type.css">
 <link rel="stylesheet" href="../apple-theme.css">
-<link rel="stylesheet" href="../apple-theme.css">
+<link rel="stylesheet" href="../notion-theme.css">
+<link rel="stylesheet" href="../components.css">
 <script src="../assets/sc-ui.js" defer></script>
 <script src="../assets/shell.js" defer></script>
 <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
@@ -18,21 +19,22 @@
   .main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 30px 24px 80px; }
   .container { width: 100%; max-width: 660px; display: flex; flex-direction: column; gap: 24px; }
 
-  .badge {
+  /* eyebrow pill (larger than .badge — page-specific) */
+  .eyebrow-pill {
     display: inline-flex; align-items: center; gap: 6px;
     align-self: flex-start;
-    padding: 5px 12px; border-radius: var(--r-full);
-    background: var(--warm-soft);
+    padding: 5px 14px; border-radius: var(--r-full);
+    background: var(--warn-soft);
     color: var(--warm-accent);
     font-size: 11.5px; font-weight: 700; letter-spacing: .04em;
   }
-  .badge svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; }
+  .eyebrow-pill svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; }
 
   .lead h1 {
-    font-size: 26px; font-weight: 600; line-height: 1.4;
+    font-size: 26px; font-weight: 600; line-height: 140%;
     color: var(--fg-strong); letter-spacing: -.005em;
   }
-  .lead p { font-size: 14px; color: var(--fg-muted); margin-top: 10px; line-height: 1.65; }
+  .lead p { font-size: 14px; color: var(--fg-muted); margin-top: 10px; line-height: 165%; }
 
   /* QUESTION SECTION */
   .qsection { display: flex; flex-direction: column; gap: 14px; }
@@ -72,13 +74,9 @@
     border-top: 0; border-left: 0;
     transform: rotate(45deg) translateY(-1px);
   }
-  .opt .lbl { flex: 1; line-height: 1.45; }
-  .opt .cat {
-    font-family: var(--font-mono); font-size: 10px; letter-spacing: .05em;
-    padding: 2px 7px; border-radius: 4px;
-    background: var(--bg-sunken); color: var(--fg-subtle);
-  }
-  .opt.sel .cat { background: var(--surface); color: var(--accent); }
+  .opt .lbl { flex: 1; line-height: 165%; }
+  .opt .cat-tag { margin-left: auto; }
+  .opt.sel .cat-tag { background: var(--surface); color: var(--accent); }
   .opt.idk { color: var(--fg-subtle); font-style: italic; }
 
   .custom {
@@ -96,22 +94,12 @@
   .custom input::placeholder { color: var(--fg-subtle); }
 
   .footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 8px; }
-  .skip { background: transparent; border: 0; color: var(--fg-muted); font-family: inherit; font-size: 13px; cursor: pointer; font-weight: 500; }
-  .skip:hover { color: var(--fg-strong); }
-  .submit {
-    background: var(--accent); color: var(--accent-fg);
-    border: 0; border-radius: var(--r-full);
-    height: 40px; padding: 0 22px;
-    display: inline-flex; align-items: center; gap: 6px;
-    font-family: inherit; font-size: 13.5px; font-weight: 600;
-    cursor: pointer;
-  }
-  .submit svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; }
 
+  /* progress dots */
   .qrow { display: flex; gap: 6px; align-items: center; font-size: 11px; color: var(--fg-subtle); font-family: var(--font-mono); letter-spacing: .04em; }
-  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--line-strong); }
-  .dot.active { background: var(--accent); }
-  .dot.done { background: var(--accent); opacity: .4; }
+  .prog-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--line-strong); }
+  .prog-dot.active { background: var(--accent); }
+  .prog-dot.done { background: var(--accent); opacity: .4; }
 
   @media (max-width: 540px) {
     .topbar { padding: 12px 16px; }
@@ -119,10 +107,10 @@
     .lead h1 { font-size: 22px; }
     .lead p { font-size: 13px; }
     .opt { padding: 11px 13px; font-size: 13.5px; }
-    .opt .cat { display: none; }
+    .opt .cat-tag { display: none; }
     .footer { flex-direction: column; align-items: stretch; gap: 8px; }
-    .submit { justify-content: center; height: 44px; }
-    .skip { text-align: center; padding: 8px 0; }
+    .btn-primary { justify-content: center; height: 44px; }
+    .btn-ghost { text-align: center; padding: 8px 0; }
   }
 </style>
 </head>
@@ -133,7 +121,7 @@
 <main class="main">
   <div class="container">
 
-    <span class="badge">
+    <span class="eyebrow-pill">
       <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v6M12 15v6M3 12h6M15 12h6"/></svg>
       <span data-i18n="badge">もう少し教えてください</span>
     </span>
@@ -144,7 +132,7 @@
     </div>
 
     <div class="qrow">
-      <div class="dot done"></div><div class="dot active"></div><div class="dot"></div>
+      <div class="prog-dot done"></div><div class="prog-dot active"></div><div class="prog-dot"></div>
       <span style="margin-left:6px" data-i18n="step_label">質問 2 / 3</span>
     </div>
 
@@ -154,17 +142,17 @@
         <button class="opt sel">
           <div class="check"></div>
           <div class="lbl" data-i18n="q1o1">テスラ社の <b>株式</b> (TSLA)</div>
-          <span class="cat" data-i18n="q1o1c">投資</span>
+          <span class="cat-tag" data-i18n="q1o1c">投資</span>
         </button>
         <button class="opt">
           <div class="check"></div>
           <div class="lbl" data-i18n="q1o2">テスラ社の <b>自動車</b> (購入検討)</div>
-          <span class="cat" data-i18n="q1o2c">消費</span>
+          <span class="cat-tag" data-i18n="q1o2c">消費</span>
         </button>
         <button class="opt">
           <div class="check"></div>
           <div class="lbl" data-i18n="q1o3"><b>イーロン・マスク</b> 関連のニュース</div>
-          <span class="cat" data-i18n="q1o3c">時事</span>
+          <span class="cat-tag" data-i18n="q1o3c">時事</span>
         </button>
         <button class="opt idk">
           <div class="check"></div>
@@ -200,8 +188,8 @@
     </div>
 
     <div class="footer">
-      <button class="skip" data-i18n="skip">この質問はスキップ</button>
-      <button class="submit"><span data-i18n="continue">続ける</span><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>
+      <button class="btn btn-ghost btn-sm" data-i18n="skip">この質問はスキップ</button>
+      <button class="btn btn-primary btn-md"><span data-i18n="continue">続ける</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>
     </div>
 
   </div>

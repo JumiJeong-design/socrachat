@@ -6,7 +6,8 @@
 <title>SocraChat · Analyzing</title>
 <link rel="stylesheet" href="../colors_and_type.css">
 <link rel="stylesheet" href="../apple-theme.css">
-<link rel="stylesheet" href="../apple-theme.css">
+<link rel="stylesheet" href="../notion-theme.css">
+<link rel="stylesheet" href="../components.css">
 <script src="../assets/sc-ui.js" defer></script>
 <script src="../assets/shell.js" defer></script>
 <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
@@ -29,7 +30,7 @@
   .q .ic { width: 28px; height: 28px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; flex-shrink: 0; font-weight: 700; font-family: var(--font-mono); }
   .q .body { flex: 1; }
   .q .lbl { font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg-subtle); font-weight: 600; margin-bottom: 4px; }
-  .q .text { font-size: 15px; color: var(--fg-strong); line-height: 1.55; }
+  .q .text { font-size: 15px; color: var(--fg-strong); line-height: 165%; }
 
   .pipeline { display: flex; flex-direction: column; gap: 4px; }
   .step {
@@ -64,13 +65,7 @@
   @keyframes spin { to { transform: rotate(360deg); } }
 
   .ai-stack { display: flex; gap: 6px; }
-  .ai-stack .av {
-    width: 22px; height: 22px; border-radius: 50%;
-    color: var(--fg-on-accent); font-size: 9px; font-weight: 700; font-family: var(--font-mono);
-    display: grid; place-items: center;
-    border: 2px solid var(--bg);
-  }
-  .ai-stack .av + .av { margin-left: -10px; }
+  .ai-stack .av { border: 2px solid var(--bg); }
   .ai-stack .av.pulse { animation: pulse 1200ms ease-in-out infinite; }
   @keyframes pulse {
     0%, 100% { transform: scale(1); }
@@ -84,16 +79,7 @@
   }
   .progress .text { font-size: 13px; color: var(--fg-muted); }
   .progress .text b { color: var(--fg-strong); font-weight: 700; font-family: var(--font-mono); }
-  .progress button {
-    background: transparent; border: 1px solid var(--line-strong);
-    color: var(--fg-muted);
-    padding: 7px 14px; border-radius: var(--r-full);
-    font-family: inherit; font-size: 12px; font-weight: 500;
-    cursor: pointer;
-    display: inline-flex; align-items: center; gap: 6px;
-  }
-  .progress button:hover { background: var(--surface-hover); color: var(--fg-strong); }
-  .progress button svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; }
+  .progress .btn-ghost svg { width: 12px; height: 12px; }
 
   @media (max-width: 540px) {
     .topbar { padding: 12px 16px; }
@@ -103,7 +89,7 @@
     .step { gap: 10px; padding: 12px 2px; }
     .step .label { font-size: 13px; }
     .progress { flex-direction: column; align-items: flex-start; gap: 10px; }
-    .progress button { align-self: flex-end; }
+    .progress .btn-ghost { align-self: flex-end; }
   }
 </style>
 </head>
@@ -126,23 +112,23 @@
     <div class="pipeline">
       <div class="step done">
         <div class="marker"><span class="n">1</span></div>
-        <div class="label" data-i18n="step1">質問のカテゴリを分析中…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height:1.5">→ 投資・経済 / 選択比較型 (A or B)</small></div>
+        <div class="label" data-i18n="step1">質問のカテゴリを分析中…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height: 165%">→ 投資・経済 / 選択比較型 (A or B)</small></div>
         <div class="meta">0.4s</div>
       </div>
       <div class="step done">
         <div class="marker"><span class="n">2</span></div>
-        <div class="label" data-i18n="step2">最適なAIモデルを選定…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height:1.5">→ Claude · GPT-4o · Gemini · Perplexity · Grok</small></div>
+        <div class="label" data-i18n="step2">最適なAIモデルを選定…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height: 165%">→ Claude · GPT-4o · Gemini · Perplexity · Grok</small></div>
         <div class="meta">0.6s</div>
       </div>
       <div class="step running">
         <div class="marker"><span class="n">3</span></div>
         <div class="label" data-i18n="step3">5モデルに同時問い合わせ中…</div>
         <div class="ai-stack">
-          <span class="av pulse" style="background:var(--ai-violet)">C</span>
-          <span class="av pulse" style="background:var(--ai-blue);animation-delay:.15s">G</span>
-          <span class="av pulse" style="background:var(--ai-amber);animation-delay:.30s">◆</span>
-          <span class="av pulse" style="background:var(--ai-teal);animation-delay:.45s">P</span>
-          <span class="av pulse" style="background:var(--ai-rose);animation-delay:.60s">X</span>
+          <span class="av av-s pulse" data-model-icon="claude"></span>
+          <span class="av av-s pulse" data-model-icon="openai" style="animation-delay:.15s"></span>
+          <span class="av av-s pulse" data-model-icon="gemini" style="animation-delay:.30s"></span>
+          <span class="av av-s pulse" data-model-icon="perplexity" style="animation-delay:.45s"></span>
+          <span class="av av-s pulse" data-model-icon="grok" style="animation-delay:.60s"></span>
         </div>
       </div>
       <div class="step">
@@ -164,7 +150,7 @@
 
     <div class="progress">
       <div class="text" role="status" aria-live="polite"><b>3</b> / 6 · <span data-i18n="prog_running">5モデルに問い合わせ中…</span></div>
-      <button aria-label="Cancel analysis"><svg viewBox="0 0 24 24" stroke-linecap="round"><rect x="6" y="6" width="12" height="12" rx="1"/></svg><span data-i18n="cancel">中断</span></button>
+      <button class="btn btn-ghost btn-sm" aria-label="Cancel analysis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6" y="6" width="12" height="12" rx="1"/></svg><span data-i18n="cancel">中断</span></button>
     </div>
   </div>
 </main>
@@ -174,8 +160,8 @@
     ja: {
       q_label: 'あなたの問い',
       question: 'テスラの株は今買うべき？それとも下がるのを待つべきだろうか。長期的な視点で見ている。',
-      step1: '質問のカテゴリを分析中…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height:1.5">→ 投資・経済 / 選択比較型 (A or B)</small>',
-      step2: '最適なAIモデルを選定…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height:1.5">→ Claude · GPT-4o · Gemini · Perplexity · Grok</small>',
+      step1: '質問のカテゴリを分析中…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height: 165%">→ 投資・経済 / 選択比較型 (A or B)</small>',
+      step2: '最適なAIモデルを選定…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height: 165%">→ Claude · GPT-4o · Gemini · Perplexity · Grok</small>',
       step3: '5モデルに同時問い合わせ中…',
       step4: '意見・結論を分類してグループ化',
       step5: 'ペルソナ視点を生成',
@@ -186,8 +172,8 @@
     en: {
       q_label: 'Your question',
       question: 'Should I buy Tesla now, or wait for it to drop? Looking long-term.',
-      step1: 'Analyzing question category…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height:1.5">→ Finance / Compare-and-decide (A or B)</small>',
-      step2: 'Selecting best AI models…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height:1.5">→ Claude · GPT-4o · Gemini · Perplexity · Grok</small>',
+      step1: 'Analyzing question category…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height: 165%">→ Finance / Compare-and-decide (A or B)</small>',
+      step2: 'Selecting best AI models…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height: 165%">→ Claude · GPT-4o · Gemini · Perplexity · Grok</small>',
       step3: 'Querying 5 models in parallel…',
       step4: 'Clustering opinions & conclusions',
       step5: 'Generating persona perspectives',
@@ -198,8 +184,8 @@
     ko: {
       q_label: '나의 질문',
       question: '테슬라 주식, 지금 사야 할까? 아니면 더 떨어지길 기다려야 할까? 장기 관점이야.',
-      step1: '질문 카테고리 분석 중…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height:1.5">→ 금융·투자 / 선택형 (A or B)</small>',
-      step2: '최적의 AI 모델 선정 중…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height:1.5">→ Claude · GPT-4o · Gemini · Perplexity · Grok</small>',
+      step1: '질문 카테고리 분석 중…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height: 165%">→ 금융·투자 / 선택형 (A or B)</small>',
+      step2: '최적의 AI 모델 선정 중…<br><small style="font-size:11.5px;color:var(--fg-subtle);font-weight:400;line-height: 165%">→ Claude · GPT-4o · Gemini · Perplexity · Grok</small>',
       step3: '5개 모델에 동시 질의 중…',
       step4: '의견·결론 분류 및 그룹화',
       step5: '페르소나 시점 생성',

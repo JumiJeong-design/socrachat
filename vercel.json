@@ -1,4 +1,4 @@
 {
-  "buildCommand": "node scripts/check-i18n.js",
+  "buildCommand": "npm run build",
   "outputDirectory": "."
 }

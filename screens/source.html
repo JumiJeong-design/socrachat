@@ -6,7 +6,8 @@
 <title>SocraChat · Source detail</title>
 <link rel="stylesheet" href="../colors_and_type.css">
 <link rel="stylesheet" href="../apple-theme.css">
-<link rel="stylesheet" href="../apple-theme.css">
+<link rel="stylesheet" href="../notion-theme.css">
+<link rel="stylesheet" href="../components.css">
 <script src="../assets/sc-ui.js" defer></script>
 <script src="../assets/shell.js" defer></script>
 <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
@@ -18,10 +19,6 @@
     padding: 16px 24px; display: flex; align-items: center; gap: 14px;
     border-bottom: 1px solid var(--line); background: var(--bg);
   }
-  .iconb { width: 36px; height: 36px; border-radius: 10px; background: transparent; border: 0; color: var(--fg-muted); cursor: pointer; display: grid; place-items: center; }
-  .iconb:hover { background: var(--surface-hover); color: var(--fg-strong); }
-  .iconb svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
-
   .crumbs { flex: 1; display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--fg-muted); }
   .crumbs a { color: var(--fg-subtle); }
   .crumbs b { color: var(--fg-strong); font-weight: 600; }
@@ -38,16 +35,14 @@
   .model-tag {
     display: inline-flex; align-items: center; gap: 10px;
     align-self: flex-start;
-    background: color-mix(in srgb, var(--ai-violet) 8%, transparent);
+    background: color-mix(in srgb, var(--ai-claude) 8%, transparent);
     padding: 6px 12px 6px 6px;
     border-radius: var(--r-full);
   }
-  .model-tag .av { width: 26px; height: 26px; border-radius: 50%; background: var(--ai-violet); color: var(--fg-on-accent); display: grid; place-items: center; font-family: var(--font-mono); font-size: 11px; font-weight: 700; }
-  .model-tag .n { font-size: 13px; font-weight: 600; color: var(--ai-violet); }
-
+  .model-tag .n { font-size: 13px; font-weight: 600; color: var(--ai-claude); }
   .model-tag .meta { font-family: var(--font-mono); font-size: 11px; color: var(--fg-muted); }
 
-  h1 { font-size: 28px; font-weight: 600; line-height: 1.35; color: var(--fg-strong); letter-spacing: -.01em; }
+  h1 { font-size: 28px; font-weight: 600; line-height: 135%; color: var(--fg-strong); letter-spacing: -.01em; }
   .qmeta { display: flex; gap: 14px; font-size: 12px; color: var(--fg-muted); font-family: var(--font-mono); }
 
   .label {
@@ -59,11 +54,11 @@
   }
   .label::before { content: ''; width: 18px; height: 1px; background: var(--line-strong); }
 
-  .full-text { font-size: 15px; line-height: 1.85; color: var(--fg); max-width: 700px; }
+  .full-text { font-size: 17px; line-height: 190%; color: var(--fg); max-width: 720px; }
   .full-text p { margin-bottom: 16px; }
-  .full-text p strong { color: var(--fg-strong); font-weight: 600; background: linear-gradient(transparent 60%, color-mix(in srgb, var(--ai-violet) 18%, transparent) 60%); padding: 0 2px; }
+  .full-text p strong { color: var(--fg-strong); font-weight: 600; background: linear-gradient(transparent 60%, color-mix(in srgb, var(--ai-claude) 18%, transparent) 60%); padding: 0 2px; }
   .full-text h3 { font-size: 16px; font-weight: 700; color: var(--fg-strong); margin: 24px 0 10px; display: flex; align-items: center; gap: 8px; }
-  .full-text h3::before { content: ''; width: 4px; height: 14px; background: var(--ai-violet); border-radius: var(--r-xs); }
+  .full-text h3::before { content: ''; width: 4px; height: 14px; background: var(--ai-claude); border-radius: var(--r-xs); }
   .full-text ul { padding-left: 22px; margin-bottom: 16px; }
   .full-text li { margin-bottom: 6px; }
   .full-text blockquote {
@@ -72,9 +67,8 @@
     margin: 16px 0;
     background: var(--accent-soft);
     border-radius: 0 8px 8px 0;
-    font-size: 14px; color: var(--fg-muted);
+    font-size: 16px; color: var(--fg-muted);
   }
-
   .src-link {
     color: var(--accent); border-bottom: 1px solid color-mix(in oklab, var(--accent) 30%, transparent);
     text-decoration: none;
@@ -97,7 +91,7 @@
   .src-item:last-child { border: 0; padding-bottom: 0; }
   .src-item .num { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--accent); width: 22px; flex-shrink: 0; }
   .src-item .info { flex: 1; min-width: 0; }
-  .src-item .t { font-size: 12.5px; color: var(--fg-strong); font-weight: 500; line-height: 1.4; }
+  .src-item .t { font-size: 12.5px; color: var(--fg-strong); font-weight: 500; line-height: 165%; }
   .src-item .d { font-size: 11px; color: var(--fg-subtle); margin-top: 2px; }
 
   .switch-models { display: flex; flex-direction: column; gap: 4px; }
@@ -109,7 +103,6 @@
   }
   .switch-row:hover { background: var(--bg-sunken); }
   .switch-row.active { background: var(--accent-soft); }
-  .switch-row .av { width: 22px; height: 22px; border-radius: 50%; color: var(--fg-on-accent); font-family: var(--font-mono); font-size: 10px; font-weight: 700; display: grid; place-items: center; flex-shrink: 0; }
   .switch-row .n { flex: 1; font-weight: 500; color: var(--fg); }
   .switch-row .pc { font-family: var(--font-mono); color: var(--fg-subtle); }
   .switch-row.active .pc { color: var(--accent); }
@@ -120,8 +113,8 @@
     .topbar .crumbs { display: none; }
     .layout { padding: 20px 16px 40px; gap: 20px; }
     h1 { font-size: 22px; }
-    .full-text { font-size: 14px; line-height: 1.75; }
-    .full-text h3 { font-size: 15px; margin: 20px 0 8px; }
+    .full-text { font-size: 16px; line-height: 185%; }
+    .full-text h3 { font-size: 17px; margin: 20px 0 8px; }
     .header-card { gap: 10px; padding-bottom: 16px; margin-bottom: 16px; }
     .qmeta { gap: 8px; font-size: 11px; flex-wrap: wrap; }
   }
@@ -146,7 +139,7 @@
   <main>
     <div class="header-card">
       <div class="model-tag">
-        <span class="av">C</span>
+        <span class="av av-s" data-model-icon="claude" style="background:var(--ai-claude)"></span>
         <span class="n">Claude Opus 4.5</span>
         <span class="meta" data-i18n="model_meta">回答 1,840文字 · 2.4秒</span>
       </div>
@@ -197,11 +190,11 @@
     <div class="scard">
       <h3 data-i18n="side_switch">他のモデルを見る</h3>
       <div class="switch-models">
-        <div class="switch-row active"><span class="av" style="background:var(--ai-violet)">C</span><span class="n">Claude Opus</span><span class="pc">95</span></div>
-        <div class="switch-row"><span class="av" style="background:var(--ai-blue)">G</span><span class="n">GPT-4o</span><span class="pc">80</span></div>
-        <div class="switch-row"><span class="av" style="background:var(--ai-teal)">P</span><span class="n">Perplexity</span><span class="pc">68</span></div>
-        <div class="switch-row"><span class="av" style="background:var(--ai-amber)">◆</span><span class="n">Gemini 2.5</span><span class="pc">55</span></div>
-        <div class="switch-row"><span class="av" style="background:var(--ai-rose)">X</span><span class="n">Grok</span><span class="pc">42</span></div>
+        <div class="switch-row active"><span class="av av-s" data-model-icon="claude" style="background:var(--ai-claude)"></span><span class="n">Claude Opus</span><span class="pc">95</span></div>
+        <div class="switch-row"><span class="av av-s" data-model-icon="openai"></span><span class="n">GPT-4o</span><span class="pc">80</span></div>
+        <div class="switch-row"><span class="av av-s" data-model-icon="perplexity"></span><span class="n">Perplexity</span><span class="pc">68</span></div>
+        <div class="switch-row"><span class="av av-s" data-model-icon="gemini"></span><span class="n">Gemini 2.5</span><span class="pc">55</span></div>
+        <div class="switch-row"><span class="av av-s" data-model-icon="grok"></span><span class="n">Grok</span><span class="pc">42</span></div>
       </div>
     </div>
 

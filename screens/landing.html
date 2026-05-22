@@ -6,7 +6,8 @@
 <title>SocraChat · 複数のAIに、同時に聞く。</title>
 <link rel="stylesheet" href="../colors_and_type.css">
 <link rel="stylesheet" href="../apple-theme.css">
-<link rel="stylesheet" href="../apple-theme.css">
+<link rel="stylesheet" href="../notion-theme.css">
+<link rel="stylesheet" href="../components.css">
 <script src="../assets/sc-ui.js" defer></script>
 <script src="../assets/shell.js" defer></script>
 <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
@@ -22,14 +23,8 @@
     display: flex; align-items: center; justify-content: space-between;
   }
   nav .links { display: flex; align-items: center; gap: 22px; font-size: 13px; }
-  nav .links a:not(.cta) { color: var(--fg-muted); font-weight: 500; }
-  nav .links a:not(.cta):hover { color: var(--fg-strong); }
-  nav .cta {
-    background: var(--accent); color: var(--accent-fg);
-    padding: 8px 18px; border-radius: var(--r-full);
-    font-size: 13px; font-weight: 600;
-  }
-  nav .cta:hover { background: var(--accent-hover); }
+  nav .links a:not(.btn) { color: var(--fg-muted); font-weight: 500; }
+  nav .links a:not(.btn):hover { color: var(--fg-strong); }
 
   /* === HERO === */
   .hero { padding: 60px 0 80px; text-align: center; }
@@ -44,7 +39,7 @@
 
   h1.hero-h {
     font-size: clamp(40px, 6.5vw, 76px);
-    font-weight: 600; line-height: 1.08; letter-spacing: -.025em;
+    font-weight: 600; line-height: 108%; letter-spacing: -.025em;
     color: var(--fg-strong);
     max-width: 920px; margin: 0 auto 24px;
   }
@@ -52,28 +47,11 @@
   h1.hero-h .ja-bold { font-family: var(--font-display); font-weight: 600; }
 
   .hero-sub {
-    font-size: 17px; line-height: 1.7;
+    font-size: 17px; line-height: 170%;
     color: var(--fg-muted);
     max-width: 520px; margin: 0 auto 32px;
   }
   .hero-cta { display: inline-flex; gap: 10px; align-items: center; }
-  .cta-primary {
-    background: var(--accent); color: var(--accent-fg);
-    padding: 13px 26px; border-radius: var(--r-full);
-    font-size: 14.5px; font-weight: 600;
-    border: 0; cursor: pointer;
-    box-shadow: 0 6px 24px color-mix(in srgb, var(--accent) 25%, transparent);
-    font-family: inherit;
-    transition: all var(--dur-base) var(--ease-out);
-  }
-  .cta-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
-  .cta-secondary {
-    background: transparent; color: var(--fg); border: 1px solid var(--line-strong);
-    padding: 12px 22px; border-radius: var(--r-full);
-    font-size: 14px; font-weight: 500;
-    cursor: pointer; font-family: inherit;
-  }
-  .cta-secondary:hover { background: var(--surface-hover); }
 
   /* === HERO PREVIEW === */
   .preview {
@@ -88,24 +66,21 @@
   }
   .pv-q { display: flex; gap: 10px; align-items: flex-start; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
   .pv-q .ic { width: 24px; height: 24px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; font-family: var(--font-mono); font-size: 10px; font-weight: 700; flex-shrink: 0; }
-  .pv-q .text { font-size: 14px; color: var(--fg-strong); font-weight: 600; line-height: 1.5; }
+  .pv-q .text { font-size: 14px; color: var(--fg-strong); font-weight: 600; line-height: 165%; }
   .pv-bar { display: flex; height: 32px; border-radius: 10px; overflow: hidden; }
   .pv-bar > div { display: grid; place-items: center; color: var(--fg-on-accent); font-family: var(--font-mono); font-size: 11px; font-weight: 700; }
   .pv-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .pv-opt { padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); display: flex; flex-direction: column; gap: 8px; position: relative; overflow: hidden; }
   .pv-opt .strip { position: absolute; left: 0; top: 0; bottom: 0; width: 3px; }
-  .pv-opt.a .strip { background: var(--ai-violet); }
-  .pv-opt.b .strip { background: var(--ai-blue); }
+  .pv-opt.a .strip { background: var(--ai-claude); }
+  .pv-opt.b .strip { background: var(--ai-gpt); }
   .pv-opt .hd { display: flex; align-items: center; gap: 8px; }
   .pv-opt .pct { font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--fg-strong); }
   .pv-opt .pct .u { font-size: 11px; color: var(--fg-subtle); font-weight: 500; }
   .pv-opt .strength { font-size: 10px; padding: 2px 7px; border-radius: var(--r-full); font-weight: 700; }
   .pv-opt .strength.s { background: var(--accent-soft); color: var(--accent); }
   .pv-opt .strength.p { background: var(--warn-soft); color: var(--warn-fg); }
-  .pv-opt .concl { font-size: 13px; font-weight: 600; color: var(--fg); line-height: 1.45; }
-  .pv-opt .models { display: flex; }
-  .pv-opt .models .av { width: 18px; height: 18px; border-radius: 50%; color: var(--fg-on-accent); font-size: 8px; font-weight: 700; font-family: var(--font-mono); display: grid; place-items: center; border: 1.5px solid var(--surface); }
-  .pv-opt .models .av + .av { margin-left: -7px; }
+  .pv-opt .concl { font-size: 13px; font-weight: 600; color: var(--fg); line-height: 165%; }
 
   /* === FEATURE SECTIONS === */
   .features { padding: 100px 0; background: var(--bg-sunken); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
@@ -116,13 +91,13 @@
   }
   .features h2 {
     font-size: clamp(32px, 4.5vw, 52px); font-weight: 600;
-    line-height: 1.15; letter-spacing: -.02em;
+    line-height: 115%; letter-spacing: -.02em;
     text-align: center; margin-bottom: 18px;
     color: var(--fg-strong);
   }
   .features .lead {
     text-align: center; color: var(--fg-muted);
-    max-width: 540px; margin: 0 auto 60px; line-height: 1.7;
+    max-width: 540px; margin: 0 auto 60px; line-height: 170%;
   }
 
   .pillars {
@@ -141,17 +116,17 @@
   .pillar .num::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
   .pillar h3 {
     font-family: var(--font-display);
-    font-size: 22px; font-weight: 500; line-height: 1.35;
+    font-size: 22px; font-weight: 500; line-height: 135%;
     color: var(--fg-strong);
   }
-  .pillar p { font-size: 13.5px; color: var(--fg-muted); line-height: 1.7; }
+  .pillar p { font-size: 13.5px; color: var(--fg-muted); line-height: 170%; }
   .pillar .visual { height: 90px; border-radius: 12px; background: var(--bg-sunken); display: grid; place-items: center; margin-top: auto; }
 
   /* === HOW IT WORKS === */
   .how { padding: 100px 0; }
   .how h2 {
     font-size: clamp(32px, 4.5vw, 48px); font-weight: 600;
-    line-height: 1.2; letter-spacing: -.02em;
+    line-height: 120%; letter-spacing: -.02em;
     text-align: center; margin-bottom: 50px;
     color: var(--fg-strong);
   }
@@ -164,14 +139,14 @@
   }
   .step-card .n { font-family: var(--font-mono); font-size: 11px; color: var(--accent); font-weight: 700; letter-spacing: .1em; }
   .step-card h4 { font-size: 15.5px; font-weight: 600; color: var(--fg-strong); }
-  .step-card p { font-size: 12.5px; color: var(--fg-muted); line-height: 1.6; }
+  .step-card p { font-size: 12.5px; color: var(--fg-muted); line-height: 165%; }
 
   /* === QUOTE === */
   .quote { padding: 100px 0; text-align: center; background: var(--bg-sunken); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .quote q {
     font-family: var(--font-display);
     font-size: clamp(28px, 4.2vw, 44px);
-    font-weight: 500; line-height: 1.4;
+    font-weight: 500; line-height: 140%;
     color: var(--fg-strong);
     quotes: '「' '」';
     display: block; max-width: 740px; margin: 0 auto;
@@ -201,7 +176,7 @@
     <a href="#features" data-i18n="nav_features">機能</a>
     <a href="#how" data-i18n="nav_how">使い方</a>
     <a href="#" data-i18n="nav_pricing">料金</a>
-    <a href="#" class="cta" data-i18n="nav_cta">無料で始める</a>
+    <a href="#" class="btn btn-primary btn-sm" data-i18n="nav_cta">無料で始める</a>
   </div>
 </nav>
 
@@ -213,8 +188,8 @@
     </h1>
     <p class="hero-sub" data-i18n="hero_sub">SocraChatは、あなたの問いを5つのトップAIに送り、結論の一致と分岐を可視化。重要な判断を、ひとつのAIの幻覚に委ねない。</p>
     <div class="hero-cta">
-      <button class="cta-primary" data-i18n="cta_primary">無料で問い合わせる →</button>
-      <button class="cta-secondary" data-i18n="cta_secondary">仕組みを見る</button>
+      <button class="btn btn-primary btn-lg" data-i18n="cta_primary">無料で問い合わせる →</button>
+      <button class="btn btn-outline btn-lg" data-i18n="cta_secondary">仕組みを見る</button>
     </div>
 
     <div class="preview">
@@ -223,8 +198,8 @@
         <div class="text" data-i18n="pv_q">テスラの株は今買うべき？それとも下がるのを待つべきだろうか。</div>
       </div>
       <div class="pv-bar">
-        <div style="background:var(--ai-violet);width:62%">62%</div>
-        <div style="background:var(--ai-blue);width:38%">38%</div>
+        <div style="background:var(--ai-claude);width:62%">62%</div>
+        <div style="background:var(--ai-gpt);width:38%">38%</div>
       </div>
       <div class="pv-opts">
         <div class="pv-opt a">
@@ -234,10 +209,10 @@
             <span class="strength s" data-i18n="strong">強い一致</span>
           </div>
           <div class="concl" data-i18n="pv_a">長期保有なら今が買い時。分割購入を推奨。</div>
-          <div class="models">
-            <span class="av" style="background:var(--ai-violet)">C</span>
-            <span class="av" style="background:var(--ai-blue)">G</span>
-            <span class="av" style="background:var(--ai-teal)">P</span>
+          <div class="av-stack">
+            <span class="av av-xs" data-model-icon="claude"></span>
+            <span class="av av-xs" data-model-icon="openai"></span>
+            <span class="av av-xs" data-model-icon="perplexity"></span>
           </div>
         </div>
         <div class="pv-opt b">
@@ -247,9 +222,9 @@
             <span class="strength p" data-i18n="cond">条件付き</span>
           </div>
           <div class="concl" data-i18n="pv_b">Q3決算後の判断が安全。短期なら待機。</div>
-          <div class="models">
-            <span class="av" style="background:var(--ai-amber)">◆</span>
-            <span class="av" style="background:var(--ai-rose)">X</span>
+          <div class="av-stack">
+            <span class="av av-xs" data-model-icon="gemini"></span>
+            <span class="av av-xs" data-model-icon="grok"></span>
           </div>
         </div>
       </div>
@@ -270,7 +245,7 @@
         <p data-i18n="p1_p">5モデルの答えを意味的にクラスタリング。「結論A: 62% · 結論B: 38%」のように、どこで合意し、どこで割れるかを可視化。</p>
         <div class="visual">
           <div style="display:flex;height:28px;width:160px;border-radius:8px;overflow:hidden">
-            <div style="background:var(--ai-violet);width:62%"></div><div style="background:var(--ai-blue);width:38%"></div>
+            <div style="background:var(--ai-claude);width:62%"></div><div style="background:var(--ai-gpt);width:38%"></div>
           </div>
         </div>
       </div>
@@ -279,9 +254,9 @@
         <h3 data-i18n="p2_h">ペルソナで<br>多角的視点</h3>
         <p data-i18n="p2_p">38歳会社員・慎重派、29歳フリーランス・攻撃的、52歳FP — 同じ問いに、異なる立場の人が答えたらどうなるか。</p>
         <div class="visual" style="display:flex;gap:8px;padding:0 20px;">
-          <span style="width:36px;height:36px;border-radius:50%;background:var(--ai-blue);color:#FFF;display:grid;place-items:center;font-weight:700">健</span>
-          <span style="width:36px;height:36px;border-radius:50%;background:var(--ai-rose);color:#FFF;display:grid;place-items:center;font-weight:700">舞</span>
-          <span style="width:36px;height:36px;border-radius:50%;background:var(--ai-teal);color:#FFF;display:grid;place-items:center;font-weight:700">圭</span>
+          <span style="width:36px;height:36px;border-radius:50%;background:var(--ai-gpt);color:#FFF;display:grid;place-items:center;font-weight:700">健</span>
+          <span style="width:36px;height:36px;border-radius:50%;background:var(--ai-grok);color:#FFF;display:grid;place-items:center;font-weight:700">舞</span>
+          <span style="width:36px;height:36px;border-radius:50%;background:var(--ai-perplexity);color:#FFF;display:grid;place-items:center;font-weight:700">圭</span>
         </div>
       </div>
       <div class="pillar">

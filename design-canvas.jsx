@@ -78,7 +78,7 @@ if (typeof document !== 'undefined' && !document.getElementById('dc-styles')) {
     '.dc-menu{position:absolute;top:100%;right:0;margin-top:4px;background:#fff;border-radius:8px;',
     '  box-shadow:0 8px 28px rgba(0,0,0,.18),0 0 0 1px rgba(0,0,0,.05);padding:4px;min-width:160px;z-index:10}',
     '.dc-menu button{display:block;width:100%;padding:7px 10px;border:0;background:transparent;',
-    '  border-radius:5px;font-family:inherit;font-size:13px;font-weight:500;line-height:1.2;',
+    '  border-radius:5px;font-family:inherit;font-size:13px;font-weight:500;line-height: 120%;',
     '  color:#29261b;cursor:pointer;text-align:left;transition:background .12s;white-space:nowrap}',
     '.dc-menu button:hover{background:rgba(0,0,0,.05)}',
     '.dc-menu hr{border:0;border-top:1px solid rgba(0,0,0,.08);margin:4px 2px}',

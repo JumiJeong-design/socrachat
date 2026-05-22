@@ -6,7 +6,8 @@
 <title>SocraChat · Answer Board</title>
 <link rel="stylesheet" href="../colors_and_type.css">
 <link rel="stylesheet" href="../apple-theme.css">
-<link rel="stylesheet" href="../apple-theme.css">
+<link rel="stylesheet" href="../notion-theme.css">
+<link rel="stylesheet" href="../components.css">
 <script src="../assets/sc-ui.js" defer></script>
 <script src="../assets/shell.js" defer></script>
 <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
@@ -22,15 +23,6 @@
     background: var(--bg);
     position: sticky; top: 0; z-index: 10;
   }
-  .iconb {
-    width: 36px; height: 36px; border-radius: 10px;
-    background: transparent; border: 1px solid transparent;
-    color: var(--fg-muted); cursor: pointer;
-    display: grid; place-items: center;
-    transition: all var(--dur-base) var(--ease-out);
-  }
-  .iconb:hover { background: var(--surface-hover); border-color: var(--line); color: var(--fg-strong); }
-  .iconb svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
   .topbar .crumbs { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--fg-subtle); }
   .topbar .crumbs span { color: var(--fg-muted); }
   .topbar .spacer { flex: 1; }
@@ -42,7 +34,7 @@
   }
   .qhead .ts { font-family: var(--font-mono); font-size: 11px; color: var(--fg-subtle); letter-spacing: .04em; text-transform: uppercase; margin-bottom: 12px; }
   .qhead h1 {
-    font-size: 28px; font-weight: 600; line-height: 1.35;
+    font-size: 28px; font-weight: 600; line-height: 135%;
     letter-spacing: -.01em;
     color: var(--fg-strong);
     max-width: 760px;
@@ -53,14 +45,7 @@
     font-size: 12px; color: var(--fg-muted);
   }
   .qhead .qmeta .sep { color: var(--line-strong); }
-  .qhead .qmeta .ai-chips { display: flex; gap: 4px; margin-left: -2px; }
-  .qhead .qmeta .av {
-    width: 22px; height: 22px; border-radius: 50%;
-    display: grid; place-items: center;
-    color: var(--fg-on-accent); font-weight: 700; font-size: 9px; font-family: var(--font-mono);
-    border: 2px solid var(--bg);
-  }
-  .qhead .qmeta .av + .av { margin-left: -10px; }
+  .qhead .qmeta .ai-chips { display: flex; }
 
   /* === Tabs === */
   .tabs-wrap {
@@ -69,7 +54,6 @@
   .tabs {
     display: flex; gap: 2px;
     border-bottom: 1px solid var(--line);
-    padding-bottom: 0;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
@@ -149,7 +133,7 @@
   .v-donut { width: 120px; height: 120px; border-radius: 50%; position: relative; flex-shrink: 0; }
   .v-donut::after { content: ''; position: absolute; inset: 26px; border-radius: 50%; background: var(--surface); }
   .v-donut-center { position: absolute; inset: 0; display: grid; place-items: center; z-index: 1; }
-  .v-donut-center .big { font-family: var(--font-mono); font-size: 22px; font-weight: 700; color: var(--fg-strong); line-height: 1; }
+  .v-donut-center .big { font-family: var(--font-mono); font-size: 22px; font-weight: 700; color: var(--fg-strong); line-height: 100%; }
   .v-donut-center .sm { font-size: 10px; color: var(--fg-subtle); letter-spacing: .1em; text-transform: uppercase; margin-top: 4px; }
   .v-donut-legend { display: flex; flex-direction: column; gap: 8px; flex: 1; }
   .v-donut-legend .l { display: flex; align-items: center; gap: 8px; font-size: 13px; }
@@ -164,7 +148,6 @@
   .v-perai { display: flex; flex-direction: column; gap: 8px; padding: 4px 0; }
   .v-perai .row { display: grid; grid-template-columns: 100px 1fr 50px; gap: 12px; align-items: center; font-size: 12.5px; }
   .v-perai .row .lb { display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--fg); }
-  .v-perai .row .lb .av { width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; color: var(--fg-on-accent); font-size: 9px; font-weight: 700; font-family: var(--font-mono); }
   .v-perai .row .track { height: 10px; background: var(--bg-sunken); border-radius: 5px; overflow: hidden; }
   .v-perai .row .fill { height: 100%; border-radius: 5px; transition: width var(--dur-enter) var(--ease-out); }
   .v-perai .row .pc { font-family: var(--font-mono); color: var(--fg-muted); text-align: right; font-size: 11px; }
@@ -179,8 +162,8 @@
     position: relative; overflow: hidden;
   }
   .opinion .strip { position: absolute; left: 0; top: 0; bottom: 0; width: 4px; }
-  .opinion.a .strip { background: var(--ai-violet); }
-  .opinion.b .strip { background: var(--ai-blue); }
+  .opinion.a .strip { background: var(--ai-claude); }
+  .opinion.b .strip { background: var(--ai-gpt); }
   .op-hd { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
   .op-num {
     width: 28px; height: 28px; border-radius: 50%;
@@ -188,9 +171,9 @@
     display: grid; place-items: center;
     font-family: var(--font-mono); font-size: 13px; font-weight: 700;
   }
-  .opinion.a .op-num { background: color-mix(in srgb, var(--ai-violet) 10%, transparent); color: var(--ai-violet); }
-  .opinion.b .op-num { background: color-mix(in srgb, var(--ai-blue) 10%, transparent); color: var(--ai-blue); }
-  .op-pct { font-family: var(--font-mono); font-size: 26px; font-weight: 700; color: var(--fg-strong); line-height: 1; }
+  .opinion.a .op-num { background: color-mix(in srgb, var(--ai-claude) 10%, transparent); color: var(--ai-claude); }
+  .opinion.b .op-num { background: color-mix(in srgb, var(--ai-gpt) 10%, transparent); color: var(--ai-gpt); }
+  .op-pct { font-family: var(--font-mono); font-size: 26px; font-weight: 700; color: var(--fg-strong); line-height: 100%; }
   .op-pct .u { font-size: 14px; font-weight: 500; color: var(--fg-subtle); margin-left: 2px; }
   .op-strength {
     font-size: 11px; font-weight: 700;
@@ -202,55 +185,26 @@
   .strong i { background: var(--accent); }
   .partial { background: var(--warn-soft); color: var(--warn-fg); }
   .partial i { background: var(--warn); }
-
   .op-conclusion {
-    font-size: 18px; font-weight: 600; line-height: 1.5;
-    color: var(--fg-strong);
-    letter-spacing: -.005em;
+    font-size: 18px; font-weight: 600; line-height: 165%;
+    color: var(--fg-strong); letter-spacing: -.005em;
   }
-  .op-rationale {
-    font-size: 13.5px; color: var(--fg-muted); line-height: 1.65;
-  }
+  .op-rationale { font-size: 16px; color: var(--fg-muted); line-height: 175%; }
   .op-foot { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px dashed var(--line); gap: 12px; }
   .op-models { display: flex; }
-  .op-models .av {
-    width: 26px; height: 26px; border-radius: 50%;
-    color: var(--fg-on-accent); font-weight: 700; font-size: 10px; font-family: var(--font-mono);
-    display: grid; place-items: center;
-    border: 2px solid var(--surface);
-  }
+  .op-models .av { width: 26px; height: 26px; border: 2px solid var(--surface); }
   .op-models .av + .av { margin-left: -8px; }
   .op-actions { display: flex; gap: 6px; }
+  /* op-actions uses .btn but with custom (non-pill) look — higher specificity wins */
   .op-actions .btn {
-    background: transparent; border: 1px solid transparent;
-    padding: 6px 12px;
-    font-family: inherit; font-size: 12px; font-weight: 600;
-    color: var(--fg-muted); cursor: pointer;
-    border-radius: 8px;
-    display: inline-flex; align-items: center; gap: 4px;
+    padding: 6px 12px; border-radius: 8px;
+    font-size: 12px; color: var(--fg-muted);
+    border: 1px solid transparent;
   }
   .op-actions .btn:hover { background: var(--bg-sunken); color: var(--fg-strong); border-color: var(--line); }
   .op-actions .btn.primary { color: var(--accent); }
   .op-actions .btn.primary:hover { background: var(--accent-soft); border-color: transparent; }
   .op-actions svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-
-  /* === Issue alert === */
-  .issue {
-    background: var(--warn-soft);
-    border: 1px solid var(--warn-border);
-    border-radius: 14px;
-    padding: 14px 16px;
-    display: flex; gap: 12px; align-items: flex-start;
-  }
-  .issue .ic {
-    width: 26px; height: 26px; border-radius: 50%;
-    background: var(--warn); color: var(--fg-on-accent);
-    display: grid; place-items: center;
-    flex-shrink: 0;
-  }
-  .issue .ic svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
-  .issue h3 { font-size: 13px; font-weight: 700; color: var(--fg-strong); margin-bottom: 4px; letter-spacing: 0; }
-  .issue p { font-size: 12.5px; color: var(--fg-muted); line-height: 1.55; }
 
   /* === Side panels === */
   .side-card {
@@ -274,21 +228,14 @@
   .p-mini { display: flex; flex-direction: column; gap: 8px; }
   .p-row {
     display: flex; gap: 10px; padding: 8px;
-    border-radius: 10px;
-    cursor: pointer;
+    border-radius: 10px; cursor: pointer;
     transition: background var(--dur-base);
   }
   .p-row:hover { background: var(--bg-sunken); }
-  .p-row .av {
-    width: 32px; height: 32px; border-radius: 50%;
-    display: grid; place-items: center;
-    color: var(--fg-on-accent); font-weight: 700; font-size: 12px; font-family: var(--font-ui);
-    flex-shrink: 0;
-  }
-  .p-row .info { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
-  .p-row .info .n { font-size: 12.5px; font-weight: 600; color: var(--fg-strong); }
-  .p-row .info .role { font-size: 11px; color: var(--fg-subtle); }
-  .p-row .info .quote { font-size: 11.5px; color: var(--fg-muted); line-height: 1.5; margin-top: 3px; }
+  .p-row .p-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+  .p-row .p-info .n { font-size: 12.5px; font-weight: 600; color: var(--fg-strong); }
+  .p-row .p-info .role { font-size: 11px; color: var(--fg-subtle); }
+  .p-row .p-info .quote { font-size: 11.5px; color: var(--fg-muted); line-height: 165%; margin-top: 3px; }
 
   /* sources */
   .src { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px dashed var(--line); }
@@ -299,10 +246,10 @@
     font-family: var(--font-mono); font-size: 10px; color: var(--fg-muted); font-weight: 700;
   }
   .src .info { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; }
-  .src .info .t { font-size: 12px; color: var(--fg-strong); font-weight: 500; line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .src .info .t { font-size: 12px; color: var(--fg-strong); font-weight: 500; line-height: 165%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .src .info .d { font-size: 10.5px; color: var(--fg-subtle); }
 
-  /* === Composer === */
+  /* === Composer (inline row variant) === */
   .composer-wrap {
     position: fixed; bottom: 0; left: 0; right: 0;
     padding: 18px 24px 22px;
@@ -310,7 +257,7 @@
     z-index: 5;
     pointer-events: none;
   }
-  .composer {
+  .composer-row {
     max-width: 720px; margin: 0 auto;
     background: var(--surface);
     border: 1px solid var(--line-strong);
@@ -320,21 +267,23 @@
     display: flex; align-items: center; gap: 10px;
     pointer-events: auto;
   }
-  .composer input {
+  .composer-row:focus-within { border-color: var(--accent); box-shadow: var(--shadow-lg), var(--shadow-focus); }
+  .composer-row input {
     flex: 1; border: 0; outline: none;
     font-family: inherit; font-size: 14px; color: var(--fg);
     background: transparent; padding: 8px 0;
   }
-  .composer input::placeholder { color: var(--fg-subtle); }
-  .composer button.send {
+  .composer-row input::placeholder { color: var(--fg-subtle); }
+  .send-inline {
     background: var(--accent); color: var(--accent-fg);
     border: 0; border-radius: var(--r-full);
     height: 32px; padding: 0 14px;
     display: inline-flex; align-items: center; gap: 5px;
     font-family: inherit; font-size: 12px; font-weight: 600;
-    cursor: pointer;
+    cursor: pointer; transition: background var(--dur-base);
   }
-  .composer button.send svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; }
+  .send-inline:hover { background: var(--accent-hover); }
+  .send-inline svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; }
 
   @media (max-width: 940px) {
     .layout { grid-template-columns: 1fr; }
@@ -380,12 +329,12 @@
     <span class="sep">·</span>
     <span data-i18n="qmeta_intent">選択比較型 (A or B)</span>
     <span class="sep">·</span>
-    <div class="ai-chips">
-      <span class="av" style="background:var(--ai-violet)">C</span>
-      <span class="av" style="background:var(--ai-blue)">G</span>
-      <span class="av" style="background:var(--ai-amber)">◆</span>
-      <span class="av" style="background:var(--ai-teal)">P</span>
-      <span class="av" style="background:var(--ai-rose)">X</span>
+    <div class="ai-chips av-stack">
+      <span class="av av-s" data-model-icon="claude"></span>
+      <span class="av av-s" data-model-icon="openai"></span>
+      <span class="av av-s" data-model-icon="gemini"></span>
+      <span class="av av-s" data-model-icon="perplexity"></span>
+      <span class="av av-s" data-model-icon="grok"></span>
     </div>
     <span data-i18n="qmeta_models">5モデル合議</span>
   </div>
@@ -432,59 +381,55 @@
         </div>
       </div>
 
-      <!-- Viz: stacked bar (default) -->
       <div class="viz-area" id="viz-bar">
         <div class="v-bar">
-          <div style="background:var(--ai-violet);width:62%">62%</div>
-          <div style="background:var(--ai-blue);width:38%">38%</div>
+          <div style="background:var(--ai-claude);width:62%">62%</div>
+          <div style="background:var(--ai-gpt);width:38%">38%</div>
         </div>
         <div class="v-legend">
-          <span><i style="background:var(--ai-violet)"></i><span data-i18n="opt_a_label">結論A · 長期保有なら今が買い時</span></span>
-          <span><i style="background:var(--ai-blue)"></i><span data-i18n="opt_b_label">結論B · 短期は待機推奨</span></span>
+          <span><i style="background:var(--ai-claude)"></i><span data-i18n="opt_a_label">結論A · 長期保有なら今が買い時</span></span>
+          <span><i style="background:var(--ai-gpt)"></i><span data-i18n="opt_b_label">結論B · 短期は待機推奨</span></span>
         </div>
       </div>
 
-      <!-- Viz: donut (hidden by default) -->
       <div class="viz-area" id="viz-donut" style="display:none">
         <div class="v-donut-wrap">
           <div style="position:relative;width:120px;height:120px;">
-            <div class="v-donut" style="background: conic-gradient(var(--ai-violet) 0% 62%, var(--ai-blue) 62% 100%);"></div>
+            <div class="v-donut" style="background: conic-gradient(var(--ai-claude) 0% 62%, var(--ai-gpt) 62% 100%);"></div>
             <div class="v-donut-center"><div><div class="big">62%</div><div class="sm" data-i18n="agree_label">合意</div></div></div>
           </div>
           <div class="v-donut-legend">
-            <div class="l"><i style="background:var(--ai-violet)"></i><span data-i18n="opt_a_short">結論 A · 買い</span><span class="pc">62%</span></div>
-            <div class="l"><i style="background:var(--ai-blue)"></i><span data-i18n="opt_b_short">結論 B · 待機</span><span class="pc">38%</span></div>
+            <div class="l"><i style="background:var(--ai-claude)"></i><span data-i18n="opt_a_short">結論 A · 買い</span><span class="pc">62%</span></div>
+            <div class="l"><i style="background:var(--ai-gpt)"></i><span data-i18n="opt_b_short">結論 B · 待機</span><span class="pc">38%</span></div>
           </div>
         </div>
       </div>
 
-      <!-- Viz: dots -->
       <div class="viz-area" id="viz-dot" style="display:none">
         <div class="v-dots" id="dots-container"></div>
         <div class="v-legend">
-          <span><i style="background:var(--ai-violet)"></i><span data-i18n="opt_a_label">結論A · 長期保有なら今が買い時</span> (62)</span>
-          <span><i style="background:var(--ai-blue)"></i><span data-i18n="opt_b_label">結論B · 短期は待機推奨</span> (38)</span>
+          <span><i style="background:var(--ai-claude)"></i><span data-i18n="opt_a_label">結論A · 長期保有なら今が買い時</span> (62)</span>
+          <span><i style="background:var(--ai-gpt)"></i><span data-i18n="opt_b_label">結論B · 短期は待機推奨</span> (38)</span>
         </div>
       </div>
 
-      <!-- Viz: per-AI bars -->
       <div class="viz-area" id="viz-perai" style="display:none">
         <div class="v-perai">
-          <div class="row"><div class="lb"><span class="av" style="background:var(--ai-violet)">C</span>Claude</div><div class="track"><div class="fill" style="width:95%;background:var(--ai-violet)"></div></div><div class="pc">A·95</div></div>
-          <div class="row"><div class="lb"><span class="av" style="background:var(--ai-blue)">G</span>GPT-4o</div><div class="track"><div class="fill" style="width:80%;background:var(--ai-violet)"></div></div><div class="pc">A·80</div></div>
-          <div class="row"><div class="lb"><span class="av" style="background:var(--ai-teal)">P</span>Perplexity</div><div class="track"><div class="fill" style="width:68%;background:var(--ai-violet)"></div></div><div class="pc">A·68</div></div>
-          <div class="row"><div class="lb"><span class="av" style="background:var(--ai-amber)">◆</span>Gemini</div><div class="track"><div class="fill" style="width:55%;background:var(--ai-blue)"></div></div><div class="pc">B·55</div></div>
-          <div class="row"><div class="lb"><span class="av" style="background:var(--ai-rose)">X</span>Grok</div><div class="track"><div class="fill" style="width:42%;background:var(--ai-blue)"></div></div><div class="pc">B·42</div></div>
+          <div class="row"><div class="lb"><span class="av av-s" data-model-icon="claude"></span>Claude</div><div class="track"><div class="fill" style="width:95%;background:var(--ai-claude)"></div></div><div class="pc">A·95</div></div>
+          <div class="row"><div class="lb"><span class="av av-s" data-model-icon="openai"></span>GPT-4o</div><div class="track"><div class="fill" style="width:80%;background:var(--ai-claude)"></div></div><div class="pc">A·80</div></div>
+          <div class="row"><div class="lb"><span class="av av-s" data-model-icon="perplexity"></span>Perplexity</div><div class="track"><div class="fill" style="width:68%;background:var(--ai-claude)"></div></div><div class="pc">A·68</div></div>
+          <div class="row"><div class="lb"><span class="av av-s" data-model-icon="gemini"></span>Gemini</div><div class="track"><div class="fill" style="width:55%;background:var(--ai-gpt)"></div></div><div class="pc">B·55</div></div>
+          <div class="row"><div class="lb"><span class="av av-s" data-model-icon="grok"></span>Grok</div><div class="track"><div class="fill" style="width:42%;background:var(--ai-gpt)"></div></div><div class="pc">B·42</div></div>
         </div>
       </div>
     </div>
 
-    <!-- Issue (disagreement) -->
-    <div class="issue">
-      <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"/><path d="M12 9v4M12 17h.01"/></svg></div>
-      <div>
-        <h3 data-i18n="issue_title">論点 · モデル間の主な不一致</h3>
-        <p data-i18n="issue_body"><b>判断のタイミング</b>に意見が割れています。長期の構造観 (EV市場・自社株買い) では合意していますが、Q3決算前か後かの<b>短期マクロリスク評価</b>で結論が分岐します。</p>
+    <!-- Issue (disagreement) — uses .warn-card component -->
+    <div class="warn-card">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"/><path d="M12 9v4M12 17h.01"/></svg>
+      <div class="warn-body">
+        <strong data-i18n="issue_title">論点 · モデル間の主な不一致</strong>
+        <p style="margin-top:6px;font-size:16px;line-height: 175%" data-i18n="issue_body"><b>判断のタイミング</b>に意見が割れています。長期の構造観 (EV市場・自社株買い) では合意していますが、Q3決算前か後かの<b>短期マクロリスク評価</b>で結論が分岐します。</p>
       </div>
     </div>
 
@@ -499,10 +444,10 @@
       <div class="op-conclusion" data-i18n="op_a_conclusion">長期保有なら今が買い時。ただし分割購入を強く推奨。</div>
       <div class="op-rationale" data-i18n="op_a_rationale">EV市場の構造的成長、自社株買い再開、現在のバリュエーション安定が共通根拠。短期下落余地は限定的との見方。3モデルが一括ではなく月次分割を明示。</div>
       <div class="op-foot">
-        <div class="op-models">
-          <span class="av" style="background:var(--ai-violet)">C</span>
-          <span class="av" style="background:var(--ai-blue)">G</span>
-          <span class="av" style="background:var(--ai-teal)">P</span>
+        <div class="op-models av-stack">
+          <span class="av av-s" data-model-icon="claude"></span>
+          <span class="av av-s" data-model-icon="openai"></span>
+          <span class="av av-s" data-model-icon="perplexity"></span>
         </div>
         <div class="op-actions">
           <button class="btn"><svg viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span data-i18n="action_copy">コピー</span></button>
@@ -522,9 +467,9 @@
       <div class="op-conclusion" data-i18n="op_b_conclusion">Q3決算後の判断が安全。短期トレード目的なら待機推奨。</div>
       <div class="op-rationale" data-i18n="op_b_rationale">マクロ金利動向と中国EV値下げ競争による短期不確実性が共通の懸念。タイミング次第で逆指値の徹底が前提。長期構造観自体には反対していない点が論点。</div>
       <div class="op-foot">
-        <div class="op-models">
-          <span class="av" style="background:var(--ai-amber)">◆</span>
-          <span class="av" style="background:var(--ai-rose)">X</span>
+        <div class="op-models av-stack">
+          <span class="av av-s" data-model-icon="gemini"></span>
+          <span class="av av-s" data-model-icon="grok"></span>
         </div>
         <div class="op-actions">
           <button class="btn"><svg viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span data-i18n="action_copy">コピー</span></button>
@@ -541,24 +486,24 @@
       <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> <span data-i18n="persona_title">ペルソナの視点</span> <span class="ct">3</span></h3>
       <div class="p-mini">
         <div class="p-row">
-          <div class="av" style="background:var(--ai-blue)">健</div>
-          <div class="info">
+          <div class="av av-m" style="background:var(--ai-gpt)">健</div>
+          <div class="p-info">
             <div class="n">健太郎 · 38歳</div>
             <div class="role" data-i18n="persona1_role">10年目会社員 · 慎重派</div>
             <div class="quote" data-i18n="persona1_quote">「家計を考えると、まずは少額から試したい」</div>
           </div>
         </div>
         <div class="p-row">
-          <div class="av" style="background:var(--ai-rose)">舞</div>
-          <div class="info">
+          <div class="av av-m" style="background:var(--ai-grok)">舞</div>
+          <div class="p-info">
             <div class="n">舞 · 29歳</div>
             <div class="role" data-i18n="persona2_role">フリーランス · 攻めの投資家</div>
             <div class="quote" data-i18n="persona2_quote">「EVは長期構造変化。タイミングは気にしない」</div>
           </div>
         </div>
         <div class="p-row">
-          <div class="av" style="background:var(--ai-teal)">圭</div>
-          <div class="info">
+          <div class="av av-m" style="background:var(--ai-perplexity)">圭</div>
+          <div class="p-info">
             <div class="n">圭一 · 52歳</div>
             <div class="role" data-i18n="persona3_role">FP · 退職世代向け助言</div>
             <div class="quote" data-i18n="persona3_quote">「個別株は資産の10%まで、出口を先に決める」</div>
@@ -594,18 +539,19 @@
       </div>
     </div>
 
-    <div class="side-card" style="background:var(--warn-soft); border-color:var(--warn-border);">
-      <h3 style="color:var(--warn-fg)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> <span data-i18n="warn_title">高リスク領域 · 投資</span></h3>
-      <p style="font-size:12px;color:var(--fg-muted);line-height:1.6;" data-i18n="warn_body">本回答は情報提供を目的としており、投資助言ではありません。最終判断は必ずファイナンシャルアドバイザーにご相談ください。</p>
+    <!-- warn-card component for investment disclaimer -->
+    <div class="warn-card" style="flex-direction:column;gap:6px">
+      <strong style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--warm-accent)" data-i18n="warn_title">高リスク領域 · 投資</strong>
+      <p style="font-size:16px;color:var(--fg-muted);line-height: 175%;margin:0" data-i18n="warn_body">本回答は情報提供を目的としており、投資助言ではありません。最終判断は必ずファイナンシャルアドバイザーにご相談ください。</p>
     </div>
   </aside>
 </div>
 
 <!-- Composer -->
 <div class="composer-wrap">
-  <div class="composer">
+  <div class="composer-row">
     <input data-i18n="composer_followup" data-i18n-attr="placeholder" placeholder="この回答について深掘りする…">
-    <button class="send"><span data-i18n="composer_send">送る</span><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>
+    <button class="send-inline"><span data-i18n="composer_send">送る</span><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>
   </div>
 </div>
 
@@ -733,13 +679,13 @@
     const c = document.getElementById('dots-container');
     let html = '';
     for (let i = 0; i < 100; i++) {
-      const color = i < 62 ? 'var(--ai-violet)' : 'var(--ai-blue)';
+      const color = i < 62 ? 'var(--ai-claude)' : 'var(--ai-gpt)';
       html += `<i style="background:${color}"></i>`;
     }
     c.innerHTML = html;
   })();
 
-  // === Tabs (just visual switch, doesn't actually navigate) ===
+  // === Tabs ===
   document.querySelectorAll('.tab').forEach(t => {
     t.addEventListener('click', () => {
       document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));

@@ -113,3 +113,21 @@ Open `canvas.html` for the full presentation. Or click these individually:
 - **Composer**: `screens/home.html`
 
 In any screen, click the **KO/JA/EN** toggle (top-right) to switch language. Click the sun/moon to swap theme. Preferences persist across all screens.
+
+## 📝 Notion devlog sync
+
+`devlog/*.md` 업무 로그를 Notion 데이터베이스에 저장할 수 있습니다.
+
+1. `.env.example`을 참고해 `.env`에 `NOTION_TOKEN`, `NOTION_DATA_SOURCE_ID`를 설정합니다.
+2. Notion의 `DAX 로그` 데이터베이스에서 `Share`로 Integration을 초대합니다.
+3. 전체 로그 동기화:
+
+```bash
+node scripts/sync-devlog-to-notion.mjs
+```
+
+특정 날짜만 동기화:
+
+```bash
+node scripts/sync-devlog-to-notion.mjs devlog/2026-05-21.md
+```

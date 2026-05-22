@@ -10,8 +10,9 @@
   const root = document.documentElement;
 
   const DESIGNS = [
-    { value: 'sc',    label: 'SC — SocraChat' },
-    { value: 'apple', label: 'AP — Apple HIG'  },
+    { value: 'sc',     label: 'SC — SocraChat'  },
+    { value: 'apple',  label: 'AP — Apple HIG'  },
+    { value: 'notion', label: 'NT — Notion'      },
   ];
 
   function dispatch(type, detail) {
@@ -54,7 +55,7 @@
       } else if (el.tagName === 'INPUT') {
         el.setAttribute('placeholder', val);
       } else if (el.tagName === 'TEXTAREA') {
-        el.textContent = val;
+        el.value = val;
       } else {
         el.innerHTML = val;
       }
@@ -66,7 +67,7 @@
       if (el.tagName === 'TEXTAREA' || el.tagName === 'INPUT') {
         el.value = val;
       } else {
-        el.textContent = val;
+        el.innerHTML = val;
       }
     });
     dispatch('sc:lang', { lang });
@@ -204,7 +205,7 @@
         letter-spacing: .03em;
         transition: all 150ms;
         cursor: pointer;
-        line-height: 1;
+        line-height: 100%;
         display: inline-flex; align-items: center; justify-content: center;
       }
       #${TLBR_ID} [data-vp-btn] { width: 26px; height: 22px; padding: 0; }
