@@ -1,0 +1,8 @@
+{
+  "name": "socrachat",
+  "private": true,
+  "scripts": {
+    "check-i18n": "node scripts/check-i18n.js",
+    "build": "node scripts/check-i18n.js"
+  }
+}
