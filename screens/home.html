@@ -7,12 +7,13 @@
 <link rel="stylesheet" href="../colors_and_type.css">
 <link rel="stylesheet" href="../apple-theme.css">
 <link rel="stylesheet" href="../notion-theme.css">
+<link rel="stylesheet" href="../components.css">
 <script src="../assets/sc-ui.js" defer></script>
 <script src="../assets/shell.js" defer></script>
 <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 <style>
   html, body { margin: 0; min-height: 100vh; }
-  body { background: var(--bg); color: var(--fg); display: flex; flex-direction: column; }
+  body { background: var(--surface); color: var(--fg); display: flex; flex-direction: column; }
 
   .topbar {
     padding: 18px 24px;
@@ -31,7 +32,7 @@
   .main {
     flex: 1;
     display: flex; align-items: center; justify-content: center;
-    padding: 32px 24px 92px;
+    padding: 40px 24px 100px;
   }
   .container {
     width: 100%; max-width: 760px;
@@ -105,13 +106,13 @@
     border: 1px solid var(--line-strong);
     border-radius: 22px;
     padding: 14px 14px 12px 20px;
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-float);
     display: flex; flex-direction: column; gap: 10px;
     transition: all var(--dur-base) var(--ease-out);
   }
   .composer:focus-within {
     border-color: var(--accent);
-    box-shadow: var(--shadow-lg), var(--shadow-focus);
+    box-shadow: var(--shadow-float), var(--shadow-focus);
   }
   .composer textarea {
     border: 0; outline: none; resize: none; padding: 0;
@@ -205,6 +206,8 @@
   .recent-item .stack .av { width: 18px; height: 18px; border-radius: 50%; color: var(--fg-on-accent); font-size: 8px; font-weight: 700; font-family: var(--font-mono); display: grid; place-items: center; border: 1.5px solid var(--bg); }
   .recent-item .stack .av + .av { margin-left: -7px; }
   .recent-item .date { font-family: var(--font-mono); font-size: 12px; color: var(--fg-subtle); }
+
+  [data-lang="ko"] .greeting { font-family: var(--font-ko); }
 
   @media (max-width: 540px) {
     .topbar nav { display: none; }
