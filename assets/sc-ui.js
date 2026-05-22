@@ -37,7 +37,7 @@
         width: 58%;
         height: 58%;
         display: block;
-        background: var(--fg-muted, #888);
+        background: var(--model-logo-color, var(--fg-muted, #888));
         mask: var(--model-logo-url) center / contain no-repeat;
         -webkit-mask: var(--model-logo-url) center / contain no-repeat;
       }

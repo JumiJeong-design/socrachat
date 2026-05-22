@@ -340,8 +340,10 @@
     applyDesign(getDesign());
     applyLang(getLang());
     applyViewport(getViewport());
-    injectToolbar();
-    paintToolbar();
+    if (new URLSearchParams(location.search).get('figma') !== '1') {
+      injectToolbar();
+      paintToolbar();
+    }
   }
 
   if (document.readyState === 'loading') {

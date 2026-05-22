@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="ko" data-theme="light" data-lang="ja">
+<html lang="ko" data-theme="light" data-lang="ko">
 <head>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SocraChat · Answer Board</title>
@@ -10,7 +11,7 @@
 <link rel="stylesheet" href="../components.css">
 <script src="../assets/sc-ui.js" defer></script>
 <script src="../assets/shell.js" defer></script>
-<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+
 <style>
   html, body { margin: 0; min-height: 100vh; }
   body { background: var(--bg); color: var(--fg); }
@@ -302,6 +303,7 @@
     .v-perai .row { grid-template-columns: 80px 1fr 36px; gap: 8px; font-size: 11.5px; }
   }
 </style>
+
 </head>
 <body>
 
@@ -415,11 +417,11 @@
 
       <div class="viz-area" id="viz-perai" style="display:none">
         <div class="v-perai">
-          <div class="row"><div class="lb"><span class="av av-s" data-model-icon="claude"></span>Claude</div><div class="track"><div class="fill" style="width:95%;background:var(--ai-claude)"></div></div><div class="pc">A·95</div></div>
-          <div class="row"><div class="lb"><span class="av av-s" data-model-icon="openai"></span>GPT-4o</div><div class="track"><div class="fill" style="width:80%;background:var(--ai-claude)"></div></div><div class="pc">A·80</div></div>
-          <div class="row"><div class="lb"><span class="av av-s" data-model-icon="perplexity"></span>Perplexity</div><div class="track"><div class="fill" style="width:68%;background:var(--ai-claude)"></div></div><div class="pc">A·68</div></div>
-          <div class="row"><div class="lb"><span class="av av-s" data-model-icon="gemini"></span>Gemini</div><div class="track"><div class="fill" style="width:55%;background:var(--ai-gpt)"></div></div><div class="pc">B·55</div></div>
-          <div class="row"><div class="lb"><span class="av av-s" data-model-icon="grok"></span>Grok</div><div class="track"><div class="fill" style="width:42%;background:var(--ai-gpt)"></div></div><div class="pc">B·42</div></div>
+          <div class="row"><div class="lb"><span class="av av-s" data-model-icon="claude" style="background:var(--ai-claude);--model-logo-color:#fff"></span>Claude</div><div class="track"><div class="fill" style="width:95%;background:var(--ai-claude)"></div></div><div class="pc">A·95</div></div>
+          <div class="row"><div class="lb"><span class="av av-s" data-model-icon="openai" style="background:var(--ai-gpt);--model-logo-color:#fff"></span>GPT-4o</div><div class="track"><div class="fill" style="width:80%;background:var(--ai-claude)"></div></div><div class="pc">A·80</div></div>
+          <div class="row"><div class="lb"><span class="av av-s" data-model-icon="perplexity" style="background:var(--ai-perplexity);--model-logo-color:#fff"></span>Perplexity</div><div class="track"><div class="fill" style="width:68%;background:var(--ai-claude)"></div></div><div class="pc">A·68</div></div>
+          <div class="row"><div class="lb"><span class="av av-s" data-model-icon="gemini" style="background:var(--ai-gemini);--model-logo-color:#fff"></span>Gemini</div><div class="track"><div class="fill" style="width:55%;background:var(--ai-gpt)"></div></div><div class="pc">B·55</div></div>
+          <div class="row"><div class="lb"><span class="av av-s" data-model-icon="grok" style="background:var(--ai-grok);--model-logo-color:#fff"></span>Grok</div><div class="track"><div class="fill" style="width:42%;background:var(--ai-gpt)"></div></div><div class="pc">B·42</div></div>
         </div>
       </div>
     </div>
