@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SocraChat · 레퍼런스 테스트 (Editorial Bold)</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F2F2F2;
+    --surface: #FFFFFF;
+    --fg: #0A0A0A;
+    --fg-sub: #6B6B6B;
+    --fg-subtle: #9E9E9E;
+    --accent: #E8471A;
+    --accent-soft: rgba(232,71,26,0.08);
+    --black: #0A0A0A;
+    --white: #FFFFFF;
+    --border: rgba(10,10,10,0.1);
+    --font: "Helvetica Neue", "Arial", sans-serif;
+    --r-pill: 999px;
+    --r-card: 20px;
+    --r-sm: 12px;
+  }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--fg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── TOPBAR ─── */
+  .topbar {
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--fg);
+  }
+  .logo span { color: var(--accent); }
+  .topbar-nav {
+    display: flex;
+    gap: 4px;
+  }
+  .topbar-nav a {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--fg-sub);
+    padding: 8px 14px;
+    border-radius: var(--r-pill);
+    text-decoration: none;
+    transition: background 150ms, color 150ms;
+    letter-spacing: -0.01em;
+  }
+  .topbar-nav a:hover { background: rgba(10,10,10,0.06); color: var(--fg); }
+  .topbar-nav a.active {
+    background: var(--black);
+    color: var(--white);
+  }
+
+  /* ─── LAYOUT ─── */
+  .page-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Mobile: single column */
+  .main {
+    flex: 1;
+    padding: 40px 28px 80px;
+    max-width: 560px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  /* Desktop: two-column */
+  @media (min-width: 900px) {
+    .topbar { padding: 24px 56px; }
+
+    .page-wrap {
+      flex-direction: row;
+      align-items: stretch;
+      min-height: calc(100vh - 72px);
+    }
+
+    /* Left: hero + flow */
+    .col-left {
+      flex: 1;
+      padding: 64px 56px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 40px;
+      border-right: 1px solid var(--border);
+    }
+
+    /* Right: composer + examples + recent */
+    .col-right {
+      width: 480px;
+      flex-shrink: 0;
+      padding: 64px 48px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      overflow-y: auto;
+    }
+
+    .main { display: none; } /* hide mobile single-col */
+
+    .headline { font-size: clamp(64px, 5.5vw, 96px); }
+    .subhead { font-size: 17px; max-width: 440px; }
+    .flow { max-width: 480px; }
+    .example-cards { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .intent-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--r-pill);
+    padding: 6px 13px;
+    width: fit-content;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--fg-sub);
+  }
+  .intent-badge i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+  .headline {
+    font-size: clamp(44px, 10vw, 76px);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.035em;
+    color: var(--fg);
+  }
+  .headline em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .subhead {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--fg-sub);
+    font-weight: 400;
+    max-width: 360px;
+  }
+
+  /* ─── FLOW STEPS ─── */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-radius: var(--r-card);
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .flow-step {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .flow-step:last-child { border-bottom: none; }
+  .flow-num {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    width: 24px;
+    flex-shrink: 0;
+  }
+  .flow-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--fg-sub);
+    line-height: 1.45;
+  }
+
+  /* ─── COMPOSER ─── */
+  .composer {
+    background: var(--surface);
+    border-radius: var(--r-card);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 2px 16px rgba(10,10,10,0.06);
+  }
+  .composer-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-subtle);
+  }
+  .composer textarea {
+    border: none;
+    outline: none;
+    resize: none;
+    font-family: var(--font);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--fg);
+    background: transparent;
+    line-height: 1.55;
+    min-height: 72px;
+    letter-spacing: -0.01em;
+    width: 100%;
+  }
+  .composer textarea::placeholder { color: var(--fg-subtle); font-weight: 400; }
+  .composer-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .ai-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 16px;
+    border-radius: var(--r-pill);
+    border: 1.5px solid var(--border);
+    background: transparent;
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--fg-sub);
+    cursor: pointer;
+    transition: all 150ms;
+    letter-spacing: -0.01em;
+  }
+  .ai-chip:hover { border-color: var(--black); color: var(--fg); }
+  .ai-chip .ct {
+    background: var(--black);
+    color: var(--white);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+    font-weight: 800;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+  .btn-send {
+    background: var(--black);
+    color: var(--white);
+    border: none;
+    border-radius: var(--r-pill);
+    height: 44px;
+    padding: 0 24px;
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: -0.01em;
+    transition: background 150ms, transform 100ms;
+    flex-shrink: 0;
+  }
+  .btn-send:hover { background: #2A2A2A; }
+  .btn-send:active { transform: scale(0.97); }
+  .btn-send svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ─── EXAMPLES ─── */
+  .examples {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .examples-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-subtle);
+    margin-bottom: 2px;
+  }
+  .example-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .ex-card {
+    background: var(--surface);
+    border-radius: var(--r-card);
+    padding: 16px;
+    cursor: pointer;
+    transition: background 150ms, transform 150ms;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .ex-card:hover { background: #EBEBEB; transform: translateY(-1px); }
+  .ex-card.accent-card {
+    background: var(--accent);
+  }
+  .ex-card.accent-card .ex-cat,
+  .ex-card.accent-card .ex-text { color: var(--white); }
+  .ex-cat {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-subtle);
+  }
+  .ex-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--fg);
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+
+  /* ─── RECENT ─── */
+  .recent {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .recent-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-subtle);
+  }
+  .recent-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .recent-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: var(--r-sm);
+    cursor: pointer;
+    transition: background 150ms;
+  }
+  .recent-item:hover { background: var(--surface); }
+  .recent-num {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--fg-subtle);
+    width: 20px;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .recent-title {
+    flex: 1;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--fg);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+  .recent-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .recent-avatars {
+    display: flex;
+  }
+  .av {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid var(--bg);
+    font-size: 7px;
+    font-weight: 800;
+    color: var(--white);
+    display: grid;
+    place-items: center;
+  }
+  .av + .av { margin-left: -6px; }
+  .av-claude { background: #7B5EA0; }
+  .av-gpt { background: #4A6FA5; }
+  .av-gemini { background: #C68635; }
+  .recent-date {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--fg-subtle);
+    font-variant-numeric: tabular-nums;
+  }
+  .recent-arrow {
+    color: var(--fg-subtle);
+    font-size: 16px;
+    font-weight: 300;
+  }
+
+  /* 데스크탑에서 mobile 단일컬럼 숨기기 */
+  @media (min-width: 900px) {
+    .main { display: none; }
+  }
+  /* 모바일에서 desktop 2컬럼 숨기기 */
+  @media (max-width: 899px) {
+    .page-wrap { display: none; }
+  }
+  @media (max-width: 540px) {
+    .main { padding: 24px 20px 60px; gap: 24px; }
+    .topbar { padding: 16px 20px; }
+    .topbar-nav { display: none; }
+    .example-cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="logo">Socra<span>Chat</span></div>
+  <nav class="topbar-nav">
+    <a href="#" class="active">질문</a>
+    <a href="#">히스토리</a>
+    <a href="#">페르소나</a>
+    <a href="#">AI 모델</a>
+  </nav>
+</header>
+
+<!-- MOBILE: single column -->
+<main class="main">
+  <section class="hero">
+    <div class="intent-badge"><i></i>멀티 AI 비교 판단</div>
+    <h1 class="headline">AI가<br>갈릴 때,<br><em>판단이<br>강해진다.</em></h1>
+    <p class="subhead">5개 AI의 일치점과 차이를 한눈에 보고, 납득하면서 결정하세요.</p>
+  </section>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-num">01</div><div class="flow-text">같은 질문을 5개 AI에 동시 전송</div></div>
+    <div class="flow-step"><div class="flow-num">02</div><div class="flow-text">일치한 결론과 갈린 논점 확인</div></div>
+    <div class="flow-step"><div class="flow-num">03</div><div class="flow-text">근거 비교 후 직접 결정</div></div>
+  </div>
+  <div class="composer">
+    <div class="composer-label">질문하기</div>
+    <textarea placeholder="무엇이든 물어보세요." rows="3">테슬라 주식은 지금 사야 할까요, 기다려야 할까요?</textarea>
+    <div class="composer-footer">
+      <button class="ai-chip"><span class="ct">5</span>모델 선택</button>
+      <button class="btn-send">물어보기<svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>
+    </div>
+  </div>
+  <div class="examples">
+    <div class="examples-label">추천 질문</div>
+    <div class="example-cards">
+      <div class="ex-card accent-card"><div class="ex-cat">투자</div><div class="ex-text">NISA 한도를 다 써야 할까?</div></div>
+      <div class="ex-card"><div class="ex-cat">커리어</div><div class="ex-text">이직 제안, 수락해야 할까?</div></div>
+      <div class="ex-card"><div class="ex-cat">부동산</div><div class="ex-text">지금 집 사는 게 맞는 타이밍?</div></div>
+      <div class="ex-card"><div class="ex-cat">관계</div><div class="ex-text">이 상황에서 어떻게 말해야 할까?</div></div>
+    </div>
+  </div>
+  <div class="recent">
+    <div class="recent-label">최근 질문</div>
+    <div class="recent-list">
+      <div class="recent-item"><div class="recent-num">1</div><div class="recent-title">해외 ETF와 국내 ETF, 세금 포함 수익률 비교</div><div class="recent-meta"><div class="recent-avatars"><div class="av av-claude">C</div><div class="av av-gpt">G</div><div class="av av-gemini">G</div></div><div class="recent-date">5.22</div></div><div class="recent-arrow">›</div></div>
+      <div class="recent-item"><div class="recent-num">2</div><div class="recent-title">팀장 승진 제안, 받아야 할까 거절해야 할까</div><div class="recent-meta"><div class="recent-avatars"><div class="av av-claude">C</div><div class="av av-gpt">G</div></div><div class="recent-date">5.21</div></div><div class="recent-arrow">›</div></div>
+      <div class="recent-item"><div class="recent-num">3</div><div class="recent-title">30대 초반 자산 포트폴리오 재조정 방향</div><div class="recent-meta"><div class="recent-avatars"><div class="av av-claude">C</div><div class="av av-gpt">G</div><div class="av av-gemini">G</div></div><div class="recent-date">5.20</div></div><div class="recent-arrow">›</div></div>
+    </div>
+  </div>
+</main>
+
+<!-- DESKTOP: two-column -->
+<div class="page-wrap">
+  <div class="col-left">
+    <section class="hero">
+      <div class="intent-badge"><i></i>멀티 AI 비교 판단</div>
+      <h1 class="headline">AI가<br>갈릴 때,<br><em>판단이<br>강해진다.</em></h1>
+      <p class="subhead">5개 AI의 일치점과 차이를 한눈에 보고, 납득하면서 결정하세요.</p>
+    </section>
+    <div class="flow">
+      <div class="flow-step"><div class="flow-num">01</div><div class="flow-text">같은 질문을 5개 AI에 동시 전송</div></div>
+      <div class="flow-step"><div class="flow-num">02</div><div class="flow-text">일치한 결론과 갈린 논점 확인</div></div>
+      <div class="flow-step"><div class="flow-num">03</div><div class="flow-text">근거 비교 후 직접 결정</div></div>
+    </div>
+  </div>
+  <div class="col-right">
+    <div class="composer">
+      <div class="composer-label">질문하기</div>
+      <textarea placeholder="무엇이든 물어보세요." rows="4">테슬라 주식은 지금 사야 할까요, 기다려야 할까요?</textarea>
+      <div class="composer-footer">
+        <button class="ai-chip"><span class="ct">5</span>모델 선택</button>
+        <button class="btn-send">물어보기<svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+    <div class="examples">
+      <div class="examples-label">추천 질문</div>
+      <div class="example-cards">
+        <div class="ex-card accent-card"><div class="ex-cat">투자</div><div class="ex-text">NISA 한도를 다 써야 할까?</div></div>
+        <div class="ex-card"><div class="ex-cat">커리어</div><div class="ex-text">이직 제안, 수락해야 할까?</div></div>
+        <div class="ex-card"><div class="ex-cat">부동산</div><div class="ex-text">지금 집 사는 게 맞는 타이밍?</div></div>
+        <div class="ex-card"><div class="ex-cat">관계</div><div class="ex-text">이 상황에서 어떻게 말해야 할까?</div></div>
+      </div>
+    </div>
+    <div class="recent">
+      <div class="recent-label">최근 질문</div>
+      <div class="recent-list">
+        <div class="recent-item"><div class="recent-num">1</div><div class="recent-title">해외 ETF와 국내 ETF, 세금 포함 수익률 비교</div><div class="recent-meta"><div class="recent-avatars"><div class="av av-claude">C</div><div class="av av-gpt">G</div><div class="av av-gemini">G</div></div><div class="recent-date">5.22</div></div><div class="recent-arrow">›</div></div>
+        <div class="recent-item"><div class="recent-num">2</div><div class="recent-title">팀장 승진 제안, 받아야 할까 거절해야 할까</div><div class="recent-meta"><div class="recent-avatars"><div class="av av-claude">C</div><div class="av av-gpt">G</div></div><div class="recent-date">5.21</div></div><div class="recent-arrow">›</div></div>
+        <div class="recent-item"><div class="recent-num">3</div><div class="recent-title">30대 초반 자산 포트폴리오 재조정 방향</div><div class="recent-meta"><div class="recent-avatars"><div class="av av-claude">C</div><div class="av av-gpt">G</div><div class="av av-gemini">G</div></div><div class="recent-date">5.20</div></div><div class="recent-arrow">›</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -59,26 +59,8 @@ When asked to push screens to Figma:
 3. Open each screen URL with capture hash
 4. Poll until completed
 
-## Design tokens
-Primary: `--accent: #2D5F4F` (Forest green) on `--bg: #FBF9F4` (Warm cream)
-Dark mode: `[data-theme="dark"]` on root element
-i18n: `data-lang="ja|ko|en"` on html element
-
-## Visual direction
-
-Current target direction:
-- Bold monochrome mobile GUI with large editorial typography, warm off-white surfaces, rounded content blocks, simple black/near-black controls, and restrained use of accent color.
-- The product should feel functional, minimal, warm, witty, mobile-native, and brand-conscious.
-- Cute is allowed only as a quiet emotional layer; the interface itself must not become childish, pastel, decorative, glossy, or mascot-led.
-- Use hierarchy through scale, weight, spacing, and contrast. Avoid screens where every card has the same visual weight.
-- One screen should have one clear main message or one clear main action.
-- Prefer black / near-black, white, warm off-white, light gray, dark gray, and low-contrast warm borders.
-- Avoid colorful gradients, glassmorphism, saturated color systems, strong shadows, nested cards, and thin fragile UI.
-
-3D mascot rule:
-- A quiet black 3D cat assistant may appear only at emotional/supportive moments: onboarding, empty states, loading, completion, error, help, waiting, friendly tips, and result summaries.
-- Do not use the mascot in dense data screens, complex forms, settings, payment/auth, long lists, comparison tables, or places where the CTA must be the only focus.
-- One mascot image max per screen. It supports the message; it never replaces the interface.
+## Design System
+→ [DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md) 참조 (디자인 규칙, AI 행동 원칙, 토큰 구조, Visual direction, 마스코트 규칙 전부 여기)
 
 ## Deploy
 ```

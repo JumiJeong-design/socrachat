@@ -19,7 +19,7 @@ Send one question to 5 top AI models simultaneously, see where they agree and wh
 | `assets/sc-ui.js` | Shared logo + icon helpers (Lucide subset) |
 | `preview/` | 14 small cards for the Design System tab (tokens + components) |
 | `screens/` | Full product screens (interactive HTML) |
-| `SKILL.md` | Claude Code-compatible skill manifest |
+| `docs/SKILL.md` | Claude Code-compatible skill manifest |
 
 ### 7 product screens
 1. **`screens/home.html`** — Composer / empty state with model selector

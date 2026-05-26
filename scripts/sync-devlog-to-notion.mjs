@@ -37,6 +37,8 @@ if (files.length === 0) {
   process.exit(0);
 }
 
+const todayKST = new Date(Date.now() + 9 * 60 * 60 * 1000).toISOString().slice(0, 10);
+
 for (const filePath of files) {
   const markdown = fs.readFileSync(filePath, "utf8");
   const fileName = path.basename(filePath);
@@ -45,6 +47,15 @@ for (const filePath of files) {
   const title = buildTitle(originalTitle, date);
   const notionMarkdown = markdown.replace(/^#\s+.+$/m, `# ${title}`);
   const summary = extractSummary(markdown);
+
+  // 과거 날짜는 Notion에 이미 있으면 스킵
+  if (date < todayKST) {
+    const existing = await findPagesByTitle(title);
+    if (existing.length > 0) {
+      console.log(`Skipping ${title} (past date, already in Notion)`);
+      continue;
+    }
+  }
 
   const children = markdownToNotionBlocks(notionMarkdown);
   const properties = buildProperties({ title, date, summary });
@@ -102,18 +113,21 @@ function buildProperties({ title, date, summary }) {
 }
 
 async function findPagesByTitle(title) {
-  const response = await notion(`data_sources/${dataSourceId}/query`, {
-    method: "POST",
-    body: {
-      filter: {
-        property: propertyNames.title,
-        title: { equals: title },
+  try {
+    const response = await notion(`databases/${dataSourceId}/query`, {
+      method: "POST",
+      body: {
+        filter: {
+          property: propertyNames.title,
+          title: { equals: title },
+        },
+        page_size: 10,
       },
-      page_size: 1,
-    },
-  });
-
-  return response.results || [];
+    });
+    return response.results || [];
+  } catch {
+    return [];
+  }
 }
 
 async function archiveExistingPages(titles) {

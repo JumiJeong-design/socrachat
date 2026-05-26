@@ -4,7 +4,8 @@ description: Use this skill to generate well-branded interfaces and assets for S
 user-invocable: true
 ---
 
-Read `README.md` for the full design system + product context.
+Read `DESIGN_SYSTEM.md` for design rules, tokens, components, AI agent rules, and visual direction.
+Read `README.md` for product overview, screen index, and i18n/theme setup.
 
 Key files:
 - `colors_and_type.css` — all tokens (light/dark, type, spacing, radii, shadow, motion, AI identity hues)

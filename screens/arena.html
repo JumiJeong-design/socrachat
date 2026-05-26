@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light" data-lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SocraChat · 비교 아레나</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../components.css">
+<script src="../assets/sc-ui.js" defer></script>
+<script src="../assets/shell.js" defer></script>
+<style>
+  html, body { margin: 0; min-height: 100vh; }
+  body { background: var(--bg); color: var(--fg); display: flex; flex-direction: column; font-family: var(--font-ui); }
+
+  /* ── TOPBAR ── */
+  .topbar {
+    padding: 14px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+    position: sticky; top: 0; z-index: 10;
+  }
+  .topbar-left { display: flex; align-items: center; gap: 16px; }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 500; color: var(--fg-muted);
+    background: none; border: none; cursor: pointer; padding: 6px 10px;
+    border-radius: var(--r-sm); transition: all var(--dur-base);
+    font-family: inherit;
+  }
+  .back-btn:hover { background: var(--surface-hover); color: var(--fg); }
+  .back-btn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .model-count {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 700;
+    color: var(--fg-subtle);
+    background: var(--bg-sunken);
+    padding: 3px 10px; border-radius: var(--r-full);
+  }
+  .topbar-actions { display: flex; align-items: center; gap: 8px; }
+  .action-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 600; color: var(--fg-muted);
+    background: none; border: 1px solid var(--line-strong);
+    padding: 6px 14px; border-radius: var(--r-full);
+    cursor: pointer; font-family: inherit; transition: all var(--dur-base);
+  }
+  .action-btn:hover { background: var(--surface-hover); color: var(--fg); }
+  .action-btn svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ── QUESTION HEADER ── */
+  .question-header {
+    padding: 28px 28px 0;
+    max-width: 1280px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--r-lg);
+    padding: 20px 24px;
+    box-shadow: var(--shadow-sm);
+    display: flex; align-items: flex-start; gap: 16px;
+  }
+  .question-icon {
+    width: 36px; height: 36px; border-radius: var(--r-md);
+    background: var(--accent-soft);
+    display: grid; place-items: center; flex-shrink: 0;
+    color: var(--accent);
+  }
+  .question-icon svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .question-body { flex: 1; min-width: 0; }
+  .question-label {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--fg-subtle); margin-bottom: 6px;
+  }
+  .question-text {
+    font-size: 17px; font-weight: 500;
+    color: var(--fg-strong); line-height: 1.5;
+    letter-spacing: -0.01em;
+  }
+  .question-meta {
+    display: flex; align-items: center; gap: 12px;
+    margin-top: 10px;
+  }
+  .consensus-bar {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 600; color: var(--fg-muted);
+  }
+  .consensus-track {
+    width: 80px; height: 6px;
+    background: var(--line);
+    border-radius: var(--r-full);
+    overflow: hidden;
+  }
+  .consensus-fill {
+    height: 100%; border-radius: var(--r-full);
+    background: var(--accent);
+    transition: width 600ms var(--ease-out);
+  }
+  .consensus-fill.warn { background: var(--warn); }
+  .consensus-label { color: var(--fg-subtle); font-family: var(--font-mono); font-size: 11px; }
+
+  /* ── ARENA GRID ── */
+  .arena {
+    padding: 20px 28px 48px;
+    max-width: 1280px;
+    width: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* ── MODEL CARD ── */
+  .model-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    transition: box-shadow var(--dur-base), border-color var(--dur-base);
+  }
+  .model-card:hover { box-shadow: var(--shadow-md); border-color: var(--line-strong); }
+  .model-card.consensus { border-color: var(--accent); }
+  .model-card.outlier { border-color: var(--warn); }
+
+  .card-header {
+    padding: 14px 16px 12px;
+    display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .model-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: grid; place-items: center; flex-shrink: 0;
+    font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+    color: #fff;
+  }
+  .model-info { flex: 1; min-width: 0; }
+  .model-name {
+    font-size: 13px; font-weight: 700;
+    color: var(--fg-strong); line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .model-org {
+    font-size: 11px; color: var(--fg-subtle);
+    font-weight: 400; margin-top: 2px;
+  }
+  .model-badge {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    padding: 3px 8px; border-radius: var(--r-full);
+    letter-spacing: 0.02em;
+  }
+  .badge-agree { background: var(--accent-soft); color: var(--accent); }
+  .badge-partial { background: rgba(201,137,58,.10); color: var(--warn-fg); }
+  .badge-differ { background: rgba(184,80,76,.10); color: var(--error-fg); }
+
+  .card-body {
+    padding: 16px;
+    flex: 1;
+    font-size: 14px; line-height: 1.7;
+    color: var(--fg);
+  }
+  .card-body p + p { margin-top: 10px; }
+  .key-point {
+    display: flex; align-items: flex-start; gap: 8px;
+    padding: 10px 12px;
+    background: var(--bg);
+    border-radius: var(--r-sm);
+    margin-top: 12px;
+    font-size: 13px; font-weight: 500;
+    color: var(--fg-muted); line-height: 1.5;
+  }
+  .key-point::before {
+    content: '→';
+    color: var(--accent);
+    font-weight: 700; flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .card-footer {
+    padding: 10px 16px;
+    border-top: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .confidence {
+    display: flex; align-items: center; gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 700;
+    color: var(--fg-subtle);
+  }
+  .conf-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+  }
+  .conf-high { background: var(--accent); }
+  .conf-mid  { background: var(--warn); }
+  .conf-low  { background: var(--error); }
+  .deepdive-btn {
+    font-size: 12px; font-weight: 600;
+    color: var(--fg-muted); background: none; border: none;
+    cursor: pointer; font-family: inherit;
+    padding: 4px 8px; border-radius: var(--r-sm);
+    transition: all var(--dur-base);
+  }
+  .deepdive-btn:hover { background: var(--accent-soft); color: var(--accent); }
+
+  /* ── BOTTOM BAR ── */
+  .bottom-bar {
+    position: sticky; bottom: 0;
+    background: linear-gradient(to top, var(--bg) 80%, transparent);
+    padding: 16px 28px 24px;
+    max-width: 1280px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .followup-composer {
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--r-xl);
+    padding: 12px 14px 10px 20px;
+    box-shadow: var(--shadow-lg);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .followup-composer:focus-within { border-color: var(--accent); box-shadow: var(--shadow-lg), var(--shadow-focus); }
+  .followup-composer input {
+    flex: 1; border: none; outline: none; background: transparent;
+    font-family: inherit; font-size: 15px; color: var(--fg);
+  }
+  .followup-composer input::placeholder { color: var(--fg-subtle); }
+  .followup-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .model-select-chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 10px; border-radius: var(--r-full);
+    background: var(--bg-sunken); border: none;
+    font-family: inherit; font-size: 12px; font-weight: 600;
+    color: var(--fg-muted); cursor: pointer;
+    transition: background var(--dur-base);
+  }
+  .model-select-chip:hover { background: var(--surface-hover); }
+  .model-select-chip .ct { font-family: var(--font-mono); font-weight: 700; color: var(--fg-strong); }
+  .send-btn {
+    background: var(--accent); color: #fff;
+    border: none; border-radius: var(--r-full);
+    width: 34px; height: 34px;
+    display: grid; place-items: center; cursor: pointer;
+    transition: background var(--dur-base);
+    flex-shrink: 0;
+  }
+  .send-btn:hover { background: var(--accent-hover); }
+  .send-btn svg { width: 14px; height: 14px; fill: none; stroke: #fff; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .arena { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 680px) {
+    .arena { grid-template-columns: 1fr; padding: 16px 16px 48px; }
+    .question-header { padding: 16px 16px 0; }
+    .topbar { padding: 12px 16px; }
+    .topbar-actions .action-btn span { display: none; }
+    .bottom-bar { padding: 12px 16px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-left">
+    <button class="back-btn">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      홈
+    </button>
+    <span class="model-count">6 MODELS</span>
+  </div>
+  <div class="topbar-actions">
+    <button class="action-btn">
+      <svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+      <span>공유</span>
+    </button>
+    <button class="action-btn">
+      <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      <span>저장</span>
+    </button>
+  </div>
+</header>
+
+<!-- QUESTION -->
+<div class="question-header">
+  <div class="question-card">
+    <div class="question-icon">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
+    </div>
+    <div class="question-body">
+      <div class="question-label">질문</div>
+      <div class="question-text">테슬라 주식은 지금 사야 할까요, 기다려야 할까요? 장기적인 관점에서 보고 있습니다.</div>
+      <div class="question-meta">
+        <div class="consensus-bar">
+          <span class="consensus-label">일치도</span>
+          <div class="consensus-track"><div class="consensus-fill warn" style="width:45%"></div></div>
+          <span style="font-size:12px;font-weight:700;color:var(--warn-fg)">45%</span>
+        </div>
+        <span style="font-size:12px;color:var(--fg-subtle)">· 결론이 엇갈리는 질문</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ARENA GRID -->
+<div class="arena">
+
+  <!-- Claude -->
+  <div class="model-card outlier">
+    <div class="card-header">
+      <div class="model-avatar" style="background:var(--ai-claude)">Cl</div>
+      <div class="model-info">
+        <div class="model-name">Claude 3.5</div>
+        <div class="model-org">Anthropic</div>
+      </div>
+      <span class="model-badge badge-differ">다른 의견</span>
+    </div>
+    <div class="card-body">
+      <p>현재 테슬라 주가는 펀더멘털 대비 고평가 구간에 있습니다. P/E 비율이 섹터 평균의 3배 이상이며, EV 시장 점유율은 지속적으로 하락 중입니다.</p>
+      <p>장기 투자자라면 지금 바로 진입보다는 분할 매수 전략을 권장합니다. 전체 포지션의 30% 이하로 제한하고 나머지는 관망하는 것이 합리적입니다.</p>
+      <div class="key-point">리스크 관리를 위해 진입 전 명확한 손절선 설정 필수</div>
+    </div>
+    <div class="card-footer">
+      <div class="confidence"><div class="conf-dot conf-mid"></div>신뢰도 72%</div>
+      <button class="deepdive-btn">깊게 파고들기 →</button>
+    </div>
+  </div>
+
+  <!-- GPT-4o -->
+  <div class="model-card consensus">
+    <div class="card-header">
+      <div class="model-avatar" style="background:var(--ai-gpt)">GP</div>
+      <div class="model-info">
+        <div class="model-name">GPT-4o</div>
+        <div class="model-org">OpenAI</div>
+      </div>
+      <span class="model-badge badge-agree">일치</span>
+    </div>
+    <div class="card-body">
+      <p>테슬라는 단기적으로 변동성이 크지만 장기(5년+) 관점에서는 EV·에너지·로보틱스 통합 기업으로의 전환이 주목할 만합니다.</p>
+      <p>현재 주가에서 분할 매수를 시작해 장기 보유하는 전략이 유효합니다. 다만 전체 포트폴리오의 5~10% 이내로 비중을 제한하세요.</p>
+      <div class="key-point">FSD 기술의 상용화 타임라인이 핵심 변수</div>
+    </div>
+    <div class="card-footer">
+      <div class="confidence"><div class="conf-dot conf-high"></div>신뢰도 81%</div>
+      <button class="deepdive-btn">깊게 파고들기 →</button>
+    </div>
+  </div>
+
+  <!-- Gemini -->
+  <div class="model-card consensus">
+    <div class="card-header">
+      <div class="model-avatar" style="background:var(--ai-gemini)">Ge</div>
+      <div class="model-info">
+        <div class="model-name">Gemini 1.5</div>
+        <div class="model-org">Google</div>
+      </div>
+      <span class="model-badge badge-agree">일치</span>
+    </div>
+    <div class="card-body">
+      <p>테슬라의 중국 시장 리스크와 BYD 경쟁 압력을 감안하면 단기 전망은 불확실합니다. 그러나 슈퍼차저 네트워크와 에너지 사업부의 성장세는 긍정적입니다.</p>
+      <p>장기 투자 목적이라면 현재 가격대는 나쁘지 않으나, 추가 하락 시 분할 매수 기회를 기다리는 전략도 합리적입니다.</p>
+      <div class="key-point">에너지 부문 매출 성장률이 예상치 초과 중</div>
+    </div>
+    <div class="card-footer">
+      <div class="confidence"><div class="conf-dot conf-high"></div>신뢰도 78%</div>
+      <button class="deepdive-btn">깊게 파고들기 →</button>
+    </div>
+  </div>
+
+  <!-- Perplexity -->
+  <div class="model-card consensus">
+    <div class="card-header">
+      <div class="model-avatar" style="background:var(--ai-teal)">Px</div>
+      <div class="model-info">
+        <div class="model-name">Perplexity</div>
+        <div class="model-org">Perplexity AI</div>
+      </div>
+      <span class="model-badge badge-agree">일치</span>
+    </div>
+    <div class="card-body">
+      <p>최신 데이터 기준, 테슬라의 2024년 Q3 인도량은 전분기 대비 6.4% 증가했습니다. 애널리스트 컨센서스는 12개월 목표가 $280으로 현재 대비 약 18% 상승 여력입니다.</p>
+      <p>기관 투자자들의 순매수 흐름이 지속되고 있어 장기 투자에 우호적인 환경입니다.</p>
+      <div class="key-point">최근 3개월 기관 순매수 $2.1B 유입 확인</div>
+    </div>
+    <div class="card-footer">
+      <div class="confidence"><div class="conf-dot conf-high"></div>신뢰도 85%</div>
+      <button class="deepdive-btn">깊게 파고들기 →</button>
+    </div>
+  </div>
+
+  <!-- Grok -->
+  <div class="model-card outlier">
+    <div class="card-header">
+      <div class="model-avatar" style="background:var(--ai-rose)">Gr</div>
+      <div class="model-info">
+        <div class="model-name">Grok 2</div>
+        <div class="model-org">xAI</div>
+      </div>
+      <span class="model-badge badge-differ">다른 의견</span>
+    </div>
+    <div class="card-body">
+      <p>테슬라는 단순 자동차 기업이 아닌 AI·로보틱스 기업으로 재평가받고 있습니다. Optimus 로봇의 상용화가 현실화되면 현재 밸류에이션은 오히려 저평가일 수 있습니다.</p>
+      <p>지금 당장 매수하기보다는 Optimus 2025년 양산 계획 발표 전후로 포지션을 잡는 전략이 알파를 낼 수 있습니다.</p>
+      <div class="key-point">Optimus 로봇 TAM $10T+ 시나리오 검토 필요</div>
+    </div>
+    <div class="card-footer">
+      <div class="confidence"><div class="conf-dot conf-mid"></div>신뢰도 65%</div>
+      <button class="deepdive-btn">깊게 파고들기 →</button>
+    </div>
+  </div>
+
+  <!-- DeepSeek -->
+  <div class="model-card consensus">
+    <div class="card-header">
+      <div class="model-avatar" style="background:var(--ai-slate)">Ds</div>
+      <div class="model-info">
+        <div class="model-name">DeepSeek V3</div>
+        <div class="model-org">DeepSeek</div>
+      </div>
+      <span class="model-badge badge-partial">부분 일치</span>
+    </div>
+    <div class="card-body">
+      <p>테슬라의 중국 내 경쟁 환경은 매우 심화되고 있습니다. BYD·니오 등 로컬 브랜드와의 가격 경쟁이 마진을 압박하는 구조적 리스크가 존재합니다.</p>
+      <p>장기 투자는 가능하나 중국 매출 비중(약 22%)에 대한 리스크 프리미엄을 반영해 보수적 목표가 설정을 권합니다.</p>
+      <div class="key-point">중국 시장 점유율 12%→9% 하락 추세 주목</div>
+    </div>
+    <div class="card-footer">
+      <div class="confidence"><div class="conf-dot conf-mid"></div>신뢰도 74%</div>
+      <button class="deepdive-btn">깊게 파고들기 →</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- BOTTOM FOLLOWUP -->
+<div class="bottom-bar">
+  <div class="followup-composer">
+    <input type="text" placeholder="이 답변을 바탕으로 더 물어보세요...">
+    <div class="followup-actions">
+      <button class="model-select-chip">
+        <span class="ct">6</span>
+        전체 모델
+      </button>
+      <button class="send-btn" aria-label="전송">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
