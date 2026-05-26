@@ -24,20 +24,25 @@ if (!token || !dataSourceId) {
   process.exit(1);
 }
 
+const todayKST = new Date(Date.now() + 9 * 60 * 60 * 1000).toISOString().slice(0, 10);
+
 const files = targetFile
   ? [path.resolve(root, targetFile)]
-  : fs
-      .readdirSync(devlogDir)
-      .filter((file) => /^\d{4}-\d{2}-\d{2}\.md$/.test(file))
-      .map((file) => path.join(devlogDir, file))
-      .sort();
+  : (() => {
+      const todayFile = path.join(devlogDir, `${todayKST}.md`);
+      if (fs.existsSync(todayFile)) return [todayFile];
+      // fallback: 가장 최근 파일 하나만
+      const all = fs
+        .readdirSync(devlogDir)
+        .filter((file) => /^\d{4}-\d{2}-\d{2}\.md$/.test(file))
+        .sort();
+      return all.length ? [path.join(devlogDir, all[all.length - 1])] : [];
+    })();
 
 if (files.length === 0) {
   console.log("No devlog files found.");
   process.exit(0);
 }
-
-const todayKST = new Date(Date.now() + 9 * 60 * 60 * 1000).toISOString().slice(0, 10);
 
 for (const filePath of files) {
   const markdown = fs.readFileSync(filePath, "utf8");
