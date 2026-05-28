@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light" data-lang="ko">
+<head>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SocraChat · Chat</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../apple-theme.css">
+<link rel="stylesheet" href="../notion-theme.css">
+<link rel="stylesheet" href="../components.css">
+<script src="../assets/sc-ui.js" defer></script>
+<script src="../assets/shell.js" defer></script>
+
+<style>
+  html, body { margin: 0; height: 100vh; overflow: hidden; }
+  body { background: var(--bg); color: var(--fg); display: flex; flex-direction: column; }
+
+  /* 상태바 (모바일 전용) */
+  .statusbar {
+    height: 50px; padding: 0 18px;
+    background: var(--surface);
+    display: flex; align-items: center;
+    font-size: 15px; font-weight: 600; color: var(--fg-strong);
+    flex-shrink: 0;
+  }
+
+  /* 상단 네비게이션 바 */
+  .topbar {
+    height: 60px; padding: 0 8px;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface);
+    display: flex; align-items: center; gap: 8px;
+    flex-shrink: 0;
+  }
+  .topbar .who { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+  .topbar .who .info { display: flex; flex-direction: column; gap: 2px; }
+  .topbar .who .info .name { font-size: 15px; font-weight: 600; color: var(--fg-strong); }
+  .topbar .who .info .status {
+    font-size: 12px; color: var(--success);
+    display: flex; align-items: center; gap: 4px;
+  }
+  .topbar .who .info .status::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--success); display: inline-block;
+  }
+
+  /* 채팅 피드 */
+  .feed {
+    flex: 1; overflow-y: auto;
+    padding: 20px 16px 120px;
+  }
+
+  /* bubble 기본 크기 override */
+  .bubble { font-size: 16px; }
+
+  /* 타임스탬프 */
+  .ts {
+    font-size: 12px; color: var(--fg-muted);
+    margin: 4px 0 10px;
+    padding-left: 2px;
+  }
+  .ts.user { text-align: right; padding-right: 2px; padding-left: 0; }
+
+  /* 하단 composer 영역 */
+  .composer-wrap {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 10px 14px 20px;
+    background: linear-gradient(180deg, transparent, var(--bg) 28%);
+  }
+  /* composer 내부를 chat용으로 단순화 — 기본 .composer는 column+cbar 구조이므로 override */
+  .composer-wrap .composer {
+    flex-direction: row; align-items: center;
+    padding: 8px 8px 8px 16px; gap: 8px;
+  }
+  .composer-wrap .composer textarea {
+    flex: 1; min-height: 20px; font-size: 15px; line-height: 160%;
+  }
+  .composer-wrap .send-btn {
+    background: var(--accent); color: var(--fg-on-accent);
+    border: 0; border-radius: var(--r-full);
+    width: 34px; height: 34px; flex-shrink: 0;
+    display: grid; place-items: center; cursor: pointer;
+    transition: background var(--dur-base);
+  }
+  .composer-wrap .send-btn:hover { background: var(--accent-hover); }
+  .composer-wrap .send-btn svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+</style>
+</head>
+<body>
+
+<div class="statusbar">9:41</div>
+
+<header class="topbar">
+  <button class="iconb" aria-label="뒤로">
+    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+  </button>
+  <div class="who">
+    <div class="av av-m" data-model-icon="claude"></div>
+    <div class="info">
+      <div class="name" data-i18n="model_name">Claude Sonnet</div>
+      <div class="status" data-i18n="online">온라인</div>
+    </div>
+  </div>
+  <button class="iconb" aria-label="더 보기">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+  </button>
+</header>
+
+<div class="feed">
+  <div class="bubble-wrap">
+
+    <div class="bubble-row">
+      <div class="av av-s" data-model-icon="claude"></div>
+      <div class="bubble b-ai" data-i18n="ai_1">안녕하세요! 무엇을 도와드릴까요?</div>
+    </div>
+    <div class="ts">오전 9:41</div>
+
+    <div class="bubble-row user">
+      <div class="bubble b-user" data-i18n="user_1">소크라챗이 뭔가요?</div>
+    </div>
+    <div class="ts user">오전 9:42</div>
+
+    <div class="bubble-row">
+      <div class="av av-s" data-model-icon="claude"></div>
+      <div class="bubble b-ai" data-i18n="ai_2">SocraChat은 Claude, GPT 등 여러 AI를 한 앱에서 쓸 수 있는 멀티모델 채팅 서비스예요!</div>
+    </div>
+    <div class="ts">오전 9:42</div>
+
+    <div class="bubble-row user">
+      <div class="bubble b-user" data-i18n="user_2">어떤 모델이 제일 좋아요?</div>
+    </div>
+    <div class="ts user">오전 9:43</div>
+
+  </div>
+</div>
+
+<div class="composer-wrap">
+  <div class="composer">
+    <textarea rows="1" placeholder="메시지를 입력하세요..." data-i18n="composer_ph" data-i18n-attr="placeholder"></textarea>
+    <button class="send-btn" aria-label="전송">
+      <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  window.__SC_I18N = {
+    ja: {
+      model_name: 'Claude Sonnet',
+      online: 'オンライン',
+      ai_1: 'こんにちは！何かお手伝いできますか？',
+      user_1: 'SocraChat って何ですか？',
+      ai_2: 'SocraChat は Claude、GPT など複数の AI を一つのアプリで使える、マルチモデルチャットサービスです！',
+      user_2: 'どのモデルが一番いいですか？',
+      composer_ph: 'メッセージを入力してください…',
+    },
+    en: {
+      model_name: 'Claude Sonnet',
+      online: 'Online',
+      ai_1: "Hi there! How can I help you today?",
+      user_1: "What is SocraChat?",
+      ai_2: "SocraChat lets you use multiple AI models — Claude, GPT, and more — all in one app!",
+      user_2: "Which model is the best?",
+      composer_ph: 'Type a message…',
+    },
+    ko: {
+      model_name: 'Claude Sonnet',
+      online: '온라인',
+      ai_1: '안녕하세요! 무엇을 도와드릴까요?',
+      user_1: '소크라챗이 뭔가요?',
+      ai_2: 'SocraChat은 Claude, GPT 등 여러 AI를 한 앱에서 쓸 수 있는 멀티모델 채팅 서비스예요!',
+      user_2: '어떤 모델이 제일 좋아요?',
+      composer_ph: '메시지를 입력하세요…',
+    },
+  };
+</script>
+</body>
+</html>

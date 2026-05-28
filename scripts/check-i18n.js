@@ -19,6 +19,7 @@ const HTML_FILES = [
   'screens/comparison.html',
   'screens/source.html',
   'screens/deep-chat.html',
+  'screens/chat.html',
   'storybook.html',
 ];
 

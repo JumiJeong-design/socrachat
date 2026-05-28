@@ -59,6 +59,11 @@ When asked to push screens to Figma:
 3. Open each screen URL with capture hash
 4. Poll until completed
 
+## 작업 기록
+
+유미님의 전체 작업 히스토리는 `~/Desktop/jumi-worklog/`에 날짜별로 쌓인다.
+세션 시작 시 최근 worklog 파일을 읽어 맥락을 파악할 것.
+
 ## Design System
 → [DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md) 참조 (디자인 규칙, AI 행동 원칙, 토큰 구조, Visual direction, 마스코트 규칙 전부 여기)
 

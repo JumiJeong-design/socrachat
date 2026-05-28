@@ -4,7 +4,7 @@
    Warm + clear · sage primary on warm cream · light + dark.
    ========================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Shippori+Mincho:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Shippori+Mincho:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 @import url('https://cdn.jsdelivr.net/npm/pretendard@latest/dist/web/variable/pretendardvariable.css');
 
 :root {
@@ -110,9 +110,9 @@
 
   /* ---------- Type ---------- */
   --font-display: 'Shippori Mincho', 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
-  --font-ui:      'Inter', 'Noto Sans JP', 'Noto Sans KR', 'Hiragino Sans', 'Yu Gothic', system-ui, sans-serif;
-  --font-jp:      'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', system-ui, sans-serif;
-  --font-ko:      'Pretendard Variable', 'Noto Sans KR', system-ui, sans-serif;
+  --font-ui:      'Noto Sans', 'Noto Sans JP', 'Noto Sans KR', system-ui, sans-serif;
+  --font-jp:      'Noto Sans JP', 'Noto Sans', system-ui, sans-serif;
+  --font-ko:      'Noto Sans KR', 'Noto Sans', system-ui, sans-serif;
   --font-mono:    'JetBrains Mono', 'Menlo', monospace;
 
   --text-xs:   12px;
